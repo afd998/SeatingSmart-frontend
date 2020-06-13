@@ -129,8 +129,9 @@ export default function CreateClass(props) {
     setStudnets(rows);
     getNewClassInfo({rows, classname, numberOfGroups, studentsPerGroup})
   }
-
+  pumpStudentListUP
   const finsishCreateClass = () =>{
+     
     closeCreateClass();
   }
 

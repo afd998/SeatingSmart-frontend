@@ -132,7 +132,6 @@ export default function TextInput(props) {
             onChange={handleChange}
             helperText={errors.studentsPerGroup}
             error={errors.studentsPerGroup ? true : false}
-          //fullWidth
           >
           </TextField>
         </Grid>

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import MaterialTable from 'material-table';
-import { Snackbar } from '@material-ui/core';
+import { Snackbar, Switch } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 //Icons
@@ -20,6 +20,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import { mdiGenderFemale } from '@mdi/js';
 const useStyles = makeStyles(theme => ({
   superlist: {
     margin: theme.spacing(5),
@@ -83,20 +84,22 @@ const tableIcons = {
 export default function SuperList(props) {
   const classes = useStyles();
   const [displayErrorDialog, setDisplayErrorDialog] = React.useState(false)
+  
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Gender', field: 'gender' },
-      { title: 'Person of Color', field: 'poc' },
+      { title: 'Gender', field: 'gender', lookup: { 34: 'Male', 63: 'Female', 62: 'Non-binary' } },
+      { title: 'Person of Color', field: 'poc',  lookup: { 34: 'No', 63: 'Yes' }},
     ],
     data: [],
   });
+  
   const showErrorDialog = () => {
     setDisplayErrorDialog(!displayErrorDialog);
   };
   const alert = <Snackbar open={displayErrorDialog} autoHideDuration={6000} onClose={showErrorDialog}>
     <MuiAlert elevation={6} variant="filled" onClose={showErrorDialog} severity="error">
-      Make sure: NAME is unique. GENDER is Male, Female or Other. POC is Yes or No
+      Each student should have a unique name!
     </MuiAlert>
   </Snackbar>
   return (
@@ -116,9 +119,7 @@ export default function SuperList(props) {
                   var badCredentials = false
                   for (var student of data) {
                     console.log(student.name);
-                    if ((newData.name === student.name) ||
-                      (newData.gender !== ("Male" || "Female" || "Other")) ||
-                      (newData.poc !== ("Yes" || "No"))) {
+                    if (newData.name === student.name) {
                       badCredentials = true;
                       showErrorDialog();
                     }
