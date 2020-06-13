@@ -34,9 +34,10 @@ export const getClasses = () => (dispatch) => {
       });
     });
 }
-export const addClass = (newClass, history) => (dispatch) => {
+export const addClass = (newClass) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
+  console.log("new class structure", newClass);
   axios.post('/addClass', newClass).then((res) => {
     console.log(res.data);
     dispatch({ type: CLEAR_ERRORS });

@@ -87,9 +87,10 @@ const styles = {
 
 export class home extends Component {
   state = {
-    classes: null,
+    classes: [],
     displayCreateClass: false,
   }
+
 
   componentDidMount() {
     this.props.getClasses();
@@ -99,6 +100,7 @@ export class home extends Component {
       window.location.href = '/login';
     }
     axios.defaults.headers.common['Authorization'] =token;
+
   }
 
   displayCreateClass = () => {
@@ -122,25 +124,29 @@ export class home extends Component {
   };
 
 
-  getNewClassInfo = ({ rows, classname, numberOfGroups, studentsPerGroup }) => {
+  getNewClassInfo = ({ students, classname, numberOfGroups, studentsPerGroup }) => {
     var newClass = {
       "ClassName": classname,
-      "students": rows,
+      "students": students,
       "numberOfGroups": numberOfGroups,
       "studentsPerGroup": studentsPerGroup
     };
     var oldClassesState = this.state.classes;
+    console.log("old state", oldClassesState);
+
     var newClassesState = oldClassesState.push(newClass);
+    this.setState({ classes: newClassesState })
     this.props.addClass(newClass, this.props.history)
 
-    this.setState({ classes: newClassesState })
 
 
   };
 
+
   render() {
+
     const {classes} =this.props;
-    const {classesArray, loading } = this.props.data;
+    const {classesArray, loading} = this.props.data;
     ///DISPLAY CREAT CLASS OR BUTTON
     let createClass = <Grid item >
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
@@ -204,6 +210,6 @@ const mapStateToProps = (state) => ({
   data: state.data
 });
 
-const mapActionToProps = { logoutUser, addClass, getClasses };
+const mapActionToProps = { logoutUser, getClasses };
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(home));

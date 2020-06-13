@@ -1,4 +1,6 @@
 import React, { Component, forwardRef } from 'react';
+import { connect } from "react-redux";
+import { withStyles } from '@material-ui/core/styles';
 
 //MUI STUFF
 import IconButton from '@material-ui/core/IconButton';
@@ -17,10 +19,11 @@ import { Grid } from '@material-ui/core';
 import { Dialog } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import TextInput from './TextInput';
-import StudentCreator from './StudentCreator';
 import ClassView from './ClassView';
 import SuperList from './SuperList'
+import PropTypes from 'prop-types';
 
+import { addClass } from "../../redux/actions/dataActions";
 
 
 const useStyles = makeStyles(theme => ({
@@ -76,10 +79,11 @@ const useStyles = makeStyles(theme => ({
 
   },
 }));
-export default function CreateClass(props) {
+
+function CreateClass(props) {
   const { onClose, open, closeCreateClass, getNewClassInfo } = props;
   const classes = useStyles();
-  const [classname, setclassname] = React.useState("");
+  const [className, setclassName] = React.useState("");
   const [showSameNameMessage, setShowSameNameMessage] = React.useState("");
   const [students, setStudnets] = React.useState(["james"]);
   const [ShowAddStudentButton, setShowAddStudentButton] = React.useState(true);
@@ -87,14 +91,10 @@ export default function CreateClass(props) {
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
-
-  const addAStudent = (event) => {
-    setShowAddStudentButton(!ShowAddStudentButton);
-  }
   const handleChange = (event) => {
     switch (event.target.name) {
       case "classname":
-        setclassname(event.target.value);
+        setclassName(event.target.value);
         break;
       case "numberOfGroups":
         setnumberOfGroups(event.target.value);
@@ -125,13 +125,18 @@ export default function CreateClass(props) {
     }
   }
 
-  const getStudents = (rows) => {
+  const liftStudents = (rows) => {
+    console.log("the students object that was lifted: ", rows);
     setStudnets(rows);
-    getNewClassInfo({rows, classname, numberOfGroups, studentsPerGroup})
   }
-  pumpStudentListUP
-  const finsishCreateClass = () =>{
-     
+  const liftClassMetaData = (metadata) => {
+    console.log("the metadata object that was lifted: ", metadata);
+    setstudentsPerGroup(metadata.studentsPerGroup);
+    setclassName(metadata.className);
+    setnumberOfGroups(metadata.numberOfGroups);
+  }
+  const finsishCreateClass = () => {
+    props.addClass({ students, className, numberOfGroups, studentsPerGroup });
     closeCreateClass();
   }
 
@@ -140,29 +145,14 @@ export default function CreateClass(props) {
       <Typography className={classes.title} variant="h2"> Create a New Class</Typography>
       <Grid container spacing={10}>
         <Grid item xs={4}>
-          <TextInput />
+          <TextInput  liftClassMetaData={liftClassMetaData}/>
         </Grid>
-        {/*<Grid item xs={4}>
-           {ShowAddStudentButton && (<Fab
-            variant="extended"
-            size="large"
-            color="primary"
-            aria-label="add"
-            className={classes.fabAddStudent}
-            onClick={addAStudent}
-          >
-            <AddIcon className={classes.icon} />
-                   Add A Student
-          </Fab>)}
-          {(!ShowAddStudentButton) && <StudentCreator closeSameNameAlert={closeSameNameAlert} sameNameMessage={showSameNameMessage} closeStudentCreator={closeAddStudent} submitAddStudent={submitAddStudent} />} 
-        </Grid>*/}
         <Grid item xs={8}>
-          {/* <ClassView /> */}
-          <SuperList className={classes.superlist} getStudents={getStudents} />
+
+          <SuperList className={classes.superlist} liftStudents={liftStudents} />
         </Grid>
         <Grid item xs={12}>
           <Button
-            //variant="extended"
             size="large"
             color="secondary"
             aria-label="cancel"
@@ -173,7 +163,6 @@ export default function CreateClass(props) {
                    Cancel
             </Button>
           <Button
-            //variant="extended"
             size="large"
             aria-label="finished"
             className={classes.fab}
@@ -187,3 +176,16 @@ export default function CreateClass(props) {
     </Paper >
   )
 }
+
+CreateClass.propTypes = {
+  addClass: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+const mapActionToProps = { addClass };
+
+export default connect(mapStateToProps, mapActionToProps)(CreateClass);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 //MUI STUFF
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
@@ -61,15 +61,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function TextInput(props) {
-  const { onClose, open } = props;
+  const {liftClassMetaData} = props;
   const classes = useStyles();
-  const [classname, setclassname] = React.useState("");
+  const [className, setclassname] = React.useState("");
   const [errors, seterrors] = React.useState({});
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
   const handleChange = (event) => {
-    switch (event.target.name) {
+      switch (event.target.name) {
       case "classname":
         setclassname(event.target.value);
         break;
@@ -82,8 +82,11 @@ export default function TextInput(props) {
       default:
         break;
     }
-  };
 
+  };
+  useEffect(() => {
+    liftClassMetaData({className, numberOfGroups, studentsPerGroup});
+  });
 
   return (
     <div >
@@ -96,7 +99,7 @@ export default function TextInput(props) {
             type='text'
             label='Class Name'
             className={classes.textField}
-            value={classname}
+            value={className}
             onChange={handleChange}
             helperText={errors.classname}
             error={errors.classname ? true : false}

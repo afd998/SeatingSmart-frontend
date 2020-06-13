@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { Snackbar, Switch } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
@@ -84,16 +84,18 @@ const tableIcons = {
 export default function SuperList(props) {
   const classes = useStyles();
   const [displayErrorDialog, setDisplayErrorDialog] = React.useState(false)
-  
+  const {liftStudents} = props;
   const [state, setState] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
-      { title: 'Gender', field: 'gender', lookup: { 34: 'Male', 63: 'Female', 62: 'Non-binary' } },
-      { title: 'Person of Color', field: 'poc',  lookup: { 34: 'No', 63: 'Yes' }},
+      { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
+      { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
     ],
     data: [],
   });
-  
+ useEffect(() => {
+  liftStudents(state.data);
+ });
   const showErrorDialog = () => {
     setDisplayErrorDialog(!displayErrorDialog);
   };
