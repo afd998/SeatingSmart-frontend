@@ -11,13 +11,14 @@ import { Grid } from "@material-ui/core"
 import AppIcon from "../images/icon.png"
 import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import "../App.css";
 import { connect } from 'react-redux';
 import { loginUser, loginUserGoogle } from '../redux/actions/userActions';
 import themeFile from "../util/theme"
-//import config from "../firebase.config.js";
+import config from "../firebase.config.js";
 const styles = themeFile;
-//firebase.initializeApp(config)
+firebase.initializeApp(config)
 var provider = new firebase.auth.GoogleAuthProvider();
 class login extends Component {
   constructor() {
@@ -30,7 +31,7 @@ class login extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log("component recieved:", nextProps.UI.errors);
+    console.log("the error object from the store is:", nextProps.UI.errors);
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors })
     }
@@ -51,7 +52,11 @@ class login extends Component {
       [event.target.name]: event.target.value
     });
   };
-
+  handleAlertClose = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
   googleFunc = (event) => {
     var googleLogin = (a, b) => { this.props.loginUserGoogle(a, b); };
     var ghistory = this.props.history;
@@ -102,7 +107,7 @@ class login extends Component {
                 value={this.state.email}
                 onChange={this.handleChange}
                 helperText={errors.email}
-                error={errors.email ? true : false}
+                error={errors.email || errors.general ? true : false}
                 fullWidth>
               </TextField>
               <TextField
@@ -114,11 +119,11 @@ class login extends Component {
                 value={this.state.password}
                 onChange={this.handleChange}
                 helperText={errors.password}
-                error={errors.email ? true : false}
+                error={errors.password || errors.email || errors.general? true : false}
                 fullWidth>
               </TextField>
               {errors.general && (
-                <Typography variant="body2" className={classes.customError}>
+                <Typography variant="body2" color= "error" className={classes.customError}>
                   {errors.general}
                 </Typography>
               )}

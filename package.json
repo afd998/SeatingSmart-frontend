@@ -1,6 +1,5 @@
 {
   "name": "seating-smart-client",
-  "homepage": "https://afd998.github.io/SeatSmart",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

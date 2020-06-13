@@ -50,9 +50,9 @@ export default {
     position: 'relative'
   },
   customError: {
-    margin: '10px auto 10px auto',
-    color: "black",
-    fontSize: "0.8rem"
+    margin: '0px 0px 20px auto',
+    color: "red",
+    fontSize: "1rem"
 
   },
   progress: {
@@ -72,6 +72,9 @@ export default {
       main: '#fdc92a',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
+    },
+    error:{
+      main: "#ff1744"
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
