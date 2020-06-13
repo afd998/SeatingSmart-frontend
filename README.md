@@ -1,4 +1,4 @@
-This code should run if you want to try it out! The only thing that wont work is the Signin With Google button. Thats because in order to use that you would need my firebase config XD
+This code should run if you want to try it out! The only thing that wont work is the Signin With Google button. Thats because in order to use that you would need my firebase config. Website will be up soon :D
 
 
 
