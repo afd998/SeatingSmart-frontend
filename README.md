@@ -1,3 +1,5 @@
+This code should run if you want to try it out! The only thing that wont work is the sign in with google button. Thats because in order to use that you would been my firebase config.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
