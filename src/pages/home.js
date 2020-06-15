@@ -116,8 +116,8 @@ export class home extends Component {
   updateStateDelete = (className) => {
     this.setState((oldstate) =>{
       let newState=oldstate.classes;
-      for (let i = 0; i <oldstate.length; i++) {
-        if (oldstate[i].className === className) {
+      for (let i = 0; i <newState.length; i++) {
+        if (newState[i].className === className) {
           delete newState[i];
         }
       }
@@ -133,7 +133,8 @@ export class home extends Component {
 
   getNewClassInfo = (newClass) => {
     this.setState((oldstate) => {
-      let e =  oldstate.classes.push(newClass);
+      let e =  oldstate.classes;
+      e.push(newClass);
       return {classes: e};
     }
     );
@@ -159,8 +160,10 @@ export class home extends Component {
           </Fab>
         </Tooltip>
       </Grid>;
-    console.log(this.state.classes);
-    let classesMarkup = this.state.classes == "init" ? (
+   
+
+   console.log("classes", this.state.classes);
+    let classesMarkup = this.state.classes === "init" ? (
      <ClassSkeleton/> 
     ) : (
       this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)

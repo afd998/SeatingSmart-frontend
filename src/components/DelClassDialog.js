@@ -24,7 +24,6 @@ export default function DelClassDialog(props) {
       headers: { 'content-type': 'application/json', },
     }).then((res) => {
       onDel();
-      handleClose();
     }).catch((err) => console.log(err));
   }
 
