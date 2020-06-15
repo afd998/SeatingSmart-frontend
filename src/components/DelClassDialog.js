@@ -42,7 +42,6 @@ export default function DelClassDialog(props) {
       <Typography className={classes.message} variant="body1" > Deleting a class will delete all of its associated charts. </Typography>
       <Button
         variant="contained"
-        color="warning"
         //className={classes.button}
         startIcon={<DeleteIcon />}
         onClick={imsure}

@@ -85,58 +85,23 @@ function CreateClass(props) {
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
   const [showSameNameMessage, setShowSameNameMessage] = React.useState("");
-  const [students, setStudnets] = React.useState(["james"]);
+  const [students_state, setStudents_state] = React.useState({
+      columns: [
+        { title: 'Name', field: 'name' },
+        { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
+        { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
+      ],
+      data: [],
+    });
   const [ShowAddStudentButton, setShowAddStudentButton] = React.useState(true);
   const [errors, seterrors] = React.useState({});
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
-  const handleChange = (event) => {
-    switch (event.target.name) {
-      case "classname":
-        setclassName(event.target.value);
-        break;
-      case "numberOfGroups":
-        setnumberOfGroups(event.target.value);
-        break;
-      case "studentsPerGroup":
-        setstudentsPerGroup(event.target.value);
-        break;
-      default:
-        break;
-    }
-  };
-  const handleClose = () => {
-    onClose();
-  };
-
-  const submitAddStudent = (studentDetails) => {
-    var alreadyUsed = false
-    for (const student of students) {
-      if (student.name === studentDetails.name) {
-        alreadyUsed = true;
-        break;
-      }
-    }
-    if (!alreadyUsed) {
-      students.push(studentDetails)
-    } else {
-      setShowSameNameMessage(true);
-    }
-  }
-
-  const liftStudents = (rows) => {
-    console.log("the students object that was lifted: ", rows);
-    setStudnets(rows);
-  }
-  const liftClassMetaData = (metadata) => {
-    console.log("the metadata object that was lifted: ", metadata);
-    setstudentsPerGroup(metadata.studentsPerGroup);
-    setclassName(metadata.className);
-    setnumberOfGroups(metadata.numberOfGroups);
-  }
   const finsishCreateClass = () => {
-    props.addClass({ students, className, numberOfGroups, studentsPerGroup });
+    let students=students_state.data;
+    props.addClass({students, className, numberOfGroups, studentsPerGroup });
+    getNewClassInfo({students, className, numberOfGroups, studentsPerGroup});
     closeCreateClass();
   }
 
@@ -145,11 +110,16 @@ function CreateClass(props) {
       <Typography className={classes.title} variant="h2"> Create a New Class</Typography>
       <Grid container spacing={10}>
         <Grid item xs={4}>
-          <TextInput  liftClassMetaData={liftClassMetaData}/>
+          <TextInput 
+            numberOfGroups={numberOfGroups}
+            setnumberOfGroups={setnumberOfGroups}
+            studentsPerGroup={studentsPerGroup}
+            setstudentsPerGroup= {setstudentsPerGroup}
+            className={className}
+            setclassName= {setclassName}/>
         </Grid>
         <Grid item xs={8}>
-
-          <SuperList className={classes.superlist} liftStudents={liftStudents} />
+          <SuperList className={classes.superlist} state = {students_state} setState = {setStudents_state}/>
         </Grid>
         <Grid item xs={12}>
           <Button

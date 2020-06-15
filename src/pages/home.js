@@ -87,20 +87,25 @@ const styles = {
 
 export class home extends Component {
   state = {
-    classes: [],
+    classes: "init",
     displayCreateClass: false,
   }
 
 
   componentDidMount() {
-    this.props.getClasses();
+    //this.props.getClasses();
     console.log("home component mounted");
     let token =localStorage.getItem('FBIdToken');
     if(!token){
       window.location.href = '/login';
     }
     axios.defaults.headers.common['Authorization'] =token;
-
+    axios.get('/getclasses').then(res => {
+        this.setState({classes: res.data.classes});
+        console.log(res.data.classes);
+      }).catch((err) => {
+          console.log("error getting classes");
+      });
   }
 
   displayCreateClass = () => {
@@ -109,13 +114,15 @@ export class home extends Component {
     })
   }
   updateStateDelete = (className) => {
-    var newState = this.state.classes;
-    for (let i = 0; i < this.state.classes.length; i++) {
-      if (this.state.classes[i].className === className) {
-        delete newState[i];
+    this.setState((oldstate) =>{
+      let newState=oldstate.classes;
+      for (let i = 0; i <oldstate.length; i++) {
+        if (oldstate[i].className === className) {
+          delete newState[i];
+        }
       }
-    }
-    this.setState({ classes: newState });
+      return {classes: newState};
+    });
   }
 
   handleLogout = () => {
@@ -124,29 +131,18 @@ export class home extends Component {
   };
 
 
-  getNewClassInfo = ({ students, classname, numberOfGroups, studentsPerGroup }) => {
-    var newClass = {
-      "ClassName": classname,
-      "students": students,
-      "numberOfGroups": numberOfGroups,
-      "studentsPerGroup": studentsPerGroup
-    };
-    var oldClassesState = this.state.classes;
-    console.log("old state", oldClassesState);
-
-    var newClassesState = oldClassesState.push(newClass);
-    this.setState({ classes: newClassesState })
-    this.props.addClass(newClass, this.props.history)
-
-
-
+  getNewClassInfo = (newClass) => {
+    this.setState((oldstate) => {
+      let e =  oldstate.classes.push(newClass);
+      return {classes: e};
+    }
+    );
   };
 
 
   render() {
-
     const {classes} =this.props;
-    const {classesArray, loading} = this.props.data;
+    const {thisloading} = this.props.data;
     ///DISPLAY CREAT CLASS OR BUTTON
     let createClass = <Grid item >
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
@@ -163,11 +159,11 @@ export class home extends Component {
           </Fab>
         </Tooltip>
       </Grid>;
-
-    let classesMarkup = !loading ? (
-     classesArray.map((classs) => <Class  className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)
+    console.log(this.state.classes);
+    let classesMarkup = this.state.classes == "init" ? (
+     <ClassSkeleton/> 
     ) : (
-      <ClassSkeleton/>
+      this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)
     ); 
 
     const noClassesMessage =

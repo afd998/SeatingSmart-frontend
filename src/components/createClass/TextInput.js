@@ -63,15 +63,15 @@ const useStyles = makeStyles(theme => ({
 export default function TextInput(props) {
   const {liftClassMetaData} = props;
   const classes = useStyles();
-  const [className, setclassname] = React.useState("");
+  //const [className, setclassname] = React.useState("");
   const [errors, seterrors] = React.useState({});
-  const [numberOfGroups, setnumberOfGroups] = React.useState("");
-  const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
-
+  //const [numberOfGroups, setnumberOfGroups] = React.useState("");
+  //const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
+  const {numberOfGroups, setnumberOfGroups, className, setclassName, studentsPerGroup, setstudentsPerGroup} = props;
   const handleChange = (event) => {
       switch (event.target.name) {
       case "classname":
-        setclassname(event.target.value);
+        setclassName(event.target.value);
         break;
       case "numberOfGroups":
         setnumberOfGroups(event.target.value);
@@ -84,9 +84,9 @@ export default function TextInput(props) {
     }
 
   };
-  useEffect(() => {
-    liftClassMetaData({className, numberOfGroups, studentsPerGroup});
-  });
+  // useEffect(() => {
+  //   liftClassMetaData({className, numberOfGroups, studentsPerGroup});
+  // });
 
   return (
     <div >

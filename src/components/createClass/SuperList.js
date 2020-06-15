@@ -85,17 +85,16 @@ export default function SuperList(props) {
   const classes = useStyles();
   const [displayErrorDialog, setDisplayErrorDialog] = React.useState(false)
   const {liftStudents} = props;
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
-      { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
-    ],
-    data: [],
-  });
- useEffect(() => {
-  liftStudents(state.data);
- });
+  const {state, setState} = props;
+  // const [state, setState] = React.useState({
+  //   columns: [
+  //     { title: 'Name', field: 'name' },
+  //     { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
+  //     { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
+  //   ],
+  //   data: [],
+  // });
+
   const showErrorDialog = () => {
     setDisplayErrorDialog(!displayErrorDialog);
   };
@@ -116,7 +115,7 @@ export default function SuperList(props) {
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                setState(prevState => {
+                setState((prevState) => {
                   const data = [...prevState.data];
                   var badCredentials = false
                   for (var student of data) {
