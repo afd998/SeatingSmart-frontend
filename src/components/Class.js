@@ -45,8 +45,7 @@ export function Class(props) {
   };
   const handleDel = value => {
     updateState(className)
-    setOpen(false);
-
+    //setOpen(false);
   }
   return (
     <Card className={classes.card}>

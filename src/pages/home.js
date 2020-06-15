@@ -181,7 +181,7 @@ export class home extends Component {
         <Grid container justify="center" spacing={5}>
           {classesMarkup}
           {this.state.displayCreateClass && createClass}
-          {(!this.state.displayCreateClass) && ((classesMarkup.length === 0) && noClassesMessage)}
+          {(!this.state.displayCreateClass) && (this.state.classes.length==0 || this.state.classes === "init") && noClassesMessage}
           {(!this.state.displayCreateClass) && createClassButton}
 
           <Grid item sm={12}>

@@ -57,6 +57,7 @@ class login extends Component {
       [event.target.name]: event.target.value
     });
   };
+  
   googleFunc = (event) => {
     var googleLogin = (a, b) => { this.props.loginUserGoogle(a, b); };
     var ghistory = this.props.history;
