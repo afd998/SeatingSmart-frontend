@@ -86,15 +86,6 @@ export default function SuperList(props) {
   const [displayErrorDialog, setDisplayErrorDialog] = React.useState(false)
   const {liftStudents} = props;
   const {state, setState} = props;
-  // const [state, setState] = React.useState({
-  //   columns: [
-  //     { title: 'Name', field: 'name' },
-  //     { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
-  //     { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
-  //   ],
-  //   data: [],
-  // });
-
   const showErrorDialog = () => {
     setDisplayErrorDialog(!displayErrorDialog);
   };

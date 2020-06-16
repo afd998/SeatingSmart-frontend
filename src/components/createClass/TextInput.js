@@ -18,7 +18,7 @@ import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   main:{
-    margin: "140px 0px 0px 0px",
+    margin: "180px 0px 0px 0px",
     
   },
   icon: {

@@ -7,6 +7,8 @@ import { addClass } from "../redux/actions/dataActions";
 import { getClasses } from '../redux/actions/dataActions';
 import Class from '../components/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
+import CreateClass from "../components/createClass/CreateClass";
+import EditClass from "../components/createClass/EditClass";
 
 //import themeFile from "../util/theme"
 
@@ -16,7 +18,6 @@ import { Box } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
-import CreateClass from "../components/createClass/CreateClass";
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
@@ -89,7 +90,9 @@ export class home extends Component {
   state = {
     classes: "init",
     displayCreateClass: false,
+    displayEditClass: false,
     loading: true,
+    classToEdit: "",
   }
 
 
@@ -110,10 +113,21 @@ export class home extends Component {
   }
 
   displayCreateClass = () => {
-    this.setState({
-      displayCreateClass: !this.state.displayCreateClass,
-    })
+    this.setState((oldstate)=>{
+      return {displayCreateClass: !oldstate.displayCreateClass};
+    });
   }
+  
+  displayEditClass = () => {
+    this.setState((oldstate)=>{
+      return {displayEditClass: !oldstate.displayEditClass};
+    });
+  }
+  editClicked = (oldClassName) => {
+    this.setState({classToEdit: oldClassName});
+    this.displayEditClass();
+  }
+
   updateStateDelete = (className) => {
     this.setState((oldstate) =>{
       let newState=oldstate.classes;
@@ -148,6 +162,10 @@ export class home extends Component {
     let createClass = <Grid item >
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
                   </Grid>;
+    let editClass = <Grid item>
+      <EditClass oldClassName ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
+                  </Grid>;
+   
     let createClassButton =
       <Grid item xs={2} className={classes.plus} >
         <Tooltip title="New Class" placement="top">
@@ -162,11 +180,10 @@ export class home extends Component {
       </Grid>;
    
 
-   console.log("classes", this.state.classes);
     let classesMarkup = this.state.classes === "init" ? (
      <ClassSkeleton/> 
     ) : (
-      this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)
+      this.state.classes.map((classs) => <Class editClicked = {this.editClicked.bind(this)} key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)
     ); 
 
     const noClassesMessage =
@@ -175,14 +192,14 @@ export class home extends Component {
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
       </Grid>
-    console.log("lengy", this.state.classes.length);
     return (
       <div className={classes.root}>
         <Grid container justify="center" spacing={5}>
           {classesMarkup}
           {this.state.displayCreateClass && createClass}
+          {this.state.displayEditClass && editClass}
           {(!this.state.displayCreateClass) && (this.state.loading===false) && (this.state.classes.length===0 || this.state.classes === "init") && noClassesMessage}
-          {(!this.state.displayCreateClass) && createClassButton}
+          {(!this.state.displayCreateClass) && (!this.state.displayEditClass) && createClassButton}
 
           <Grid item sm={12}>
             <div className={classes.logout}>

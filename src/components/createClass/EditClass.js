@@ -12,13 +12,15 @@ import SaveIcon from '@material-ui/icons/Save';
 import { Typography } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core'
+import { Fab } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
+import { Dialog } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import TextInput from './TextInput';
 import SuperList from './SuperList'
 import PropTypes from 'prop-types';
 
 import { addClass } from "../../redux/actions/dataActions";
-
 
 const useStyles = makeStyles(theme => ({
   superlist: {
@@ -59,7 +61,6 @@ const useStyles = makeStyles(theme => ({
 
   },
 
-
   textField: {
     margin: '20px 0px 0px 0px',
     textAlign: 'center',
@@ -74,8 +75,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function CreateClass(props) {
-  const {closeCreateClass, getNewClassInfo } = props;
+function EditClass(props) {
+  const {closeEditClass, getNewClassInfo, oldClassName } = props;
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
   const [students_state, setStudents_state] = React.useState({
@@ -89,15 +90,15 @@ function CreateClass(props) {
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
-  const finsishCreateClass = () => {
+  const finsishEditClass = () => {
     let students=students_state.data;
     let newClass = {students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, closeCreateClass, getNewClassInfo);
+    props.addClass(newClass, closeEditClass, getNewClassInfo);
   }
 
   return (
     <Paper elevation={2} className={classes.paper}>
-      <Typography className={classes.title} variant="h2"> Create a New Class</Typography>
+      <Typography className={classes.title} variant="h2"> {`Edit ${oldClassName}`} </Typography>
       <Grid container spacing={10}>
         <Grid item xs={4}>
           <TextInput 
@@ -117,7 +118,7 @@ function CreateClass(props) {
             color="secondary"
             aria-label="cancel"
             className={classes.fab}
-            onClick={closeCreateClass}
+            onClick={closeEditClass}
           >
             <CancelIcon className={classes.icon} />
                    Cancel
@@ -126,7 +127,7 @@ function CreateClass(props) {
             size="large"
             aria-label="finished"
             className={classes.fab}
-            onClick={finsishCreateClass}
+            onClick={finsishEditClass}
           >
             <SaveIcon className={classes.icon} />
                    Finished
@@ -137,7 +138,7 @@ function CreateClass(props) {
   )
 }
 
-CreateClass.propTypes = {
+EditClass.propTypes = {
   addClass: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired
@@ -150,4 +151,4 @@ const mapStateToProps = (state) => ({
 
 const mapActionToProps = { addClass };
 
-export default connect(mapStateToProps, mapActionToProps)(CreateClass);
+export default connect(mapStateToProps, mapActionToProps)(EditClass);
