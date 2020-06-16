@@ -24,6 +24,7 @@ const token = localStorage.FBIdToken;
 
 //axios.defaults.baseURL = 'https://us-central1-seatingsmart-15114.cloudfunctions.net/api';
 axios.defaults.baseURL = "http://localhost:5000/seatingsmart-15114/us-central1/api";
+
 if (token) {
   const decodedToken = jwtDecode(token)
   if (decodedToken.exp * 1000 < Date.now()) {

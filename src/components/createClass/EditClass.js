@@ -20,7 +20,7 @@ import TextInput from './TextInput';
 import SuperList from './SuperList'
 import PropTypes from 'prop-types';
 
-import { addClass } from "../../redux/actions/dataActions";
+import { editClass } from "../../redux/actions/dataActions";
 
 const useStyles = makeStyles(theme => ({
   superlist: {
@@ -76,24 +76,27 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function EditClass(props) {
-  const {closeEditClass, getNewClassInfo, oldClassName } = props;
+  const {closeEditClass, replaceClass, classToEdit} = props;
+  const oldClassName=classToEdit.className;
   const classes = useStyles();
-  const [className, setclassName] = React.useState("");
-  const [students_state, setStudents_state] = React.useState({
+  const [className, setclassName] = React.useState(oldClassName);
+  const [tableData, setTableData] = React.useState({
       columns: [
         { title: 'Name', field: 'name' },
         { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
         { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
       ],
-      data: [],
+      data: classToEdit.students,
     });
-  const [numberOfGroups, setnumberOfGroups] = React.useState("");
-  const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
+  const [numberOfGroups, setnumberOfGroups] = React.useState(classToEdit.numberOfGroups);
+  const [studentsPerGroup, setstudentsPerGroup] = React.useState(classToEdit.studentsPerGroup);
+  const componenttWillMount= () =>{
 
+  }
   const finsishEditClass = () => {
-    let students=students_state.data;
-    let newClass = {students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, closeEditClass, getNewClassInfo);
+    let students=tableData.data;
+    let newClass = {oldClassName, students, className, numberOfGroups, studentsPerGroup }
+    props.editClass(newClass, closeEditClass, replaceClass);
   }
 
   return (
@@ -110,7 +113,7 @@ function EditClass(props) {
             setclassName= {setclassName}/>
         </Grid>
         <Grid item xs={8}>
-          <SuperList className={classes.superlist} state = {students_state} setState = {setStudents_state}/>
+          <SuperList className={classes.superlist} state = {tableData} setState = {setTableData}/>
         </Grid>
         <Grid item xs={12}>
           <Button
@@ -139,7 +142,7 @@ function EditClass(props) {
 }
 
 EditClass.propTypes = {
-  addClass: PropTypes.func.isRequired,
+  editClass: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired
 };
@@ -149,6 +152,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-const mapActionToProps = { addClass };
+const mapActionToProps = { editClass };
 
 export default connect(mapStateToProps, mapActionToProps)(EditClass);

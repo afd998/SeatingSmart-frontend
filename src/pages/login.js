@@ -58,27 +58,27 @@ class login extends Component {
     });
   };
   
-  googleFunc = (event) => {
-    var googleLogin = (a, b) => { this.props.loginUserGoogle(a, b); };
-    var ghistory = this.props.history;
-    event.preventDefault();
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-      firebase.auth().currentUser.getIdToken().then((token) => {
-        console.log("currentUser", firebase.auth().currentUser);
-        var userData = {
-          token: token
-        };
-        return userData;
-      }).then((userData) => {
-        return googleLogin(userData, ghistory);
-      })
-        .catch(err => {
-          console.error(err);
-        });
-    }).catch(err => {
-      console.error(err);
-    });
-  }
+  // googleFunc = (event) => {
+  //   var googleLogin = (a, b) => { this.props.loginUserGoogle(a, b); };
+  //   var ghistory = this.props.history;
+  //   event.preventDefault();
+  //   firebase.auth().signInWithPopup(provider).then(function (result) {
+  //     firebase.auth().currentUser.getIdToken().then((token) => {
+  //       console.log("currentUser", firebase.auth().currentUser);
+  //       var userData = {
+  //         token: token
+  //       };
+  //       return userData;
+  //     }).then((userData) => {
+  //       return googleLogin(userData, ghistory);
+  //     })
+  //       .catch(err => {
+  //         console.error(err);
+  //       });
+  //   }).catch(err => {
+  //     console.error(err);
+  //   });
+  // }
 
 
 

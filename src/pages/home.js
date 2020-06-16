@@ -124,8 +124,22 @@ export class home extends Component {
     });
   }
   editClicked = (oldClassName) => {
-    this.setState({classToEdit: oldClassName});
-    this.displayEditClass();
+    this.state.classes.forEach(element => {
+      if(element.className === oldClassName)
+      this.setState({classToEdit: element});
+    });
+    this.displayEditClass();  
+  }
+  replaceClass =(newClass) => {
+    for(let i=0; i<this.state.classes.length; i++){
+      if(this.state.classes[i].className === newClass.oldClassName){
+        this.setState((oldstate)=>{
+          oldstate.classes[i]=newClass; 
+          delete oldstate.classes[i].oldClassName;
+          return oldstate;
+        });
+      }
+    }
   }
 
   updateStateDelete = (className) => {
@@ -163,7 +177,7 @@ export class home extends Component {
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
                   </Grid>;
     let editClass = <Grid item>
-      <EditClass oldClassName ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
+      <EditClass classToEdit ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
                   </Grid>;
    
     let createClassButton =

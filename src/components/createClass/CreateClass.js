@@ -37,13 +37,15 @@ const useStyles = makeStyles(theme => ({
     // background: "#fdc92a",
     margin: "2px 5px 2px 5px",
     textAlign: 'center',
-
+    backgroundColor: '#FAACA8',
+    backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)'
+    
   },
   root: {
     flexGrow: 1,
   },
   title: {
-    margin: "0px 60px 60px 60px",
+    margin: "0px 0px 10px 60px",
     textAlign: 'center',
 
   },

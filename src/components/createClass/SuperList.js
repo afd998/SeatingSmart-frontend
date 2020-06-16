@@ -24,7 +24,10 @@ import { mdiGenderFemale } from '@mdi/js';
 const useStyles = makeStyles(theme => ({
   superlist: {
     margin: theme.spacing(5),
-
+    background: "#FF5F6D",  /* fallback for old browsers */
+    background: "-webkit-linear-gradient(to right, #FFC371, #FF5F6D)",  /* Chrome 10-25, Safari 5.1-6" */
+    background: "linear-gradient(to right, #FFC371, #FF5F6D)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
   },
   root: {
     flexGrow: 1,
