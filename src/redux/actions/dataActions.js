@@ -18,12 +18,14 @@ export const getClasses = () => (dispatch) => {
       });
     });
 }
-export const addClass = (newClass) => (dispatch) => {
+export const addClass = (newClass, closeCreateClass, getNewClassInfo) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("new class structure", newClass);
   axios.post('/addClass', newClass).then((res) => {
     console.log(res.data);
+    getNewClassInfo(newClass);
+    closeCreateClass(); 
     dispatch({
       type: SET_CLASSES,
       payload: newClass
@@ -34,6 +36,15 @@ export const addClass = (newClass) => (dispatch) => {
       payload: err.response.data
     });
   });
+
+}
+export const deleteClass = (body) => (dispatch) => {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
+    axios.delete('/deleteclass', body, {
+      headers: { 'content-type': 'application/json', },
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => console.log(err));
 
 }
 

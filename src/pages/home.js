@@ -89,6 +89,7 @@ export class home extends Component {
   state = {
     classes: "init",
     displayCreateClass: false,
+    loading: true,
   }
 
 
@@ -101,7 +102,7 @@ export class home extends Component {
     }
     axios.defaults.headers.common['Authorization'] =token;
     axios.get('/getclasses').then(res => {
-        this.setState({classes: res.data.classes});
+        this.setState({classes: res.data.classes, loading: false});
         console.log(res.data.classes);
       }).catch((err) => {
           console.log("error getting classes");
@@ -143,7 +144,6 @@ export class home extends Component {
 
   render() {
     const {classes} =this.props;
-    const {thisloading} = this.props.data;
     ///DISPLAY CREAT CLASS OR BUTTON
     let createClass = <Grid item >
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
@@ -175,13 +175,13 @@ export class home extends Component {
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
       </Grid>
-
+    console.log("lengy", this.state.classes.length);
     return (
       <div className={classes.root}>
         <Grid container justify="center" spacing={5}>
           {classesMarkup}
           {this.state.displayCreateClass && createClass}
-          {(!this.state.displayCreateClass) && (this.state.classes.length==0 || this.state.classes === "init") && noClassesMessage}
+          {(!this.state.displayCreateClass) && (this.state.loading===false) && (this.state.classes.length===0 || this.state.classes === "init") && noClassesMessage}
           {(!this.state.displayCreateClass) && createClassButton}
 
           <Grid item sm={12}>

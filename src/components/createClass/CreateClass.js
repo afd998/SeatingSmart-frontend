@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 
 //MUI STUFF
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -81,10 +79,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CreateClass(props) {
-  const { onClose, open, closeCreateClass, getNewClassInfo } = props;
+  const {closeCreateClass, getNewClassInfo } = props;
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
-  const [showSameNameMessage, setShowSameNameMessage] = React.useState("");
   const [students_state, setStudents_state] = React.useState({
       columns: [
         { title: 'Name', field: 'name' },
@@ -93,16 +90,13 @@ function CreateClass(props) {
       ],
       data: [],
     });
-  const [ShowAddStudentButton, setShowAddStudentButton] = React.useState(true);
-  const [errors, seterrors] = React.useState({});
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
   const finsishCreateClass = () => {
     let students=students_state.data;
-    props.addClass({students, className, numberOfGroups, studentsPerGroup });
-    getNewClassInfo({students, className, numberOfGroups, studentsPerGroup});
-    closeCreateClass();
+    let newClass = {students, className, numberOfGroups, studentsPerGroup }
+    props.addClass(newClass, closeCreateClass, getNewClassInfo);
   }
 
   return (
@@ -149,11 +143,13 @@ function CreateClass(props) {
 
 CreateClass.propTypes = {
   addClass: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  data: state.data
+  data: state.data,
+  UI: state.UI
 });
 
 const mapActionToProps = { addClass };

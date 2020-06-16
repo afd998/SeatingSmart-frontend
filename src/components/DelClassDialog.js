@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from "react-redux";
+
 import { Dialog } from '@material-ui/core';
 import { DialogTitle } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { deleteClass } from "../redux/actions/dataActions";
 
 const useStyles = makeStyles(theme => ({
   message: {
@@ -14,17 +16,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function DelClassDialog(props) {
+function DelClassDialog(props) {
   const classes = useStyles();
-  const { onClose, onDel, open } = props;
+  const { onClose, onDel, open, deleteClass} = props;
   const imsure = () => {
-    var body = { data: { className: props.nameOfClass } }
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
-    axios.delete('/deleteclass', body, {
-      headers: { 'content-type': 'application/json', },
-    }).then((res) => {
-      onDel();
-    }).catch((err) => console.log(err));
+    var body = { data: { className: props.nameOfClass } };
+    props.deleteClass(body);
+    onDel();
   }
 
   const handleClose = () => {
@@ -55,3 +53,12 @@ DelClassDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };
+
+const mapActionToProps = { deleteClass};
+
+const mapStateToProps = (state) => ({
+  errors: state.UI.errrors
+});
+
+
+export default connect(mapStateToProps, mapActionToProps)(DelClassDialog);

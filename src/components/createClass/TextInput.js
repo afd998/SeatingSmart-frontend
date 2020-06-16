@@ -1,4 +1,7 @@
 import React, { Component, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+
 //MUI STUFF
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
@@ -60,13 +63,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function TextInput(props) {
+function TextInput(props) {
+  const { UI: {errors} } = props;
   const {liftClassMetaData} = props;
   const classes = useStyles();
-  //const [className, setclassname] = React.useState("");
-  const [errors, seterrors] = React.useState({});
-  //const [numberOfGroups, setnumberOfGroups] = React.useState("");
-  //const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
   const {numberOfGroups, setnumberOfGroups, className, setclassName, studentsPerGroup, setstudentsPerGroup} = props;
   const handleChange = (event) => {
       switch (event.target.name) {
@@ -84,9 +84,6 @@ export default function TextInput(props) {
     }
 
   };
-  // useEffect(() => {
-  //   liftClassMetaData({className, numberOfGroups, studentsPerGroup});
-  // });
 
   return (
     <div >
@@ -101,9 +98,8 @@ export default function TextInput(props) {
             className={classes.textField}
             value={className}
             onChange={handleChange}
-            helperText={errors.classname}
-            error={errors.classname ? true : false}
-          //fullWidth
+            helperText={errors ? errors.className : false}
+            error={(errors && errors.className)? true : false}
           >
           </TextField>
         </Grid>
@@ -117,9 +113,8 @@ export default function TextInput(props) {
             className={classes.textField}
             value={numberOfGroups}
             onChange={handleChange}
-            helperText={errors.numberOfGroups}
-            error={errors.numberOfGroups ? true : false}
-          //fullWidth
+            helperText={errors ? errors.numberOfGroups : false}
+            error={(errors && errors.numberOfGroups)? true : false}
           >
           </TextField>
         </Grid>
@@ -133,8 +128,8 @@ export default function TextInput(props) {
             className={classes.textField}
             value={studentsPerGroup}
             onChange={handleChange}
-            helperText={errors.studentsPerGroup}
-            error={errors.studentsPerGroup ? true : false}
+            helperText={errors? errors.studentsPerGroup : false}
+            error={(errors && errors.studentsPerGroup)? true : false}
           >
           </TextField>
         </Grid>
@@ -142,3 +137,13 @@ export default function TextInput(props) {
     </div>
   )
 }
+
+TextInput.propTypes = {
+  UI: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  UI: state.UI
+});
+
+export default connect(mapStateToProps)(TextInput);
