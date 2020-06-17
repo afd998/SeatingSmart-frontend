@@ -1,6 +1,5 @@
 import React, { Component, forwardRef } from 'react';
 import { connect } from "react-redux";
-import { withStyles } from '@material-ui/core/styles';
 
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';

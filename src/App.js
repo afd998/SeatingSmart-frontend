@@ -36,7 +36,7 @@ if (token) {
     store.dispatch(getUserData());
   }
 }else{
-
+  window.location.href = '/login';
 }
 function App() {
   return (
@@ -47,9 +47,9 @@ function App() {
         <Router>
           <div className="container">
             <Switch>
-              <Route exact path="/" component={home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
+              <Route path="/" component={home} />
             </Switch>
           </div>
         </Router>

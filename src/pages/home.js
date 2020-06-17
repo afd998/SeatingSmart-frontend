@@ -9,6 +9,7 @@ import Class from '../components/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
 import CreateClass from "../components/createClass/CreateClass";
 import EditClass from "../components/createClass/EditClass";
+import CreateClassButton from "../components/createClass/CreateClassButton";
 
 //import themeFile from "../util/theme"
 
@@ -40,9 +41,6 @@ const styles = {
     // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     // color: 'white',
 
-  },
-  plus: {
-    margin: '50px 0px 20px 0px',
   },
   class: {
     margin: '50px 50px 50px 50px',
@@ -177,23 +175,9 @@ export class home extends Component {
       <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
                   </Grid>;
     let editClass = <Grid item>
-      <EditClass classToEdit ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
+      <EditClass classToEdit ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} replaceClass={this.replaceClass.bind(this)} />
                   </Grid>;
-   
-    let createClassButton =
-      <Grid item xs={2} className={classes.plus} >
-        <Tooltip title="New Class" placement="top">
-          <Fab variant="extended"
-            size="large"
-            color="primary"
-            aria-label="add"
-            onClick={this.displayCreateClass}>
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-      </Grid>;
-   
-
+    
     let classesMarkup = this.state.classes === "init" ? (
      <ClassSkeleton/> 
     ) : (
@@ -213,8 +197,7 @@ export class home extends Component {
           {this.state.displayCreateClass && createClass}
           {this.state.displayEditClass && editClass}
           {(!this.state.displayCreateClass) && (this.state.loading===false) && (this.state.classes.length===0 || this.state.classes === "init") && noClassesMessage}
-          {(!this.state.displayCreateClass) && (!this.state.displayEditClass) && createClassButton}
-
+          {(!this.state.displayCreateClass) && (!this.state.displayEditClass) && <CreateClassButton displayCreateClass={this.displayCreateClass.bind(this)}/>}
           <Grid item sm={12}>
             <div className={classes.logout}>
               <Tooltip title="Logout" placement="top">
