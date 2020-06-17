@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Route, Switch } from "react-router-dom";
+
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from "react-redux";
@@ -10,6 +12,7 @@ import ClassSkeleton from '../util/ClassSkeleton';
 import CreateClass from "../components/createClass/CreateClass";
 import EditClass from "../components/createClass/EditClass";
 import CreateClassButton from "../components/createClass/CreateClassButton";
+import ClassRoute from "../components/createClass/ClassRoute";
 
 //import themeFile from "../util/theme"
 
@@ -87,7 +90,6 @@ const styles = {
 export class home extends Component {
   state = {
     classes: "init",
-    displayCreateClass: false,
     displayEditClass: false,
     loading: true,
     classToEdit: "",
@@ -95,44 +97,36 @@ export class home extends Component {
 
 
   componentDidMount() {
-    //this.props.getClasses();
     console.log("home component mounted");
-    let token =localStorage.getItem('FBIdToken');
-    if(!token){
+    let token = localStorage.getItem('FBIdToken');
+    if (!token) {
       window.location.href = '/login';
     }
-    axios.defaults.headers.common['Authorization'] =token;
+    axios.defaults.headers.common['Authorization'] = token;
     axios.get('/getclasses').then(res => {
-        this.setState({classes: res.data.classes, loading: false});
-        console.log(res.data.classes);
-      }).catch((err) => {
-          console.log("error getting classes");
-      });
-  }
-
-  displayCreateClass = () => {
-    this.setState((oldstate)=>{
-      return {displayCreateClass: !oldstate.displayCreateClass};
+      this.setState({ classes: res.data.classes, loading: false });
+    }).catch((err) => {
+      console.log("error getting classes");
     });
   }
-  
+
   displayEditClass = () => {
-    this.setState((oldstate)=>{
-      return {displayEditClass: !oldstate.displayEditClass};
+    this.setState((oldstate) => {
+      return { displayEditClass: !oldstate.displayEditClass };
     });
   }
   editClicked = (oldClassName) => {
     this.state.classes.forEach(element => {
-      if(element.className === oldClassName)
-      this.setState({classToEdit: element});
+      if (element.className === oldClassName)
+        this.setState({ classToEdit: element });
     });
-    this.displayEditClass();  
+    this.displayEditClass();
   }
-  replaceClass =(newClass) => {
-    for(let i=0; i<this.state.classes.length; i++){
-      if(this.state.classes[i].className === newClass.oldClassName){
-        this.setState((oldstate)=>{
-          oldstate.classes[i]=newClass; 
+  replaceClass = (newClass) => {
+    for (let i = 0; i < this.state.classes.length; i++) {
+      if (this.state.classes[i].className === newClass.oldClassName) {
+        this.setState((oldstate) => {
+          oldstate.classes[i] = newClass;
           delete oldstate.classes[i].oldClassName;
           return oldstate;
         });
@@ -141,14 +135,14 @@ export class home extends Component {
   }
 
   updateStateDelete = (className) => {
-    this.setState((oldstate) =>{
-      let newState=oldstate.classes;
-      for (let i = 0; i <newState.length; i++) {
+    this.setState((oldstate) => {
+      let newState = oldstate.classes;
+      for (let i = 0; i < newState.length; i++) {
         if (newState[i].className === className) {
           delete newState[i];
         }
       }
-      return {classes: newState};
+      return { classes: newState };
     });
   }
 
@@ -160,29 +154,29 @@ export class home extends Component {
 
   getNewClassInfo = (newClass) => {
     this.setState((oldstate) => {
-      let e =  oldstate.classes;
+      let e = oldstate.classes;
       e.push(newClass);
-      return {classes: e};
+      return { classes: e };
     }
     );
   };
 
 
   render() {
-    const {classes} =this.props;
+    const { classes } = this.props;
     ///DISPLAY CREAT CLASS OR BUTTON
     let createClass = <Grid item >
-      <CreateClass closeCreateClass={this.displayCreateClass.bind(this)} open={true} getNewClassInfo={this.getNewClassInfo.bind(this)} />
-                  </Grid>;
+      <CreateClass getNewClassInfo={this.getNewClassInfo.bind(this)}/>
+    </Grid>;
     let editClass = <Grid item>
-      <EditClass classToEdit ={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} replaceClass={this.replaceClass.bind(this)} />
-                  </Grid>;
-    
+      <EditClass classToEdit={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} replaceClass={this.replaceClass.bind(this)} />
+    </Grid>;
+
     let classesMarkup = this.state.classes === "init" ? (
-     <ClassSkeleton/> 
+      <ClassSkeleton />
     ) : (
-      this.state.classes.map((classs) => <Class editClicked = {this.editClicked.bind(this)} key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)}/>)
-    ); 
+        this.state.classes.map((classs) => <Class editClicked={this.editClicked.bind(this)} key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)
+      );
 
     const noClassesMessage =
       <Grid item xs={6}>
@@ -190,15 +184,25 @@ export class home extends Component {
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
       </Grid>
+
     return (
       <div className={classes.root}>
         <Grid container justify="center" spacing={5}>
-          {classesMarkup}
-          {this.state.displayCreateClass && createClass}
+          {(this.props.location.pathname === '/') && classesMarkup}
           {this.state.displayEditClass && editClass}
-          {(!this.state.displayCreateClass) && (this.state.loading===false) && (this.state.classes.length===0 || this.state.classes === "init") && noClassesMessage}
-          {(!this.state.displayCreateClass) && (!this.state.displayEditClass) && <CreateClassButton displayCreateClass={this.displayCreateClass.bind(this)}/>}
-          <Grid item sm={12}>
+          {/* {(!this.state.displayCreateClass) && (this.state.loading === false) && (this.state.classes.length === 0 || this.state.classes === "init") && noClassesMessage} */}
+          {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
+          {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
+        </Grid>
+        <Switch>
+          <Route exact path="/newclass">
+            {createClass}
+          </Route>
+          <Route path={`/:URLclassName`}>
+            <ClassRoute allClasses={this.state.classes} />
+          </Route>
+        </Switch>
+        <Grid item sm={12}>
             <div className={classes.logout}>
               <Tooltip title="Logout" placement="top">
                 <IconButton size="medium" onClick={this.handleLogout}>
@@ -207,7 +211,6 @@ export class home extends Component {
               </Tooltip>
             </div>
           </Grid>
-        </Grid>
       </div >
     )
   }

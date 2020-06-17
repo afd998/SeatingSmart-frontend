@@ -1,5 +1,6 @@
 import { SET_CLASSES, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 export const getClasses = () => (dispatch) => {
@@ -18,14 +19,14 @@ export const getClasses = () => (dispatch) => {
       });
     });
 }
-export const addClass = (newClass, closeCreateClass, getNewClassInfo) => (dispatch) => {
+export const addClass = (newClass, getNewClassInfo) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("new class structure", newClass);
   axios.post('/addclass', newClass).then((res) => {
     console.log(res.data);
     getNewClassInfo(newClass);
-    closeCreateClass(); 
+    document.location.href="/";
     dispatch({
       type: SET_CLASSES,
       payload: newClass

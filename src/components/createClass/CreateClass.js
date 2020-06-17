@@ -1,6 +1,6 @@
 import React, { Component, forwardRef } from 'react';
 import { connect } from "react-redux";
-
+import {Link} from 'react-router-dom';
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -34,11 +34,11 @@ const useStyles = makeStyles(theme => ({
     // minHeight: "400px",
     //flexGrow: 1,
     // background: "#fdc92a",
-    margin: "2px 5px 2px 5px",
+    margin: "20px 20px 20px 20px",
     textAlign: 'center',
     backgroundColor: '#FAACA8',
     backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)'
-    
+
   },
   root: {
     flexGrow: 1,
@@ -76,24 +76,24 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CreateClass(props) {
-  const {closeCreateClass, getNewClassInfo } = props;
+  const {getNewClassInfo } = props;
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
   const [students_state, setStudents_state] = React.useState({
-      columns: [
-        { title: 'Name', field: 'name' },
-        { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
-        { title: 'Person of Color', field: 'poc',  lookup: { 0: 'No', 1: 'Yes' }},
-      ],
-      data: [],
-    });
+    columns: [
+      { title: 'Name', field: 'name' },
+      { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
+      { title: 'Person of Color', field: 'poc', lookup: { 0: 'No', 1: 'Yes' } },
+    ],
+    data: [],
+  });
   const [numberOfGroups, setnumberOfGroups] = React.useState("");
   const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
 
   const finsishCreateClass = () => {
-    let students=students_state.data;
-    let newClass = {students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, closeCreateClass, getNewClassInfo);
+    let students = students_state.data;
+    let newClass = { students, className, numberOfGroups, studentsPerGroup }
+    props.addClass(newClass, getNewClassInfo);
   }
 
   return (
@@ -101,28 +101,29 @@ function CreateClass(props) {
       <Typography className={classes.title} variant="h2"> Create a New Class</Typography>
       <Grid container spacing={10}>
         <Grid item xs={4}>
-          <TextInput 
+          <TextInput
             numberOfGroups={numberOfGroups}
             setnumberOfGroups={setnumberOfGroups}
             studentsPerGroup={studentsPerGroup}
-            setstudentsPerGroup= {setstudentsPerGroup}
+            setstudentsPerGroup={setstudentsPerGroup}
             className={className}
-            setclassName= {setclassName}/>
+            setclassName={setclassName} />
         </Grid>
         <Grid item xs={8}>
-          <SuperList className={classes.superlist} state = {students_state} setState = {setStudents_state}/>
+          <SuperList className={classes.superlist} state={students_state} setState={setStudents_state} />
         </Grid>
         <Grid item xs={12}>
-          <Button
-            size="large"
-            color="secondary"
-            aria-label="cancel"
-            className={classes.fab}
-            onClick={closeCreateClass}
-          >
-            <CancelIcon className={classes.icon} />
+          <Link to='/'>
+            <Button
+              size="large"
+              color="secondary"
+              aria-label="cancel"
+              className={classes.fab}
+            >
+              <CancelIcon className={classes.icon} />
                    Cancel
             </Button>
+          </Link>
           <Button
             size="large"
             aria-label="finished"

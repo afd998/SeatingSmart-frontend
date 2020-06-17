@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DelClassDialog from './DelClassDialog';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {Link} from 'react-router-dom';
 //MUI STUFF
 import { ButtonGroup } from '@material-ui/core';
 import { Button } from '@material-ui/core';
@@ -105,7 +106,7 @@ export function Class(props) {
             </Popover>
           </div>
         }
-        title={className}
+        title={<Link to={className} > {className} </Link>}
         subheader={`Created ${dayjs(createdAt).fromNow()}`}
       />
       <CardContent>

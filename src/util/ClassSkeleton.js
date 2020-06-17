@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import NoImg from '../images/loading3.png';
+//import NoImg from '../images/loading3.png';
 import PropTypes from 'prop-types';
 // MUI
 import Card from '@material-ui/core/Card';
@@ -54,7 +54,7 @@ const ClassSkeleton = (props) => {
 
   const content = Array.from({ length: 3 }).map((item, index) => (
     <Card className={classes.card} key={index}>
-      <CardMedia className={classes.cover} image={NoImg} />
+      <CardMedia className={classes.cover}  />
       <CardContent className={classes.cardContent}>
         <div className={classes.handle} />
         <div className={classes.date} />
