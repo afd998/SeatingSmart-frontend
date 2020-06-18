@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -32,6 +32,7 @@ import { Typography } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { Tooltip } from '@material-ui/core';
+import FourOFour from '../util/FourOFour';
 
 const styles = {
 
@@ -90,7 +91,6 @@ const styles = {
 export class home extends Component {
   state = {
     classes: "init",
-    displayEditClass: false,
     loading: true,
     classToEdit: "",
   }
@@ -109,12 +109,6 @@ export class home extends Component {
       console.log("error getting classes");
     });
   }
-
-  displayEditClass = () => {
-    this.setState((oldstate) => {
-      return { displayEditClass: !oldstate.displayEditClass };
-    });
-  }
   editClicked = (oldClassName) => {
     this.state.classes.forEach(element => {
       if (element.className === oldClassName)
@@ -122,27 +116,22 @@ export class home extends Component {
     });
     this.displayEditClass();
   }
+
   replaceClass = (newClass) => {
-    for (let i = 0; i < this.state.classes.length; i++) {
-      if (this.state.classes[i].className === newClass.oldClassName) {
-        this.setState((oldstate) => {
-          oldstate.classes[i] = newClass;
-          delete oldstate.classes[i].oldClassName;
-          return oldstate;
-        });
-      }
-    }
+      this.setState((oldstate) => {
+        let newState = oldstate.classes;
+        const result = newState.filter(classs => classs.className != newClass.oldClassName);
+        delete newClass.oldClassName;
+        result.push(newClass);
+        return { classes: result};
+      });
   }
 
   updateStateDelete = (className) => {
     this.setState((oldstate) => {
       let newState = oldstate.classes;
-      for (let i = 0; i < newState.length; i++) {
-        if (newState[i].className === className) {
-          delete newState[i];
-        }
-      }
-      return { classes: newState };
+      const result = newState.filter(classs => classs.className != className);
+      return { classes: result};
     });
   }
 
@@ -166,16 +155,13 @@ export class home extends Component {
     const { classes } = this.props;
     ///DISPLAY CREAT CLASS OR BUTTON
     let createClass = <Grid item >
-      <CreateClass getNewClassInfo={this.getNewClassInfo.bind(this)}/>
-    </Grid>;
-    let editClass = <Grid item>
-      <EditClass classToEdit={this.state.classToEdit} closeEditClass={this.displayEditClass.bind(this)} replaceClass={this.replaceClass.bind(this)} />
+      <CreateClass getNewClassInfo={this.getNewClassInfo.bind(this)} />
     </Grid>;
 
     let classesMarkup = this.state.classes === "init" ? (
       <ClassSkeleton />
     ) : (
-        this.state.classes.map((classs) => <Class editClicked={this.editClicked.bind(this)} key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)
+        this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)
       );
 
     const noClassesMessage =
@@ -189,28 +175,30 @@ export class home extends Component {
       <div className={classes.root}>
         <Grid container justify="center" spacing={5}>
           {(this.props.location.pathname === '/') && classesMarkup}
-          {this.state.displayEditClass && editClass}
-          {/* {(!this.state.displayCreateClass) && (this.state.loading === false) && (this.state.classes.length === 0 || this.state.classes === "init") && noClassesMessage} */}
           {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
           {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
         </Grid>
         <Switch>
-          <Route exact path="/newclass">
+          <Route exact path="/new">
             {createClass}
           </Route>
-          <Route path={`/:URLclassName`}>
-            <ClassRoute allClasses={this.state.classes} />
+          <Route path={`/class/:URLclassName`}>
+            <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
           </Route>
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
+
         </Switch>
         <Grid item sm={12}>
-            <div className={classes.logout}>
-              <Tooltip title="Logout" placement="top">
-                <IconButton size="medium" onClick={this.handleLogout}>
-                  <KeyboardReturn color="primary" />
-                </IconButton>
-              </Tooltip>
-            </div>
-          </Grid>
+          <div className={classes.logout}>
+            <Tooltip title="Logout" placement="top">
+              <IconButton size="medium" onClick={this.handleLogout}>
+                <KeyboardReturn color="primary" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </Grid>
       </div >
     )
   }

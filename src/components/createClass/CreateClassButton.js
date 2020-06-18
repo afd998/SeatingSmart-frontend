@@ -17,7 +17,7 @@ export default function CreateClassButton(props) {
   return (
     <Grid item xs={2} className={classes.plus} >
       <Tooltip title="New Class" placement="top">
-        <Link to='/newclass'>
+        <Link to='/new'>
           <Fab variant="extended"
             size="large"
             color="primary"

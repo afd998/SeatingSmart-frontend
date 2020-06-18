@@ -49,7 +49,6 @@ export function Class(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { updateState } = props;
   const {class:{ className,setNumOfGroups, students, createdAt, studentsPerGroup, numberOfGroups, numberOfStudents } } = props;
-  const{editClicked}= props;
 
   dayjs.extend(relativeTime);
 
@@ -57,9 +56,7 @@ export function Class(props) {
     setOpen(true);
   };
   const handleClickEdit = () => {
-    editClicked(className);
     setAnchorEl(null);
-
   };
   const openSettings = (event) => {
     setAnchorEl(event.currentTarget);
@@ -100,13 +97,13 @@ export function Class(props) {
               }}
             >
               <ButtonGroup orientation="vertical" color="primary" aria-label="outlined primary button group">
-            <Button onClick ={handleClickEdit}> Edit </Button>
-                <Button>View</Button>
+            <Link to={`/class/${className}/edit+`}><Button> Edit </Button> </Link> 
+            <Link to={`/class/${className}`}><Button> View </Button> </Link> 
               </ButtonGroup>
             </Popover>
           </div>
         }
-        title={<Link to={className} > {className} </Link>}
+        title={<Link to={`/class/${className}`}> {className} </Link>}
         subheader={`Created ${dayjs(createdAt).fromNow()}`}
       />
       <CardContent>

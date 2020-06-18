@@ -24,7 +24,7 @@ export default function ClassRoute(props) {
     } else {
       return (
         <div>
-         <ClassPage classroom = {classroom}/>
+         <ClassPage classroom = {classroom} replaceClass ={props.replaceClass}/>
         </div>
       )
     }
