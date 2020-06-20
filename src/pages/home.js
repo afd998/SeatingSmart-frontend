@@ -13,6 +13,7 @@ import CreateClass from "../components/createClass/CreateClass";
 import EditClass from "../components/createClass/EditClass";
 import CreateClassButton from "../components/createClass/CreateClassButton";
 import ClassRoute from "../components/createClass/ClassRoute";
+import AppIcon from "../images/icon.png"
 
 //import themeFile from "../util/theme"
 
@@ -26,7 +27,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
-import { Link } from '@material-ui/core'
+import { Link } from 'react-router-dom';
 import { Fab } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
@@ -35,17 +36,12 @@ import { Tooltip } from '@material-ui/core';
 import FourOFour from '../util/FourOFour';
 
 const styles = {
-
-  createClass: {
-    minWidth: 275,
-    //display: 'flex',
-    //flexWrap: 'wrap',
-    //border: 10,
-    // borderRadius: 3,
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    // color: 'white',
-
+  image: {
+    margin: '0px 20px 10px 20px',
+    height: '50px',
+    width: '50px'
   },
+
   class: {
     margin: '50px 50px 50px 50px',
     padding: 30
@@ -109,29 +105,22 @@ export class home extends Component {
       console.log("error getting classes");
     });
   }
-  editClicked = (oldClassName) => {
-    this.state.classes.forEach(element => {
-      if (element.className === oldClassName)
-        this.setState({ classToEdit: element });
-    });
-    this.displayEditClass();
-  }
 
   replaceClass = (newClass) => {
-      this.setState((oldstate) => {
-        let newState = oldstate.classes;
-        const result = newState.filter(classs => classs.className != newClass.oldClassName);
-        delete newClass.oldClassName;
-        result.push(newClass);
-        return { classes: result};
-      });
+    this.setState((oldstate) => {
+      let newState = oldstate.classes;
+      const result = newState.filter(classs => classs.className != newClass.oldClassName);
+      delete newClass.oldClassName;
+      result.push(newClass);
+      return { classes: result };
+    });
   }
 
   updateStateDelete = (className) => {
     this.setState((oldstate) => {
       let newState = oldstate.classes;
       const result = newState.filter(classs => classs.className != className);
-      return { classes: result};
+      return { classes: result };
     });
   }
 
@@ -161,7 +150,10 @@ export class home extends Component {
     let classesMarkup = this.state.classes === "init" ? (
       <ClassSkeleton />
     ) : (
-        this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)
+        <div>
+          <Typography variant="h3" > Welcome back</Typography>
+          {this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)}
+        </div>
       );
 
     const noClassesMessage =
@@ -173,6 +165,19 @@ export class home extends Component {
 
     return (
       <div className={classes.root}>
+        <Grid item sm={12}>
+          <Link to={`/`}>
+            <Tooltip title="Home" placement="bottom">
+              {/* <IconButton size="medium" edge="start"> */}
+                <img
+                  src={AppIcon}
+                  className={classes.image}
+                  alt="app icon"
+                />
+              {/* </IconButton> */}
+            </Tooltip>
+          </Link>
+        </Grid>
         <Grid container justify="center" spacing={5}>
           {(this.props.location.pathname === '/') && classesMarkup}
           {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}

@@ -100,6 +100,7 @@ export default function SuperList(props) {
   return (
     <div className = {classes.superlist}>
       <MaterialTable
+        className = {classes.superlist}
         icons={tableIcons}
         title="Students"
         columns={state.columns}
