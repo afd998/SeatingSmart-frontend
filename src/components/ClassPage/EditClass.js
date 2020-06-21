@@ -16,8 +16,8 @@ import { Fab } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Dialog } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
-import TextInput from './TextInput';
-import SuperList from './SuperList'
+import TextInput from '../createClass/TextInput';
+import SuperList from '../createClass/SuperList'
 import PropTypes from 'prop-types';
 
 import { editClass } from "../../redux/actions/dataActions";
@@ -32,12 +32,14 @@ const useStyles = makeStyles(theme => ({
 
   },
   paper: {
-    minWidth: "400px",
+    // width: "500px",
+    // height: "800px",
+
     //
     // minHeight: "400px",
     //flexGrow: 1,
-    // background: "#fdc92a",
-    margin: "2px 5px 2px 5px",
+    backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
+    //margin: "2px 5px 2px 5px",
     textAlign: 'center',
 
   },
@@ -51,7 +53,6 @@ const useStyles = makeStyles(theme => ({
   },
 
   fab: {
-    margin: "0px 200px 0px 200px",
     textAlign: 'center',
 
   },
@@ -97,7 +98,7 @@ function EditClass(props) {
     props.editClass(newClass, replaceClass);
   }
   let cancelButton = (props.cancelRoute === '/') ?
-    (<Link to='/'>
+    (<Link to=''>
       <Button
         size="large"
         color="secondary"
@@ -124,22 +125,14 @@ function EditClass(props) {
 
   return (
     <Paper elevation={2} className={classes.paper}>
-      <Typography className={classes.title} variant="h2"> {`Edit ${oldClassName}`} </Typography>
-      <Grid container spacing={10}>
-        <Grid item xs={4}>
-          <TextInput
-            numberOfGroups={numberOfGroups}
-            setnumberOfGroups={setnumberOfGroups}
-            studentsPerGroup={studentsPerGroup}
-            setstudentsPerGroup={setstudentsPerGroup}
-            className={className}
-            setclassName={setclassName} />
-        </Grid>
-        <Grid item xs={8}>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
           <SuperList className={classes.superlist} state={tableData} setState={setTableData} />
         </Grid>
-        <Grid item xs={12}>
-            {cancelButton}
+        <Grid item xs={6}>
+          {cancelButton}
+        </Grid>
+        <Grid item xs={6}>
           <Button
             size="large"
             aria-label="finished"

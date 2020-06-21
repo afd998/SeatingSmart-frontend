@@ -1,13 +1,11 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
 import FourOFour from '../../util/FourOFour';
-import ClassPage from './ClassPage';
+import ClassPage from '../ClassPage/ClassPage';
 export default function ClassRoute(props) {
   let classroom;
   let { URLclassName } = useParams();
   const { allClasses } = props;
-
-  let markUp
   if (allClasses === 'init') {
     return <div>loading </div>;
   } else {

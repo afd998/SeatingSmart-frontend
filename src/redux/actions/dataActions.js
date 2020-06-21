@@ -39,15 +39,12 @@ export const addClass = (newClass, getNewClassInfo) => (dispatch) => {
   });
 
 }
-export const editClass = (newClass, closeEditClass, replaceClass) => (dispatch) => {
+export const editClass = (newClass, replaceClass) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("edited class structure", newClass);
   axios.post('/editclass', newClass).then((res) => {
-    console.log("then", res.data);
-    //replaceClass(newClass);
-    console.log("then", res.data);
-    document.location.href="/";
+    replaceClass(newClass);
     dispatch({
       type: SET_CLASSES,
       payload: newClass

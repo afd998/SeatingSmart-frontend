@@ -7,12 +7,12 @@ import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/userActions";
 import { addClass } from "../redux/actions/dataActions";
 import { getClasses } from '../redux/actions/dataActions';
-import Class from '../components/Class'
+import Class from '../components/HomeUtil/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
 import CreateClass from "../components/createClass/CreateClass";
-import EditClass from "../components/createClass/EditClass";
-import CreateClassButton from "../components/createClass/CreateClassButton";
-import ClassRoute from "../components/createClass/ClassRoute";
+import EditClass from "../components/ClassPage/EditClass";
+import CreateClassButton from "../components/HomeUtil/CreateClassButton";
+import ClassRoute from "../components/HomeUtil/ClassRoute";
 import AppIcon from "../images/icon.png"
 
 //import themeFile from "../util/theme"
@@ -37,24 +37,26 @@ import FourOFour from '../util/FourOFour';
 
 const styles = {
   image: {
-    margin: '0px 20px 10px 20px',
+    margin: '0px 15px 80px 15px',
     height: '50px',
     width: '50px'
   },
 
   class: {
     margin: '50px 50px 50px 50px',
-    padding: 30
+    padding: 20
   },
   logout: {
-    // display: 'flex',
+    display: 'flex',
     //left: '50%',
     //textAlign: 'center',
     //margin: "0 auto",
     position: "sticky",
     top: 0,
     float: "right",
-    padding: 30
+    //padding: 30
+    //margin: '0px 50px 500px 50px',
+
 
   },
   classSpiner: {
@@ -66,14 +68,15 @@ const styles = {
     textAlgin: 'center'
   },
   root: {
+
     //background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
-    // border: 0,
-    //borderRadius: 3,
+    border: 10,
+    borderRadius: 3,
     //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    width: "100%",
+    //width: "100%",
     //height: 48,
-    padding: '30px 0px',
-    background: "000000",
+    padding: '30px 30px 30px 30px',
+    //background: "000000",
 
   },
   noClassesMessage: {
@@ -113,7 +116,8 @@ export class home extends Component {
       delete newClass.oldClassName;
       result.push(newClass);
       return { classes: result };
-    });
+    } );
+    //document.location.href=`/class/${newClass.className}`
   }
 
   updateStateDelete = (className) => {
@@ -167,34 +171,37 @@ export class home extends Component {
       <div className={classes.root}>
         <Grid item sm={12}>
           <Link to={`/`}>
-            <Tooltip title="Home" placement="bottom">
+            <Tooltip title="Home" placement="right">
               {/* <IconButton size="medium" edge="start"> */}
-                <img
-                  src={AppIcon}
-                  className={classes.image}
-                  alt="app icon"
-                />
+              <img
+                src={AppIcon}
+                className={classes.image}
+                alt="app icon"
+              />
               {/* </IconButton> */}
             </Tooltip>
           </Link>
         </Grid>
-        <Grid container justify="center" spacing={5}>
+        <Grid container justify="center" spacing={10}>
           {(this.props.location.pathname === '/') && classesMarkup}
           {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
           {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
         </Grid>
-        <Switch>
-          <Route exact path="/new">
-            {createClass}
-          </Route>
-          <Route path={`/class/:URLclassName`}>
-            <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
-          </Route>
-          <Route path="/">
-            <Redirect to="/" />
-          </Route>
+        <Grid item sm={12}>
 
-        </Switch>
+          <Switch>
+            <Route exact path="/new">
+              {createClass}
+            </Route>
+            <Route path={`/class/:URLclassName`}>
+              <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
+            </Route>
+            <Route path="/">
+              <Redirect to="/" />
+            </Route>
+          </Switch>
+        </Grid>
+
         <Grid item sm={12}>
           <div className={classes.logout}>
             <Tooltip title="Logout" placement="top">

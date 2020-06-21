@@ -1,24 +1,30 @@
 import React from 'react'
 import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
 import EditClass from './EditClass';
-import { Button, InputBase } from '@material-ui/core'
+import { Button, InputBase, Grid } from '@material-ui/core'
 import { Input } from '@material-ui/core'
 
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import Title from './Title';
+import SuperList from '../createClass/SuperList';
 
 const useStyles = makeStyles((theme) => ({
 
   title: {
-    margin: 'auto',
-    textAlign: 'center',
+    margin: '0 1%',
+
+
+  },
+  form: {
+    margin: 'auto auto auto auto%',
 
 
   },
   titleEdit: {
-    margin: '0 auto',
+    margin: '0 1%',
     textAlign: 'center',
-    fontSize: "350%"
+    fontSize: "338%"
 
   },
   card: {
@@ -42,32 +48,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ClassPage(props) {
+
   const classes = useStyles();
   let match = useRouteMatch();
-  
+
   let classPage =
     <div>
-      <InputBase fullWidth={true} className={classes.titleEdit} defaultValue={props.classroom.className}/>
-      {/* <Typography className={classes.title} variant="h2"> {props.classroom.className} </Typography> */}
-      <Link to={`${match.url}/edit`}> <Button> Edit </Button> </Link>
-
-
+      <Title {...props} />
+      <Grid container className={classes.form}>
+        <Grid item xs={3}>
+        </Grid>
+        <Grid item xs={4}>
+        </Grid>
+        <Grid item xs={5}>
+          <EditClass classToEdit={props.classroom} replaceClass= {props.replaceClass} />
+        </Grid>
+      </Grid>
     </div>
 
   return (
     <div>
       <Switch>
-        <Route exact path={`${match.url}/edit`}>
-          <EditClass cancelRoute="" classToEdit={props.classroom} replaceClass={props.replaceClass} />
-        </Route>
-        <Route exact path={`${match.url}/edit+`}>
-          <EditClass cancelRoute="/" classToEdit={props.classroom} replaceClass={props.replaceClass} />
-        </Route>
         <Route path={`/class/${props.classroom.className}`}>
           {classPage}
           <Redirect to={`/class/${props.classroom.className}`} />
         </Route>
-      </Switch>
-    </div>
+      </Switch >
+    </div >
   )
 }

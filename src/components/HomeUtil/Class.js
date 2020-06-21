@@ -77,32 +77,6 @@ export function Class(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        action={
-          <div className={classes.root}>
-            <IconButton aria-describedby={id} onClick={openSettings} aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-            <Popover
-              id={id}
-              open={openSet}
-              anchorEl={anchorEl}
-              onClose={handleCloseSet}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-              }}
-            >
-              <ButtonGroup orientation="vertical" color="primary" aria-label="outlined primary button group">
-            <Link to={`/class/${className}/edit+`}><Button> Edit </Button> </Link> 
-            <Link to={`/class/${className}`}><Button> View </Button> </Link> 
-              </ButtonGroup>
-            </Popover>
-          </div>
-        }
         title={<Link to={`/class/${className}`}> {className} </Link>}
         subheader={`Created ${dayjs(createdAt).fromNow()}`}
       />

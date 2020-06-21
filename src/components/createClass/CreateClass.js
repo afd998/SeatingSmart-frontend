@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     // minHeight: "400px",
     //flexGrow: 1,
     // background: "#fdc92a",
-    margin: "20px 100px 20px 0px",
+    margin: "20px 100px 20px 100px",
     textAlign: 'center',
     backgroundColor: '#FAACA8',
     backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)'
