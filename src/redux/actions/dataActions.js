@@ -1,4 +1,4 @@
-import { SET_CLASSES, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
+import { SET_CLASSES, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -19,6 +19,23 @@ export const getClasses = () => (dispatch) => {
       });
     });
 }
+
+export const getCharts = () => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
+  axios.get('/getcharts').then(res => {
+    dispatch({
+      type: SET_CHARTS,
+      payload: res.data.classes
+    });
+      }).catch((err) => {
+    dispatch({
+      type: SET_CHARTS,
+      payload: []
+    });
+  });
+}
+
 export const addClass = (newClass, getNewClassInfo) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');

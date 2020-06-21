@@ -1,13 +1,18 @@
 import React from 'react'
+import {useEffect} from 'react'
+
+import PropTypes from 'prop-types';
 import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
 import EditClass from './EditClass';
 import { Button, InputBase, Grid } from '@material-ui/core'
-import { Input } from '@material-ui/core'
+import {getCharts} from '../../redux/actions/dataActions';
+import Title from './Title';
+import Chart from './Chart/Chart';
 
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import Title from './Title';
-import SuperList from '../createClass/SuperList';
+import { Input } from '@material-ui/core'
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -47,7 +52,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClassPage(props) {
+function ClassPage(props) {
+  
+  useEffect(() => {
+      props.getCharts();
+  }, []);
 
   const classes = useStyles();
   let match = useRouteMatch();
@@ -56,12 +65,11 @@ export default function ClassPage(props) {
     <div>
       <Title {...props} />
       <Grid container className={classes.form}>
-        <Grid item xs={3}>
-        </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={7}>
+         <Chart charts = {props.charts}/>
         </Grid>
         <Grid item xs={5}>
-          <EditClass classToEdit={props.classroom} replaceClass= {props.replaceClass} />
+          <EditClass classToEdit={props.classroom} replaceClass={props.replaceClass} />
         </Grid>
       </Grid>
     </div>
@@ -70,10 +78,22 @@ export default function ClassPage(props) {
     <div>
       <Switch>
         <Route path={`/class/${props.classroom.className}`}>
-          {classPage}
+          {classPage} 
           <Redirect to={`/class/${props.classroom.className}`} />
         </Route>
       </Switch >
     </div >
   )
 }
+
+ClassPage.propTypes = {
+  getCharts: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  charts: state.data.charts,
+});
+
+const mapActionToProps = { getCharts };
+
+export default connect(mapStateToProps, mapActionToProps)(ClassPage);

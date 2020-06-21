@@ -1,4 +1,4 @@
-import { SET_CLASSES, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types';
+import { SET_CLASSES, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types';
 
 
 const initialState = {
@@ -18,6 +18,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         classesArray: action.payload,
+        loading: false
+      };
+      case SET_CHARTS:
+      return {
+        ...state,
+        charts: action.payload,
         loading: false
       };
     default:
