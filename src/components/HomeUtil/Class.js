@@ -20,26 +20,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   header: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    //background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
 
   },
   card: {
     margin: '10px 10px 10px 10px',
-    backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%,  rgba(130,205,221,1) 0%, rgba(255,247,153,1) 90% )",
+    backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, rgba(255,247,153,1)  0%, #69f0ae 90% )",
   },
-  content: {
-    padding: 25,
+  title: {
+    '&:hover': {
+      color: 'green',
+  },
   },
   delClass: {
     margin: '10px 10px 10px 10px'
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
   },
 }));
 
@@ -77,13 +71,13 @@ export function Class(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={<Link to={`/class/${className}`}> {className} </Link>}
+        title={<Link className = {classes.title} to={`/class/${className}`}> {className} </Link>}
         subheader={`Created ${dayjs(createdAt).fromNow()}`}
       />
       <CardContent>
         <Typography variant="body1" > {} </Typography>
-        <Typography variant="body1" > {numberOfGroups} </Typography>
-        <Typography variant="body1" > {studentsPerGroup} </Typography>
+        <Typography variant="body1" > {} </Typography>
+        <Typography variant="body1" > {} </Typography>
       </CardContent>
       <IconButton onClick={handleClickDel} aria-label="delete" className={classes.delClass}>
         <DeleteIcon />

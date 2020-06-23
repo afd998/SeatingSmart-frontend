@@ -24,7 +24,6 @@ import { editClass } from "../../redux/actions/dataActions";
 
 const useStyles = makeStyles(theme => ({
   superlist: {
-    //padding: "30px"
 
   },
   icon: {
@@ -54,6 +53,7 @@ const useStyles = makeStyles(theme => ({
 
   fab: {
     textAlign: 'center',
+    margin: 'auto'
 
   },
   fabAddStudent: {
@@ -81,6 +81,8 @@ function EditClass(props) {
   const oldClassName = classToEdit.className;
   const classes = useStyles();
   const [className, setclassName] = React.useState(oldClassName);
+  const [showEdit, setShowEdit] = React.useState(false);
+
   const [tableData, setTableData] = React.useState({
     columns: [
       { title: 'Name', field: 'name' },
@@ -96,35 +98,25 @@ function EditClass(props) {
     let students = tableData.data;
     let newClass = { oldClassName, students, className, numberOfGroups, studentsPerGroup }
     props.editClass(newClass, replaceClass);
+    props.setShowEdit(false);
   }
-  let cancelButton = (props.cancelRoute === '/') ?
-    (<Link to=''>
+  const handleClick = () => {
+      props.setShowEdit(false);
+  }
+  let cancelButton = 
       <Button
         size="large"
         color="secondary"
         aria-label="cancel"
         className={classes.fab}
+        onClick = {handleClick}
       >
         <CancelIcon className={classes.icon} />
-                   Cancel
-      </Button>
-    </Link>) : (
-      (<Link to={`/class/${oldClassName}`}>
-        <Button
-          size="large"
-          color="secondary"
-          aria-label="cancel"
-          className={classes.fab}
-        >
-          <CancelIcon className={classes.icon} />
               Cancel
- </Button>
-      </Link>)
-    );
-
-
+        </Button>
+ 
   return (
-    <Paper elevation={2} className={classes.paper}>
+    // <Paper elevation={2} className={classes.paper}>
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <SuperList className={classes.superlist} state={tableData} setState={setTableData} />
@@ -144,7 +136,7 @@ function EditClass(props) {
             </Button>
         </Grid>
       </Grid>
-    </Paper >
+    // </Paper >
   )
 }
 

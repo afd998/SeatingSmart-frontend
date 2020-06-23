@@ -14,9 +14,8 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core'
 import { Fab } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
-import { CLEAR_ERRORS } from '../../redux/types';
-import { clearErrors } from '../../redux/actions/uiActions';
+import { CLEAR_ERRORS } from '../../../redux/types';
+import { clearErrors } from '../../../redux/actions/uiActions';
 const useStyles = makeStyles(theme => ({
   textField: {
     margin: '10px 0px 20px 0px',
@@ -29,14 +28,11 @@ function TextInput(props) {
   const { UI: { errors } } = props;
   const { liftClassMetaData } = props;
   const classes = useStyles();
-  const { numberOfGroups, className, setclassName, setnumberOfGroups } = props;
+  const { numberOfGroups, chartName, setChartName, setnumberOfGroups } = props;
   const handleChange = (event) => {
     switch (event.target.name) {
-      case "classname":
-        setclassName(event.target.value);
-        break;
-      case "numberOfGroups":
-        setnumberOfGroups(event.target.value);
+      case "chartname":
+        setChartName(event.target.value);
         break;
       default:
         break;
@@ -54,34 +50,20 @@ function TextInput(props) {
     <div>
       <div>
         <TextField
-         // variant='filled'
-          id='classname'
-          name='classname'
+          // variant='filled'
+          id='chartname'
+          name='chartname'
           type='text'
-          label='Class Name'
+          label='Chart Name'
           className={classes.textField}
-          value={className}
+          value={chartName}
           onChange={handleChange}
-          helperText={errors ? errors.className : false}
-          error={(errors && errors.className) ? true : false}
+          helperText={errors ? errors.chartName : false}
+          error={(errors && errors.chartName) ? true : false}
         >
         </TextField>
       </div>
-      <div>
-        <TextField
-         // variant='outlined'
-          id='numberOfGroups'
-          name='numberOfGroups'
-          type='text'
-          label='Number of Groups/Tables'
-          className={classes.textField}
-          value={numberOfGroups}
-          onChange={handleChange}
-          helperText={errors ? errors.numberOfGroups : false}
-          error={(errors && errors.numberOfGroups) ? true : false}
-        >
-        </TextField>
-      </div>
+
     </div>
   )
 }

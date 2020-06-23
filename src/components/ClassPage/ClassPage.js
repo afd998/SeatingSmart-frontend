@@ -1,13 +1,15 @@
 import React from 'react'
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
-import EditClass from './EditClass';
+import EditWrapper from './EditWrapper';
 import { Button, InputBase, Grid } from '@material-ui/core'
-import {getCharts} from '../../redux/actions/dataActions';
+import { getCharts } from '../../redux/actions/dataActions';
 import Title from './Title';
 import Chart from './Chart/Chart';
+import NewChart from './NewChart/NewChart';
+import NewChartButton from './NewChartButton';
 
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,9 +55,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ClassPage(props) {
-  
+
   useEffect(() => {
-      props.getCharts();
+    props.getCharts();
   }, []);
 
   const classes = useStyles();
@@ -64,22 +66,22 @@ function ClassPage(props) {
   let classPage =
     <div>
       <Title {...props} />
-      <Grid container className={classes.form}>
-        <Grid item xs={7}>
-         <Chart charts = {props.charts}/>
-        </Grid>
-        <Grid item xs={5}>
-          <EditClass classToEdit={props.classroom} replaceClass={props.replaceClass} />
-        </Grid>
-      </Grid>
+       <NewChartButton route = {`/class/${props.classroom.className}/new`} />
+      <EditWrapper classToEdit={props.classroom} replaceClass={props.replaceClass} />
     </div>
 
   return (
     <div>
       <Switch>
-        <Route path={`/class/${props.classroom.className}`}>
-          {classPage} 
-          <Redirect to={`/class/${props.classroom.className}`} />
+        <Route exact path={`/class/${props.classroom.className}`}>
+          {classPage}
+          {/* <Redirect to={`/class/${props.classroom.className}`} /> */}
+        </Route>
+        <Route exact path={`/class/${props.classroom.className}/new`}>
+          <NewChart students = {props.classroom.students} numberOfGroups ={props.classroom.numberOfGroups} cancelPath= {`/class/${props.classroom.className}`}/>
+        </Route>
+        <Route path="/">
+          <Redirect to="/" />
         </Route>
       </Switch >
     </div >

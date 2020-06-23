@@ -28,61 +28,55 @@ import { Button } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import { Link } from 'react-router-dom';
-import { Fab } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
-import { CircularProgress } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { Tooltip } from '@material-ui/core';
-import FourOFour from '../util/FourOFour';
 
 const styles = {
   image: {
-    margin: '0px 15px 80px 15px',
-    height: '50px',
-    width: '50px'
+    //margin: '10px 10px 10px 10px',
+    height: '40px',
+    width: '40px'
   },
-
   class: {
     margin: '50px 50px 50px 50px',
     padding: 20
   },
   logout: {
-    display: 'flex',
-    //left: '50%',
-    //textAlign: 'center',
-    //margin: "0 auto",
-    position: "sticky",
-    top: 0,
     float: "right",
-    //padding: 30
-    //margin: '0px 50px 500px 50px',
-
-
-  },
-  classSpiner: {
-    display: 'flex',
-    margin: '0px 0px 0px 0px',
-    padding: '0 30px',
-    border: 0,
-    borderRadius: 3,
-    textAlgin: 'center'
+    position: "sticky",
+    bottom: 0,
   },
   root: {
-
-    //background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
     border: 10,
     borderRadius: 3,
-    //boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    //width: "100%",
-    //height: 48,
     padding: '30px 30px 30px 30px',
-    //background: "000000",
-
   },
   noClassesMessage: {
     textAlgin: "center",
     left: "100px",
     margin: "50px 100px 0px 100px"
+  },
+  welcome: {
+    textAlgin: "center",
+    margin: "3% 30%"
+    // left: "100px",
+    //margin: "50px 100px 0px 100px"
+  },
+  flexContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center"
+
+  },
+  flexItem: {
+    //height: "200px"
+    flexBasis: "250px"
+  },
+  createClass: {
+    //height: "200px",
+    margin: "0 50px"
+
   }
 };
 
@@ -116,7 +110,7 @@ export class home extends Component {
       delete newClass.oldClassName;
       result.push(newClass);
       return { classes: result };
-    } );
+    });
     //document.location.href=`/class/${newClass.className}`
   }
 
@@ -154,63 +148,61 @@ export class home extends Component {
     let classesMarkup = this.state.classes === "init" ? (
       <ClassSkeleton />
     ) : (
-        <div>
-          <Typography variant="h3" > Welcome back</Typography>
-          {this.state.classes.map((classs) => <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />)}
-        </div>
-      );
+
+        this.state.classes.map((classs) =>
+          <div className={classes.flexItem}>
+            <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />
+          </div>
+        ));
 
     const noClassesMessage =
-      <Grid item xs={6}>
+      <div className={classes.flexItem}>
         <Typography variant="body1" className={classes.noClassesMessage}>
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
-      </Grid>
+      </div>
+
 
     return (
       <div className={classes.root}>
-        <Grid item sm={12}>
-          <Link to={`/`}>
-            <Tooltip title="Home" placement="right">
-              {/* <IconButton size="medium" edge="start"> */}
-              <img
-                src={AppIcon}
-                className={classes.image}
-                alt="app icon"
-              />
-              {/* </IconButton> */}
-            </Tooltip>
-          </Link>
-        </Grid>
-        <Grid container justify="center" spacing={10}>
+        <Link to={`/`}>
+          <Tooltip title="Home" placement="right">
+            <img
+              src={AppIcon}
+              className={classes.image}
+              alt="app icon"
+            />
+          </Tooltip>
+        </Link>
+
+        {(this.props.location.pathname === '/') && (<Typography variant="h3" align="center" className={classes.welcome}> Welcome back</Typography>)}
+        <div className={classes.flexContainer}>
           {(this.props.location.pathname === '/') && classesMarkup}
           {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
-          {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
-        </Grid>
-        <Grid item sm={12}>
-
-          <Switch>
-            <Route exact path="/new">
-              {createClass}
-            </Route>
-            <Route path={`/class/:URLclassName`}>
-              <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
-            </Route>
-            <Route path="/">
-              <Redirect to="/" />
-            </Route>
-          </Switch>
-        </Grid>
-
-        <Grid item sm={12}>
-          <div className={classes.logout}>
-            <Tooltip title="Logout" placement="top">
-              <IconButton size="medium" onClick={this.handleLogout}>
-                <KeyboardReturn color="primary" />
-              </IconButton>
-            </Tooltip>
+          <div className={classes.createClass}>
+            {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
           </div>
-        </Grid>
+        </div>
+        
+        <Switch>
+          <Route exact path="/new">
+            {createClass}
+          </Route>
+          <Route path={`/class/:URLclassName`}>
+            <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
+          </Route>
+          <Route path="/">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
+
+        <div className={classes.logout}>
+          <Tooltip title="Logout" placement="top">
+            <IconButton size="medium" onClick={this.handleLogout}>
+              <KeyboardReturn color="primary" />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div >
     )
   }

@@ -1,18 +1,31 @@
 import React from 'react'
+import { List } from '@material-ui/core';
+import { ListItem } from '@material-ui/core'
+import { ListItemText } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 
-function Table() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    borderStyle: "solid",
+    borderWidth: "5px",
+  }
+
+}));
+function Table(props) {
+  const { students } = props;
+  const classes = useStyles();
+  let listMarkup =
+    students.map((student) =>
+      <div>
+        <ListItem>
+          <ListItemText primary={student.name} secondary={student.gender} />
+        </ListItem>
+      </div>);
+
   return (
     <div>
       <List className={classes.root}>
-        <ListItem>
-          <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="Work" secondary="Jan 7, 2014" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="Vacation" secondary="July 20, 2014" />
-        </ListItem>
+        {listMarkup}
       </List>
     </div>
   )

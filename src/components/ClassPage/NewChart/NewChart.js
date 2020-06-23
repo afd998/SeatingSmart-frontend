@@ -11,13 +11,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import { Typography } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-import { Grid } from '@material-ui/core';
-import TextInput from './TextInput';
-import SuperList from './SuperList'
 import PropTypes from 'prop-types';
+import TextInput from './TextInput';
+import ChartGenerator from './ChartGenerator';
 
-import { addClass } from "../../redux/actions/dataActions";
-
+import Chart from '../Chart/Chart';
 
 const useStyles = makeStyles(theme => ({
   superlist: {
@@ -71,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   },
   flexItemButton: {
     //flexBasis: "50%",
-    //margin: "0px 30%",
+    margin: "30px 0%",
     textAlign: "center"
     //float: "left"
   },
@@ -90,47 +88,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function CreateClass(props) {
-  const { getNewClassInfo } = props;
+function NewChart(props) {
+  const { students, numberOfGroups } = props;
   const classes = useStyles();
-  const [className, setclassName] = React.useState("");
-  const [students_state, setStudents_state] = React.useState({
-    columns: [
-      {
-        title: 'Name', field: 'name',
-      },
-      { title: 'Gender', field: 'gender', lookup: { 'Male': 'Male', 'Female': 'Female', 'Non-binary': 'Non-binary' } },
-      { title: 'Person of Color', field: 'poc', lookup: { 0: 'No', 1: 'Yes' } },
-    ],
-    data: [],
-  });
-  const [numberOfGroups, setnumberOfGroups] = React.useState("");
-  const [studentsPerGroup, setstudentsPerGroup] = React.useState("");
+  const [chartName, setChartName] = React.useState("");
+  const [chart, setChart] = React.useState([]);
 
-  const finsishCreateClass = () => {
-    let students = students_state.data;
-    let newClass = { students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, getNewClassInfo);
+  const finsishNewChart = () => {
+    let newClass = { chartName }
   }
 
   return (
     <div>
       <Paper elevation={2} className={classes.paper}>
-
         <div className={classes.flexContainer}>
           <div className={classes.flexItemText}>
             <div className={classes.title}>
-              <Typography variant="h3"> Create a New Class</Typography>
+              <Typography variant="h3"> Create a New Chart</Typography>
             </div>
             <TextInput
-              numberOfGroups={numberOfGroups}
-              setnumberOfGroups={setnumberOfGroups}
-              studentsPerGroup={studentsPerGroup}
-              setstudentsPerGroup={setstudentsPerGroup}
-              className={className}
-              setclassName={setclassName} />
+              chartName={chartName}
+              setChartName={setChartName} />
             <div className={classes.flexItemCancel}>
-              <Link to='/'>
+              <Link to={props.cancelPath}>
                 <Button
                   size="large"
                   aria-label="cancel"
@@ -148,7 +128,7 @@ function CreateClass(props) {
 
                 aria-label="finished"
                 className={classes.fab}
-                onClick={finsishCreateClass}
+                onClick={finsishNewChart}
               >
                 <SaveIcon className={classes.icon} />
                    Finished
@@ -156,17 +136,18 @@ function CreateClass(props) {
             </div>
           </div>
           <div className={classes.flexItem}>
-            <SuperList className={classes.superlist} state={students_state} setState={setStudents_state} />
+            <Chart chart={chart} />
+            <div className={classes.flexItemButton}>
+              <ChartGenerator students={students} numberOfGroups={numberOfGroups} setChart={setChart} />
+            </div>
           </div>
-
-
         </div>
       </Paper >
     </div>
   )
 }
 
-CreateClass.propTypes = {
+NewChart.propTypes = {
   addClass: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired
@@ -177,6 +158,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-const mapActionToProps = { addClass };
+const mapActionToProps = {};
 
-export default connect(mapStateToProps, mapActionToProps)(CreateClass);
+export default connect(mapStateToProps, mapActionToProps)(NewChart);

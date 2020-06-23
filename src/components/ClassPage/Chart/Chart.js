@@ -1,54 +1,39 @@
 import React from 'react'
-import {Paper} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Paper } from '@material-ui/core';
+import Table from './Table';
 
-const useStyles = makeStyles((theme) => ({
-
-  title: {
-    margin: '0 1%',
-
-
-  },
-  form: {
-    margin: 'auto auto auto auto%',
-
-
-  },
-  titleEdit: {
-    margin: '0 1%',
-    textAlign: 'center',
-    fontSize: "338%"
-
-  },
-  paper: {
-    backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
-    },
-  content: {
-    padding: 25,
-  },
-  delClass: {
-    margin: '10px 10px 10px 10px'
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 function Chart(props) {
+  const useStyles = makeStyles((theme) => ({
+    flexContainer: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    paper: {
+    },
+
+    flexItem: {
+
+    }
+  }));
+
   const classes = useStyles();
-console.log("chart", props.chart);
+  const { chart } = props;
+
+  let chartMarkup =
+    chart.map((table) =>
+      <div className={classes.flexItem}>
+        <Table students ={table}/>
+      </div>);
+
   return (
-
-    <div>
-      <Paper className ={classes.paper} elevation={1} />
-      <p> test</p>
-
-      <Paper />
-    </div>
+    <Paper elevation={2} className={classes.paper}>
+      <div className={classes.flexContainer}>
+      {chartMarkup}
+      </div>
+    </Paper>
   )
 }
 

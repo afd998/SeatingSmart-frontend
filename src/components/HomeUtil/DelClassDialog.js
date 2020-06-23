@@ -13,6 +13,9 @@ import { deleteClass } from "../../redux/actions/dataActions";
 const useStyles = makeStyles(theme => ({
   message: {
     textAlign: 'center'
+  },
+  button: {
+    margin: '4% 35%'
   }
 }));
 
@@ -39,7 +42,7 @@ function DelClassDialog(props) {
       <Typography className={classes.message} variant="body1" > Deleting a class will delete all of its associated charts. </Typography>
       <Button
         variant="contained"
-        //className={classes.button}
+        className={classes.button}
         startIcon={<DeleteIcon />}
         onClick={imsure}
       >

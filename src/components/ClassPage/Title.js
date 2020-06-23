@@ -11,49 +11,38 @@ import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   title: {
-    margin: '0 1%',
+    //margin: '0 1%',
     padding: "7px",
-
   },
+
   titleEdit: {
     margin: '0 1%',
     textAlign: 'center',
     //fontSize: "5008%",
     padding: "19px",
-
-
   },
+
   main: {
-    margin: '10px 10px 10px 10px',
+    margin: '20px 0px 0px 0px',
     ///display: "inline-block"
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center"
+    
 
   },
   button: {
+    //height: "1px",
+    //width: "1px"
   },
   buttonChild: {
-    width: "10%",
-    float: "left",
-    padding: "20px",
-    display: "inline-block",
-    //border: "2px solid red",
+   // width: "10%",
+    //padding: "20px",
   },
   titleChild: {
-    //display: "inline",
-    width: "20%",
-    float: "left",
-    //border: "2px solid red",
-  },
-  delClass: {
-    margin: '10px 10px 10px 10px'
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
+   // width: "20%",
+  }
 }));
 
 
@@ -102,27 +91,26 @@ function Title(props) {
   let ActionButton = editing ?
     (
       <div className={classes.button} >
-        <Button
+        <IconButton
           variant="contained"
-          color="primary"
           size="small"
           className={classes.button}
           onClick={handleSave}
         >
           <SaveIcon />
-        </Button>
+        </IconButton>
       </div>
     ) : (
       <div className={classes.button} >
-        <Button
+        <IconButton
           variant="contained"
-          color="primary"
           size="small"
           className={classes.button}
           onClick={handleEdit}
         >
-          Edit
-        </Button>
+          <EditIcon />
+
+        </IconButton>
       </div>
     )
   let TitleText = editing ?
@@ -140,7 +128,7 @@ function Title(props) {
     ) : (
       <Typography
         className={classes.title}
-        variant="h3"> {title}
+        variant="h2"> {title}
       </Typography>
     );
 
@@ -149,7 +137,7 @@ function Title(props) {
       <div className={classes.titleChild}>
         {TitleText}
       </div>
-      <div className={classes.buttonChild}>
+      <div className={classes.titleChild}>
         {ActionButton}
         {(editing === false) && <Redirect to={`/class/${title}`} />}
       </div>
