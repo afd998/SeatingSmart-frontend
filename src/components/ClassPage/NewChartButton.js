@@ -1,27 +1,40 @@
 import React from 'react';
 import { Fab } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { Tooltip } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
-import FiberNewIcon from '@material-ui/icons/FiberNew';
+import AddIcon from '@material-ui/icons/Add';
 const useStyles = makeStyles(theme => ({
-  plus: {
-    margin: '50px 0px 20px 0px',
+  root: {
+    // borderStyle: 'solid',
+    //borderWidth: '1px',
+    display: "flex",
+    justifyContent: "center"
+  },
+  button: {
+   
+  },
+  text: {
+    textAlign: "center",
+    flexBasis: "100%",
+
   }
 }));
 
 export default function NewChartButton(props) {
   const classes = useStyles();
   return (
-    <Link to={props.route}>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        startIcon={<FiberNewIcon />}
-      >
-        New Chart
-    </Button>
-    </Link>
+    <div className={classes.root}>
+    {/* <Typography className={classes.text} >Create a New Chart</Typography> */}
+      <Tooltip title="New Chart" placement="top">
+      <Link to={props.route}>
+        <Fab className={classes.button} color="primary" >
+          <AddIcon />
+        </Fab>
+      </Link>
+      </Tooltip>
+    </div>
   )
 }

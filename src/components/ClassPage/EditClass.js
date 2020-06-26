@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     //
     // minHeight: "400px",
     //flexGrow: 1,
-    backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
+   // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
     //margin: "2px 5px 2px 5px",
     textAlign: 'center',
 
@@ -101,42 +101,36 @@ function EditClass(props) {
     props.setShowEdit(false);
   }
   const handleClick = () => {
-      props.setShowEdit(false);
+    props.setShowEdit(false);
   }
-  let cancelButton = 
-      <Button
-        size="large"
-        color="secondary"
-        aria-label="cancel"
-        className={classes.fab}
-        onClick = {handleClick}
-      >
-        <CancelIcon className={classes.icon} />
+  let cancelButton =
+    <Button
+      size="large"
+      color="secondary"
+      aria-label="cancel"
+      className={classes.fab}
+      onClick={handleClick}
+    >
+      <CancelIcon className={classes.icon} />
               Cancel
         </Button>
- 
+
   return (
-    // <Paper elevation={2} className={classes.paper}>
-      <Grid container spacing={0}>
-        <Grid item xs={12}>
-          <SuperList className={classes.superlist} state={tableData} setState={setTableData} />
-        </Grid>
-        <Grid item xs={6}>
-          {cancelButton}
-        </Grid>
-        <Grid item xs={6}>
-          <Button
-            size="large"
-            aria-label="finished"
-            className={classes.fab}
-            onClick={finsishEditClass}
-          >
-            <SaveIcon className={classes.icon} />
+    <div>
+      <Paper className = {classes.paper}>
+        <SuperList className={classes.superlist} state={tableData} setState={setTableData} />
+        {cancelButton}
+        <Button
+          size="large"
+          aria-label="finished"
+          className={classes.fab}
+          onClick={finsishEditClass}
+        >
+          <SaveIcon className={classes.icon} />
                    Finished
-            </Button>
-        </Grid>
-      </Grid>
-    // </Paper >
+        </Button>
+      </Paper>
+    </div>
   )
 }
 

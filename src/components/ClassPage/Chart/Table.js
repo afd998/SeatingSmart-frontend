@@ -13,10 +13,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Table(props) {
   const { students } = props;
+  console.log("students at this table: ", students);
   const classes = useStyles();
   let listMarkup =
-    students.map((student) =>
-      <div>
+    students.map((student, index) =>
+      <div key={index}>
         <ListItem>
           <ListItemText primary={student.name} secondary={student.gender} />
         </ListItem>

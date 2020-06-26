@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types';
+
 import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
 import EditClass from './EditClass';
 import { editClass } from '../../redux/actions/dataActions';
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center"
-    
+
 
   },
   button: {
@@ -37,16 +39,17 @@ const useStyles = makeStyles((theme) => ({
     //width: "1px"
   },
   buttonChild: {
-   // width: "10%",
+    // width: "10%",
     //padding: "20px",
   },
   titleChild: {
-   // width: "20%",
+    // width: "20%",
   }
 }));
 
 
 function Title(props) {
+  const { UI: { errors } } = props;
   const classes = useStyles();
   const [editing, setEditing] = React.useState("");
   const [title, setTitle] = React.useState(props.classroom.className);
@@ -75,15 +78,14 @@ function Title(props) {
       setError("Must not include special characters");
       return;
     }
-    let changedClass = props.classroom;
     if (title === props.classroom.className) {
       setEditing(false);
       return
     } else {
+      var changedClass = Object.assign({}, props.classroom);
       changedClass.oldClassName = props.classroom.className;
       changedClass.className = title;
       props.editClass(changedClass, props.replaceClass);
-      setEditing(false);
     }
   }
 
@@ -120,15 +122,12 @@ function Title(props) {
         fullWidth={true}
         value={title}
         onChange={handleInput}
-        helperText={error}
-        error={error ? true : false} />
-      // <InputBase
-      //   className={classes.titleEdit}
-      //   defaultValue={props.classroom.className} />
+        helperText={errors ? errors.className : ""}
+        error={errors ? true : false} />
     ) : (
       <Typography
         className={classes.title}
-        variant="h2"> {title}
+        variant="h3"> {title}
       </Typography>
     );
 
@@ -145,5 +144,14 @@ function Title(props) {
   )
 }
 
+Title.propTypes = {
+  UI: PropTypes.object.isRequired,
+  editClass: PropTypes.func.isRequired,
 
-export default connect(null, { editClass })(Title);
+};
+
+const mapStateToProps = (state) => ({
+  UI: state.UI
+});
+
+export default connect(mapStateToProps, { editClass })(Title);

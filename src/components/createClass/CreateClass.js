@@ -1,6 +1,7 @@
 import React, { Component, forwardRef } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     margin: "5% 100px",
     // backgroundColor: '#FAACA8',
     // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
-    backgroundColor: "#CFFFEF",  /* fallback for old browsers */
+    //backgroundColor: "#CFFFEF",  /* fallback for old browsers */
     //background: "-webkit-linear-gradient(to right, #373B44, #73C8A9)",  /* Chrome 10-25, Safari 5.1-6 */
     //background: "linear-gradient(to right, #373B44, #73C8A9)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
@@ -91,6 +92,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CreateClass(props) {
+  let history=useHistory();
   const { getNewClassInfo } = props;
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
@@ -110,7 +112,7 @@ function CreateClass(props) {
   const finsishCreateClass = () => {
     let students = students_state.data;
     let newClass = { students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, getNewClassInfo);
+    props.addClass(newClass, getNewClassInfo, history);
   }
 
   return (

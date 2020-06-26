@@ -1,6 +1,7 @@
 import React, { Component, forwardRef } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,7 +15,7 @@ import { Button } from '@material-ui/core'
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
 import ChartGenerator from './ChartGenerator';
-
+import { addChart } from '../../../redux/actions/dataActions';
 import Chart from '../Chart/Chart';
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     margin: "5% 100px",
     // backgroundColor: '#FAACA8',
     // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
-    backgroundColor: "#CFFFEF",  /* fallback for old browsers */
+    // backgroundColor: "#CFFFEF",  /* fallback for old browsers */
     //background: "-webkit-linear-gradient(to right, #373B44, #73C8A9)",  /* Chrome 10-25, Safari 5.1-6 */
     //background: "linear-gradient(to right, #373B44, #73C8A9)" /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
@@ -89,13 +90,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function NewChart(props) {
-  const { students, numberOfGroups } = props;
+  let history = useHistory();
+  const { classroom: { students, numberOfGroups, className } } = props;
   const classes = useStyles();
   const [chartName, setChartName] = React.useState("");
   const [chart, setChart] = React.useState([]);
 
-  const finsishNewChart = () => {
-    let newClass = { chartName }
+  const finsishNewChart = (event) => {
+    event.preventDefault();
+    let data = {
+      chart: chart,
+      chartName: chartName,
+      className: className,
+    }
+    props.addChart(data, history);
+
   }
 
   return (
@@ -136,7 +145,7 @@ function NewChart(props) {
             </div>
           </div>
           <div className={classes.flexItem}>
-            <Chart chart={chart} />
+            {(chart.length !== 0) && <Chart chart={{ chart: chart }} />}
             <div className={classes.flexItemButton}>
               <ChartGenerator students={students} numberOfGroups={numberOfGroups} setChart={setChart} />
             </div>
@@ -148,7 +157,7 @@ function NewChart(props) {
 }
 
 NewChart.propTypes = {
-  addClass: PropTypes.func.isRequired,
+  addChart: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired
 };
@@ -158,6 +167,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-const mapActionToProps = {};
+const mapActionToProps = { addChart };
 
 export default connect(mapStateToProps, mapActionToProps)(NewChart);

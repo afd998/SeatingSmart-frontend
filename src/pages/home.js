@@ -105,13 +105,14 @@ export class home extends Component {
 
   replaceClass = (newClass) => {
     this.setState((oldstate) => {
-      let newState = oldstate.classes;
-      const result = newState.filter(classs => classs.className != newClass.oldClassName);
+      let newState = oldstate.classes.slice()
+      const result = newState.filter(classs => classs.className !== newClass.oldClassName);
       delete newClass.oldClassName;
       result.push(newClass);
+      this.props.history.push(`/class/${newClass.className}`);
+
       return { classes: result };
     });
-    //document.location.href=`/class/${newClass.className}`
   }
 
   updateStateDelete = (className) => {
@@ -150,8 +151,8 @@ export class home extends Component {
     ) : (
 
         this.state.classes.map((classs) =>
-          <div className={classes.flexItem}>
-            <Class key={classs.className} className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />
+          <div className={classes.flexItem} key={classs.className}>
+            <Class  className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />
           </div>
         ));
 
@@ -183,7 +184,7 @@ export class home extends Component {
             {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
           </div>
         </div>
-        
+
         <Switch>
           <Route exact path="/new">
             {createClass}
@@ -214,7 +215,6 @@ home.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
   data: state.data
 });
 

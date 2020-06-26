@@ -10,29 +10,30 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import { Typography } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 50,
-    maxWidth: 300,
+    maxWidth: 400,
+    //margin: "0% 10%",
+    display: "inline-block"
+
 
   },
   root: {
-    float: "right",
-    flexGrow: 1,
-    maxWidth: 752,
+    //float: "right",
+    //flexGrow: 1,
+    //maxWidth: 752,
+    textAlign: "center"
   },
 
   button: {
-    margin: "auto",
-    width: "50%",
-    textAlign: "center",
+    display: "inline-block"
+
 
   },
   title: {
-    float: "right",
-    margin: theme.spacing(4, 0, 2),
+    textAlign: "center",
   },
 }));
 
@@ -48,11 +49,12 @@ export default function SimpleTable(props) {
     props.setShowEdit(true);
   }
   return (
-    <div className = {classes.root} >
+    <div className={classes.root} >
 
-      <Typography variant="h6" className={classes.title}> Students </Typography>
 
       <TableContainer className={classes.table} component={Paper}>
+        <Typography variant="h5" className={classes.title}> Students </Typography>
+
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -68,7 +70,7 @@ export default function SimpleTable(props) {
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.gender}</TableCell>
-                <TableCell align="right">{row.poc == 1 ? ('Yes') : ('No')}</TableCell>
+                <TableCell align="right">{row.poc === 1 ? ('Yes') : ('No')}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -85,5 +87,6 @@ export default function SimpleTable(props) {
      </Button>
       </TableContainer>
     </div>
+
   );
 }

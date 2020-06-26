@@ -10,7 +10,6 @@ export default function ClassRoute(props) {
     return <div>loading </div>;
   } else {
     let found = false;
-    console.log("allClasses", allClasses);
     allClasses.forEach(element => {
       if (element.className === URLclassName) {
         classroom = element;

@@ -11,7 +11,6 @@ import { Grid } from "@material-ui/core"
 import AppIcon from "../images/icon.png"
 import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
 import "../App.css";
 import { connect } from 'react-redux';
 import { loginUser, loginUserGoogle } from '../redux/actions/userActions';

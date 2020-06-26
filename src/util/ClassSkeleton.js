@@ -54,7 +54,6 @@ const ClassSkeleton = (props) => {
 
   const content = Array.from({ length: 3 }).map((item, index) => (
     <Card className={classes.card} key={index}>
-      <CardMedia className={classes.cover}  />
       <CardContent className={classes.cardContent}>
         <div className={classes.handle} />
         <div className={classes.date} />

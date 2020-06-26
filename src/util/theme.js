@@ -60,7 +60,7 @@ export default {
   },
   
   palette: {
-    type: 'light',
+    type: 'dark',
     primary: {
       // light: will be calculated from palette.primary.main,
       main: '#69f0ae',

@@ -20,7 +20,7 @@ function ChartGenerator(props) {
   const { students, numberOfGroups, setChart } = props;
   const classes = useStyles();
 
-  
+
   const shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
     // While there remain elements to shuffle...
@@ -51,9 +51,14 @@ function ChartGenerator(props) {
       for (let i = 0; i < numberOfGroups; i++) {
         if (count < numStudents) {
           localChart[i][j] = localStudents[count];
+        } else {
+          localChart[i][j] = {name: "EMPTY", gender: "N/A", POC: "N/A"};
         }
-        count ++;
+        count++;
       }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      localChart[i] = {i: localChart[i]}
     }
     setChart(localChart);
   }

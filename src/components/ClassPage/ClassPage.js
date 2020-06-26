@@ -10,64 +10,80 @@ import Title from './Title';
 import Chart from './Chart/Chart';
 import NewChart from './NewChart/NewChart';
 import NewChartButton from './NewChartButton';
-
+import PastChartsMain from './PastCharts/PastChartsMain';
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { Input } from '@material-ui/core'
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-
-  title: {
-    margin: '0 1%',
-
-
-  },
-  form: {
-    margin: 'auto auto auto auto%',
-
+  flexContainer: {
+    margin: "40px 0px",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "flex-start"
 
   },
-  titleEdit: {
-    margin: '0 1%',
-    textAlign: 'center',
-    fontSize: "338%"
+  NewChartButton: {
+    //flexBasis: "5%",
+    width: "15%",
+    //alignSelf: "flex-end",
+    //margin: "20px 0px 0px 0px"
+  },
+  currChart: {
+    flexBasis: "40%",
 
   },
-  card: {
-    margin: '10px 10px 10px 10px',
-    backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%,  rgba(130,205,221,1) 0%, rgba(255,247,153,1) 90% )",
+
+  EditWrapper: {
+    flexBasis: "40%"
+
   },
-  content: {
-    padding: 25,
-  },
-  delClass: {
-    margin: '10px 10px 10px 10px'
-  },
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
+
+  PastChartsMain: {
+    flexBasis: "100%"
+  }
+
 }));
 
 function ClassPage(props) {
 
   useEffect(() => {
-    props.getCharts();
+    props.getCharts(props.classroom.className);
   }, []);
+
+  let charts= props.charts ? (props.charts[props.classroom.className]):(null);
 
   const classes = useStyles();
   let match = useRouteMatch();
+  console.log("charts", charts);
+  let currChart =
+    <div className={classes.currChart}>
+      {charts && (charts.length !== 0) && (<Chart showDel chart={charts[charts.length - 1]} />)}
+      {charts && (charts.length === 0) && <Typography variant = "h5"> You have no charts 🧐. Press the plus button to make some! </Typography>}
+      {!charts && "loading"}
 
+    </div>
   let classPage =
     <div>
       <Title {...props} />
-       <NewChartButton route = {`/class/${props.classroom.className}/new`} />
-      <EditWrapper classToEdit={props.classroom} replaceClass={props.replaceClass} />
+
+      <div className={classes.flexContainer}>
+        <div className={classes.NewChartButton}>
+          <NewChartButton
+            route={`/class/${props.classroom.className}/new`} />
+        </div>
+        {currChart}
+        <div className={classes.EditWrapper}>
+          <EditWrapper
+            classToEdit={props.classroom}
+            replaceClass={props.replaceClass} />
+        </div>
+      </div>
+      <div className={classes.PastChartsMain}>
+        <PastChartsMain/>
+      </div>
     </div>
 
   return (
@@ -78,7 +94,7 @@ function ClassPage(props) {
           {/* <Redirect to={`/class/${props.classroom.className}`} /> */}
         </Route>
         <Route exact path={`/class/${props.classroom.className}/new`}>
-          <NewChart students = {props.classroom.students} numberOfGroups ={props.classroom.numberOfGroups} cancelPath= {`/class/${props.classroom.className}`}/>
+          <NewChart classroom={props.classroom} cancelPath={`/class/${props.classroom.className}`} />
         </Route>
         <Route path="/">
           <Redirect to="/" />

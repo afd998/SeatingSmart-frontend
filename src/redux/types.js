@@ -10,5 +10,8 @@ export const LOADING_UI = 'LOADING_UI';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 //data reducer types
 export const SET_CLASSES = 'SET_CLASSES'
+export const SET_CURRCLASS = 'SET_CURRCLASS'
 export const SET_CHARTS = 'SET_CHARTS'
+export const ADD_CHART = 'ADD_CHART'
+export const DELETE_CHART = 'DELETE_CHART'
 

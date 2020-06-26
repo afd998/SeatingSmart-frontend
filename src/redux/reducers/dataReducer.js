@@ -1,30 +1,50 @@
-import { SET_CLASSES, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types';
+import { SET_CURRCLASS, SET_CLASSES, ADD_CHART, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_UNAUTHENTICATED, DELETE_CHART } from '../types';
 
 
 const initialState = {
   classesArray: [],
   loading: false,
+  charts: {},
+  currClass: ""
 };
 
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case LOADING_UI:
-       return {
+    case SET_CURRCLASS:
+      console.log("here");
+      return {
         ...state,
-        loading: true
+        currClass: action.payload.className
       };
+
     case SET_CLASSES:
       return {
         ...state,
-        classesArray: action.payload,
+        classesArray: action.payload.className,
         loading: false
       };
-      case SET_CHARTS:
+
+    case SET_CHARTS:
       return {
         ...state,
-        charts: action.payload,
-        loading: false
+        charts: { ...state.charts, [action.payload.className]: action.payload.data },
+        loading: false,
+      };
+    case ADD_CHART:
+      return {
+        ...state,
+        charts: {
+          ...state.charts, [action.payload.className]: [...state.charts[action.payload.className], action.payload],
+        }
+      };
+    case DELETE_CHART:
+      console.log("should be an arry", state.charts[action.payload.className]);
+      return {
+        ...state,
+        charts: {
+          ...state.charts, [action.payload.className]: state.charts[action.payload.className].filter(chart => chart.chartName !== action.payload.chartName),
+        }
       };
     default:
       return state;

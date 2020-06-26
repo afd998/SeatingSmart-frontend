@@ -60,7 +60,7 @@ DelClassDialog.propTypes = {
 const mapActionToProps = { deleteClass};
 
 const mapStateToProps = (state) => ({
-  errors: state.UI.errrors
+  errors: state.UI.errors
 });
 
 

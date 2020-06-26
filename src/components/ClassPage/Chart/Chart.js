@@ -1,40 +1,60 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import { Paper, Typography } from '@material-ui/core';
+import { Card, CardContent, CardActions } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import { deleteChart } from '../../../redux/actions/dataActions';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import Table from './Table';
+const useStyles = makeStyles((theme) => ({
+  flexContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  text: {
+    textAlign: "center"
 
+  },
+
+  paper: {
+    padding: "20px 20px"
+
+  }
+}));
 function Chart(props) {
-  const useStyles = makeStyles((theme) => ({
-    flexContainer: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    paper: {
-    },
-
-    flexItem: {
-
-    }
-  }));
-
+  let showDel = props.showDel ? (true) : (false);
   const classes = useStyles();
   const { chart } = props;
-
+  const data = chart.chart;
+  console.log(chart);
   let chartMarkup =
-    chart.map((table) =>
-      <div className={classes.flexItem}>
-        <Table students ={table}/>
+    data.map((table, index) =>
+      <div key={index} className={classes.flexItem}>
+        <Table students={table.i} />
       </div>);
 
+  let handleClick = () => {
+    props.deleteChart({ data: props.chart });
+  }
   return (
-    <Paper elevation={2} className={classes.paper}>
-      <div className={classes.flexContainer}>
-      {chartMarkup}
-      </div>
-    </Paper>
+    <Card className={classes.paper}>
+      <CardContent>
+        <Typography variant="h4" className={classes.text}> {chart.chartName}</Typography>
+        <div className={classes.flexContainer}>
+          {chartMarkup}
+        </div>
+      </CardContent>
+      {props.showDel && <CardActions>
+        <IconButton onClick={handleClick} size="small">
+          <DeleteIcon />
+        </IconButton>
+      </CardActions>}
+    </Card>
   )
 }
 
-export default Chart
+export default connect(null, { deleteChart })(Chart)
