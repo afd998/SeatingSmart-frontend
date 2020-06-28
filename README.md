@@ -1,4 +1,7 @@
-This code should run if you want to try it out!  The only thing that will not work is the Signin With Google Button. That's because in order to use that you would need my firebase config. You will have to comment out certain lines that have to do with the Signin With Google Button in order to make the app compile. Website will be up soon :D
+This code should run if you want to try it out!  The only thing that will not work is the Signin With Google Button. That's because in order to use that you would need my firebase config. You will have to comment out certain lines that have to do with the Signin With Google Button in order to make the app compile. 
+
+
+Here is the actual site: https://seatingsmart-15114.web.app/
 
 
 
