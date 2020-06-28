@@ -1,22 +1,12 @@
-import React, { Component, forwardRef } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
-import { withStyles } from '@material-ui/core/styles';
 
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import AddIcon from '@material-ui/icons/Add';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SaveIcon from '@material-ui/icons/Save';
-import { Typography } from '@material-ui/core';
 import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-import { Fab } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
-import { Dialog } from '@material-ui/core';
-import { Link, Redirect } from 'react-router-dom';
-import TextInput from '../createClass/TextInput';
 import SuperList from '../createClass/SuperList'
 import PropTypes from 'prop-types';
 
@@ -81,7 +71,6 @@ function EditClass(props) {
   const oldClassName = classToEdit.className;
   const classes = useStyles();
   const [className, setclassName] = React.useState(oldClassName);
-  const [showEdit, setShowEdit] = React.useState(false);
 
   const [tableData, setTableData] = React.useState({
     columns: [

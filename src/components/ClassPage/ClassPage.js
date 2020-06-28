@@ -2,9 +2,8 @@ import React from 'react'
 import { useEffect } from 'react'
 
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import EditWrapper from './EditWrapper';
-import { Button, InputBase, Grid } from '@material-ui/core'
 import { getCharts } from '../../redux/actions/dataActions';
 import Title from './Title';
 import Chart from './Chart/Chart';
@@ -13,7 +12,6 @@ import NewChartButton from './NewChartButton';
 import PastChartsMain from './PastCharts/PastChartsMain';
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import { Input } from '@material-ui/core'
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +20,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    textAlign: "center"
 
   },
   NewChartButton: {
     //flexBasis: "5%",
     width: "15%",
-    //alignSelf: "flex-end",
+    alignSelf: "center",
     //margin: "20px 0px 0px 0px"
   },
   currChart: {
@@ -42,29 +41,29 @@ const useStyles = makeStyles((theme) => ({
   },
 
   PastChartsMain: {
-    flexBasis: "100%"
+    flexBasis: "100%",
+    display: "inline-block"
   }
 
 }));
 
 function ClassPage(props) {
 
-  useEffect(() => {
+  useEffect((props) => {
     props.getCharts(props.classroom.className);
   }, []);
 
-  let charts= props.charts ? (props.charts[props.classroom.className]):(null);
+  let charts = props.charts ? (props.charts[props.classroom.className]) : (null);
 
   const classes = useStyles();
-  let match = useRouteMatch();
   console.log("charts", charts);
   let currChart =
     <div className={classes.currChart}>
       {charts && (charts.length !== 0) && (<Chart showDel chart={charts[charts.length - 1]} />)}
-      {charts && (charts.length === 0) && <Typography variant = "h5"> You have no charts 🧐. Press the plus button to make some! </Typography>}
+      {charts && (charts.length === 0) && <Typography variant="h5"> You have no charts <span role='img' aria-label="emoji"> 🧐</span>. Press the plus button to make some! </Typography>}
       {!charts && "loading"}
-
     </div>
+
   let classPage =
     <div>
       <Title {...props} />
@@ -82,7 +81,7 @@ function ClassPage(props) {
         </div>
       </div>
       <div className={classes.PastChartsMain}>
-        <PastChartsMain/>
+        <PastChartsMain />
       </div>
     </div>
 

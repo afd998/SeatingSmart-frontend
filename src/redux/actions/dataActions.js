@@ -81,6 +81,7 @@ export const addClass = (newClass, getNewClassInfo, history) => (dispatch) => {
   });
 
 }
+
 export const editClass = (newClass, replaceClass) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
@@ -101,6 +102,29 @@ export const editClass = (newClass, replaceClass) => (dispatch) => {
   });
 
 }
+
+export const changeClassName = (newClass, replaceClass) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
+  console.log("edited class structure", newClass);
+  axios.post('/changeclassname', newClass).then((res) => {
+    replaceClass(newClass);
+    dispatch({
+      type: SET_CLASSES,
+      payload: newClass
+    })
+  }).catch(err => {
+    console.log(err.response);
+    if (err.response) {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      });
+    }
+  });
+
+}
+
 export const deleteClass = (body) => (dispatch) => {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   axios.delete('/deleteclass', body, {

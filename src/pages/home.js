@@ -5,12 +5,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/userActions";
-import { addClass } from "../redux/actions/dataActions";
 import { getClasses } from '../redux/actions/dataActions';
 import Class from '../components/HomeUtil/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
 import CreateClass from "../components/createClass/CreateClass";
-import EditClass from "../components/ClassPage/EditClass";
 import CreateClassButton from "../components/HomeUtil/CreateClassButton";
 import ClassRoute from "../components/HomeUtil/ClassRoute";
 import AppIcon from "../images/icon.png"
@@ -19,12 +17,7 @@ import AppIcon from "../images/icon.png"
 
 
 import Grid from '@material-ui/core/Grid';
-import { Box } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
-import { Card } from '@material-ui/core';
-import { CardContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import { Link } from 'react-router-dom';
@@ -43,18 +36,19 @@ const styles = {
   },
   logout: {
     float: "right",
-    position: "sticky",
+    position: "fixed",
+    margin: '0px 0 2% 92%',
     bottom: 0,
   },
   root: {
-    border: 10,
-    borderRadius: 3,
+    //border: 10,
+    //borderRadius: 3,
     padding: '30px 30px 30px 30px',
+    height: '100%'
   },
   noClassesMessage: {
     textAlgin: "center",
-    left: "100px",
-    margin: "50px 100px 0px 100px"
+
   },
   welcome: {
     textAlgin: "center",
@@ -82,12 +76,15 @@ const styles = {
 
 
 export class home extends Component {
-  state = {
-    classes: "init",
-    loading: true,
-    classToEdit: "",
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state =  {
+      classes: "init",
+      loading: true,
+      classToEdit: "",
+    }
   }
-
 
   componentDidMount() {
     console.log("home component mounted");
@@ -118,7 +115,7 @@ export class home extends Component {
   updateStateDelete = (className) => {
     this.setState((oldstate) => {
       let newState = oldstate.classes;
-      const result = newState.filter(classs => classs.className != className);
+      const result = newState.filter(classs => classs.className !== className);
       return { classes: result };
     });
   }
@@ -157,13 +154,13 @@ export class home extends Component {
         ));
 
     const noClassesMessage =
-      <div className={classes.flexItem}>
-        <Typography variant="body1" className={classes.noClassesMessage}>
+      <div className={classes.noClassesMessage}>
+        <Typography variant="h5" className={classes.noClassesMessage}>
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
       </div>
 
-
+console.log(this.props.user);
     return (
       <div className={classes.root}>
         <Link to={`/`}>
@@ -176,7 +173,7 @@ export class home extends Component {
           </Tooltip>
         </Link>
 
-        {(this.props.location.pathname === '/') && (<Typography variant="h3" align="center" className={classes.welcome}> Welcome back</Typography>)}
+        {(this.props.location.pathname === '/') && (this.props.user) && (<Typography variant="h3" align="center" className={classes.welcome}> Welcome back {this.props.user.credentials.instructorName}! </Typography>)}
         <div className={classes.flexContainer}>
           {(this.props.location.pathname === '/') && classesMarkup}
           {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
@@ -211,11 +208,14 @@ export class home extends Component {
 
 home.propTypes = {
   getClasses: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+
 };
 
 const mapStateToProps = (state) => ({
-  data: state.data
+  data: state.data,
+  user: state.user
 });
 
 const mapActionToProps = { logoutUser, getClasses };

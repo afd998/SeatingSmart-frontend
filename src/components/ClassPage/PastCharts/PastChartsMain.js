@@ -44,9 +44,9 @@ function PastChartsMain() {
 
   }
   let actionButton = !showPast ?
-    (<Button onClick={handleShow}> Past Charts </Button>) :
+    (<Button variant = "outlined" onClick={handleShow}> Past Charts </Button>) :
     (<div>
-      <Button className={classes.button} onClick={handleHide}> Hide Past Charts </Button>
+      <Button  variant = "outlined" className={classes.button} onClick={handleHide}> Hide Past Charts </Button>
       <PastCharts />
     </div>);
 

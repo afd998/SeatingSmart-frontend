@@ -19,7 +19,7 @@ function Table(props) {
     students.map((student, index) =>
       <div key={index}>
         <ListItem>
-          <ListItemText primary={student.name} secondary={student.gender} />
+          <ListItemText primary={student.name} secondary={`Gender: ${student.gender}, POC: ${student.poc === "1" ? ("yes") : ("No")}`} />
         </ListItem>
       </div>);
 

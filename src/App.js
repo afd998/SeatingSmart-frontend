@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import themeFile from "./util/theme"
 import "./App.css";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles/";
-import { Box } from '@material-ui/core';
-import { Typography} from '@material-ui/core';
 import { CssBaseline } from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import jwtDecode from "jwt-decode";

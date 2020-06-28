@@ -70,7 +70,7 @@ export default function SimpleTable(props) {
                   {row.name}
                 </TableCell>
                 <TableCell align="right">{row.gender}</TableCell>
-                <TableCell align="right">{row.poc === 1 ? ('Yes') : ('No')}</TableCell>
+                <TableCell align="right">{row.poc === '1' ? ('Yes') : ('No')}</TableCell>
               </TableRow>
             ))}
           </TableBody>

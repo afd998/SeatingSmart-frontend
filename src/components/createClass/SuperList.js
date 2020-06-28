@@ -1,6 +1,6 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import MaterialTable from 'material-table';
-import { Snackbar, Switch } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 //Icons
@@ -20,7 +20,6 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import { mdiGenderFemale } from '@mdi/js';
 const useStyles = makeStyles(theme => ({
   superlist: {
 
@@ -83,7 +82,6 @@ const tableIcons = {
 export default function SuperList(props) {
   const classes = useStyles();
   const [displayErrorDialog, setDisplayErrorDialog] = React.useState(false)
-  const {liftStudents} = props;
   const {state, setState} = props;
   const showErrorDialog = () => {
     setDisplayErrorDialog(!displayErrorDialog);

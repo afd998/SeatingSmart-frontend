@@ -7,6 +7,7 @@ export const loginUser = (userData, history) => (dispatch) => {
     console.log(res.data);
     setAuthorizationHeader(res.data.token);
     dispatch({ type: CLEAR_ERRORS });
+    getUserData();
     history.push('/');
 
   }).catch(err => {

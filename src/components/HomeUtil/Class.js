@@ -1,19 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DelClassDialog from './DelClassDialog';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {Link} from 'react-router-dom';
 //MUI STUFF
-import { ButtonGroup } from '@material-ui/core';
-import { Button } from '@material-ui/core';
-import { Popover } from '@material-ui/core';
 import {IconButton} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import withStyles from '@material-ui/core/styles/withStyles';
 import {Card} from '@material-ui/core';
 import {CardContent} from '@material-ui/core';
 import { Typography } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { CardHeader } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -42,7 +37,7 @@ export function Class(props) {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { updateState } = props;
-  const {class:{ className,setNumOfGroups, students, createdAt, studentsPerGroup, numberOfGroups, numberOfStudents } } = props;
+  const {class:{ className, createdAt } } = props;
 
   dayjs.extend(relativeTime);
 

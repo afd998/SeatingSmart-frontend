@@ -1,6 +1,4 @@
-import { SET_CLASSES, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import {CLEAR_ERRORS} from '../types';
 
 export const clearErrors = () => (dispatch) => {
     dispatch({

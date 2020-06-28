@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Card, CardContent, CardActions } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { deleteChart } from '../../../redux/actions/dataActions';
@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 function Chart(props) {
-  let showDel = props.showDel ? (true) : (false);
   const classes = useStyles();
   const { chart } = props;
   const data = chart.chart;

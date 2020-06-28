@@ -1,21 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 
 //MUI STUFF
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import AddIcon from '@material-ui/icons/Add';
-import CancelIcon from '@material-ui/icons/Cancel';
-import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core'
-import { Fab } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
-import { CLEAR_ERRORS } from '../../redux/types';
 import { clearErrors } from '../../redux/actions/uiActions';
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -27,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 function TextInput(props) {
 
   const { UI: { errors } } = props;
-  const { liftClassMetaData } = props;
   const classes = useStyles();
   const { numberOfGroups, className, setclassName, setnumberOfGroups } = props;
   const handleChange = (event) => {
@@ -44,7 +32,7 @@ function TextInput(props) {
 
   };
 
-  useEffect(() => {
+  useEffect((props) => {
     return () => {
       props.clearErrors();
     }

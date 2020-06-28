@@ -29,8 +29,8 @@ function PastCharts(props) {
 
   return (
     <div className={classes.flexContainer}>
-      {(oldCharts.length ===0 ) && <Typography variant= 'h5'> You have no additional charts in our database 😶. </Typography>}
-      {(oldCharts.length !==0 ) && chartsMarkup}
+      {(oldCharts.length === 0) && <Typography variant='h5'> You have no additional charts in our database <span role="img" aria-label = "emoji">😶</span>. </Typography>}
+      {(oldCharts.length !== 0) && chartsMarkup}
 
     </div>
   )

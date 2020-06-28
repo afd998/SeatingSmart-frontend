@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button } from '@material-ui/core';
+import { Button, FormGroup, FormControlLabel, Checkbox, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CasinoIcon from '@material-ui/icons/Casino';
-
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 const useStyles = makeStyles((theme) => ({
   button: {
     background: "red", /* For browsers that do not support gradients */
@@ -10,7 +10,41 @@ const useStyles = makeStyles((theme) => ({
     background: "-o-linear-gradient(right, orange, yellow, green, cyan, blue, violet)", /* For Opera 11.1 to 12.0 */
     background: "-moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet)", /* For Firefox 3.6 to 15 */
     background: "linear-gradient(to right, orange , yellow, green, cyan, blue, violet)", /* Standard syntax (must be last) */
-    textAlign: "center"
+    //display: "inline-block",
+    width: "150px",
+    margin: "20px 0px",
+
+
+  },
+  button2: {
+    width: "100px",
+    //display: "inline-block"
+    margin: "20px 0px 20px 0px",
+
+
+
+  },
+  or: {
+    //display: "inline-block"
+    margin: "20px 0px 0px 0px",
+
+
+
+  },
+  flexContainer: {
+    display: "flex",
+    textAlign: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+
+
+  },
+  FormGroup: {
+    display: "inline-block",
+    textAlign: "center",
+    ///flexDirection: "column",
+    //justifyContent: "center"
 
   }
 
@@ -19,7 +53,10 @@ const useStyles = makeStyles((theme) => ({
 function ChartGenerator(props) {
   const { students, numberOfGroups, setChart } = props;
   const classes = useStyles();
-
+  const [state, setState] = React.useState({
+    checkedA: false,
+    checkedB: false,
+  });
 
   const shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -36,12 +73,12 @@ function ChartGenerator(props) {
     return array;
   }
 
-  const handleClick = (event) => {
+  const randomize = (event) => {
     event.preventDefault();
     let localChart = [];
     let numStudents = students.length;
     let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
-    let localStudents = students;
+    let localStudents = JSON.parse(JSON.stringify(students));
     localStudents = shuffle(localStudents);
     for (var i = 0; i < numberOfGroups; i++) {
       localChart[i] = new Array(numStudentsPerGroup);
@@ -52,26 +89,256 @@ function ChartGenerator(props) {
         if (count < numStudents) {
           localChart[i][j] = localStudents[count];
         } else {
-          localChart[i][j] = {name: "EMPTY", gender: "N/A", POC: "N/A"};
+          localChart[i][j] = { name: "EMPTY", gender: "N/A", POC: "N/A" };
         }
         count++;
       }
     }
     for (let i = 0; i < numberOfGroups; i++) {
-      localChart[i] = {i: localChart[i]}
+      localChart[i] = { i: localChart[i] }
+    }
+    localChart = shuffle(localChart);
+    setChart(localChart);
+  }
+
+
+  const handleGo = (event) => {
+    if (state.checkedA && state.checkedB) {
+      event.preventDefault();
+
+      genderAndPoc();
+    }
+    else if (state.checkedA && !state.checkedB) {
+      event.preventDefault();
+
+      gender();
+    }
+    else if (!state.checkedA && state.checkedB) {
+      event.preventDefault();
+
+      poc();
+    }
+    else {
+      randomize(event);
+    }
+  }
+
+  const genderAndPoc = () => {
+    let compare = (a, b) => {
+      if (a.length <= b.length) {
+        return -1;
+      }
+      return 1;
+    }
+    let localChart = [];
+    let numStudents = students.length;
+    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
+    console.log(numStudentsPerGroup);
+    for (var i = 0; i < numberOfGroups; i++) {
+      localChart[i] = [];
+    }
+    let localStudents = JSON.parse(JSON.stringify(students));
+    localStudents = shuffle(localStudents);
+
+    let whiteGirls = localStudents.filter((student) => (student.gender !== "Male" && student.gender !== "1"));
+    let whiteGuys = localStudents.filter((student) => (student.gender === "Male" && student.gender !== "1"));
+    let pocGuys = localStudents.filter((student) => (student.gender === "Male" && student.gender === "1"));
+    let pocGirls = localStudents.filter((student) => (student.gender !== "Male" && student.gender === "1"));
+
+
+    localChart.sort(compare);
+    if (pocGuys.length % 2 === 1) {
+      localChart[0].push(pocGuys.pop());
+    }
+    while (pocGuys.length !== 0) {
+      for (let i = 0; i < numberOfGroups; i++) {
+        if (pocGuys.length !== 0 && localChart[i].length < numStudentsPerGroup - 1) {
+          localChart[i].push(pocGuys.pop());
+          localChart[i].push(pocGuys.pop());
+        }
+      }
+    }
+
+    localChart.sort(compare);
+    if (whiteGirls.length % 2 === 1) {
+      localChart[0].push(whiteGirls.pop());
+    }
+    while (whiteGirls.length !== 0) {
+      for (let i = 0; i < numberOfGroups; i++) {
+        if (whiteGirls.length !== 0 && localChart[i].length < numStudentsPerGroup - 1) {
+          localChart[i].push(whiteGirls.pop());
+          localChart[i].push(whiteGirls.pop());
+        }
+      }
+    }
+
+    while (pocGirls.length !== 0) {
+      for (let i = 0; i < numberOfGroups; i++) {
+        if (pocGirls.length !== 0 && localChart[i].length < numStudentsPerGroup - 1 && localChart[i].length !== 0) {
+          localChart[i].push(pocGirls.pop());
+        }
+      }
+    }
+
+    for (let i = 0; i < numberOfGroups; i++) {
+      while (localChart[i].length < numStudentsPerGroup - 1) {
+        localChart[i].push(whiteGuys.pop());
+      }
+    }
+
+    localChart = shuffle(localChart);
+    for (let i = numberOfGroups - 1; i >= 0; i--) {
+      if (localChart[i].length < numStudentsPerGroup && whiteGuys.length !== 0) {
+        localChart[i].push(whiteGuys.pop());
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      while (localChart[i].length < numStudentsPerGroup) {
+        localChart[i].push({ name: "EMPTY", gender: "N/A", POC: "N/A" });
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      localChart[i] = { i: localChart[i] }
     }
     setChart(localChart);
   }
 
+  const gender = () => {
+    let localChart = [];
+    let numStudents = students.length;
+    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
+    console.log(numStudentsPerGroup);
+    for (var i = 0; i < numberOfGroups; i++) {
+      localChart[i] = [];
+    }
+    let localStudents = JSON.parse(JSON.stringify(students));
+    localStudents = shuffle(localStudents);
+    let nonMales = localStudents.filter((student) => student.gender !== "Male");
+    let males = localStudents.filter((student) => student.gender === "Male");
+    if (nonMales.length % 2 === 1) {
+      localChart[0].push(nonMales.pop());
+    }
+    while (nonMales.length !== 0) {
+      for (let i = 0; i < numberOfGroups; i++) {
+        if (nonMales.length !== 0 && localChart[i].length < numStudentsPerGroup - 1) {
+          localChart[i].push(nonMales.pop());
+          localChart[i].push(nonMales.pop());
+        }
+      }
+    }
+
+    for (let i = 0; i < numberOfGroups; i++) {
+      console.log(localChart[i].length);
+      while (localChart[i].length < numStudentsPerGroup - 1) {
+        localChart[i].push(males.pop());
+      }
+    }
+
+    localChart = shuffle(localChart);
+    for (let i = numberOfGroups - 1; i >= 0; i--) {
+      if (localChart[i].length < numStudentsPerGroup && males.length !== 0) {
+        localChart[i].push(males.pop());
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      while (localChart[i].length < numStudentsPerGroup) {
+        localChart[i].push({ name: "EMPTY", gender: "N/A", POC: "N/A" });
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      localChart[i] = { i: localChart[i] }
+    }
+    setChart(localChart);
+
+  }
+
+
+  const poc = () => {
+    let localChart = [];
+    let numStudents = students.length;
+    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
+    console.log(numStudentsPerGroup);
+    for (var i = 0; i < numberOfGroups; i++) {
+      localChart[i] = [];
+    }
+    let localStudents = JSON.parse(JSON.stringify(students));
+    localStudents = shuffle(localStudents);
+    let pocs = localStudents.filter((student) => student.poc !== "0");
+    let whites = localStudents.filter((student) => student.poc === "0");
+    if (pocs.length % 2 === 1) {
+      localChart[0].push(pocs.pop());
+    }
+    while (pocs.length !== 0) {
+      for (let i = 0; i < numberOfGroups; i++) {
+        if (pocs.length !== 0 && localChart[i].length < numStudentsPerGroup - 1) {
+          localChart[i].push(pocs.pop());
+          localChart[i].push(pocs.pop());
+        }
+      }
+    }
+
+    for (let i = 0; i < numberOfGroups; i++) {
+      console.log(localChart[i].length);
+      while (localChart[i].length < numStudentsPerGroup - 1) {
+        localChart[i].push(whites.pop());
+      }
+    }
+    localChart = shuffle(localChart);
+    for (let i = numberOfGroups - 1; i >= 0; i--) {
+      if (localChart[i].length < numStudentsPerGroup && whites.length !== 0) {
+        localChart[i].push(whites.pop());
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      while (localChart[i].length < numStudentsPerGroup) {
+        localChart[i].push({ name: "EMPTY", gender: "N/A", POC: "N/A" });
+      }
+    }
+    for (let i = 0; i < numberOfGroups; i++) {
+      localChart[i] = { i: localChart[i] }
+    }
+    setChart(localChart);
+  }
+
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
   return (
-    <Button
-      variant="contained"
-      className={classes.button}
-      startIcon={<CasinoIcon />}
-      onClick={handleClick}
-    >
-      RANDOMIZE
+    <div className={classes.flexContainer}>
+      <Paper>
+
+      <FormGroup row className={classes.FormGroup}>
+        <FormControlLabel
+          control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
+          label="Don't isolate females"
+        />
+        <FormControlLabel
+          control={<Checkbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
+          label="Don't isolate people of color"
+        />
+      </FormGroup>
+      <Button
+        variant="contained"
+        className={classes.button2}
+        startIcon={<PlayArrowIcon />}
+        onClick={handleGo}
+      >
+        GO
     </Button>
+    </Paper>
+      <Typography elevation = {10} className= {classes.or}>- OR -</Typography>
+      <Button
+        variant="contained"
+        className={classes.button}
+        startIcon={<CasinoIcon />}
+        onClick={randomize}
+      >
+        RANDOMIZE
+    </Button>
+
+    </div>
   )
 }
 

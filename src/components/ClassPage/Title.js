@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-import { Route, Switch, Redirect, useRouteMatch, Link } from "react-router-dom";
-import EditClass from './EditClass';
-import { editClass } from '../../redux/actions/dataActions';
+import {Redirect } from "react-router-dom";
+import { changeClassName } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux'
-import { Button, InputBase, Grid, TextField, IconButton } from '@material-ui/core'
-import { Input } from '@material-ui/core'
+import {TextField, IconButton } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
 import { Typography } from '@material-ui/core'
@@ -85,7 +83,7 @@ function Title(props) {
       var changedClass = Object.assign({}, props.classroom);
       changedClass.oldClassName = props.classroom.className;
       changedClass.className = title;
-      props.editClass(changedClass, props.replaceClass);
+      props.changeClassName(changedClass, props.replaceClass);
     }
   }
 
@@ -146,7 +144,7 @@ function Title(props) {
 
 Title.propTypes = {
   UI: PropTypes.object.isRequired,
-  editClass: PropTypes.func.isRequired,
+  changeClassName: PropTypes.func.isRequired,
 
 };
 
@@ -154,4 +152,4 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-export default connect(mapStateToProps, { editClass })(Title);
+export default connect(mapStateToProps, { changeClassName })(Title);
