@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Button } from '@material-ui/core';
 import { Link } from "@material-ui/core";
 import { Grid } from "@material-ui/core"
-import AppIcon from "../images/icon.png"
+import AppIcon from "../images/icon2.png"
 import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import "../App.css";
@@ -19,6 +19,7 @@ import config from "../firebase.config.js";
 const styles = themeFile;
 firebase.initializeApp(config)
 var provider = new firebase.auth.GoogleAuthProvider();
+
 class login extends Component {
   constructor() {
     super();

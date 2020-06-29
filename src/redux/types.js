@@ -15,3 +15,6 @@ export const SET_CHARTS = 'SET_CHARTS'
 export const ADD_CHART = 'ADD_CHART'
 export const DELETE_CHART = 'DELETE_CHART'
 
+export const ADD_CLASS = 'ADD_CLASS'
+export const DELETE_CLASS = 'DELETE_CLASS'
+export const EDIT_CLASS = 'EDIT_CLASS'

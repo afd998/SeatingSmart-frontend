@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SaveIcon from '@material-ui/icons/Save';
-import { Paper } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core'
 import SuperList from '../createClass/SuperList'
 import PropTypes from 'prop-types';
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     //
     // minHeight: "400px",
     //flexGrow: 1,
-   // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
+    // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
     //margin: "2px 5px 2px 5px",
     textAlign: 'center',
 
@@ -53,21 +53,25 @@ const useStyles = makeStyles(theme => ({
   },
 
   textField: {
-    margin: '20px 0px 0px 0px',
+    margin: '20px 0px',
     textAlign: 'center',
-    minWidth: '400px'
+    //minWidth: '400px'
 
   },
+
   textinput: {
     //margin: '20px 0px 0px 0px',
     textAlign: 'center',
     maxWidth: '50px'
 
   },
+
 }));
 
 function EditClass(props) {
-  const { replaceClass, classToEdit } = props;
+  const {classToEdit} = props;
+  const {UI} = props;
+  const errors = UI.errors;
   const oldClassName = classToEdit.className;
   const classes = useStyles();
   const [className, setclassName] = React.useState(oldClassName);
@@ -81,14 +85,17 @@ function EditClass(props) {
     data: classToEdit.students,
   });
   const [numberOfGroups, setnumberOfGroups] = React.useState(classToEdit.numberOfGroups);
-  const [studentsPerGroup, setstudentsPerGroup] = React.useState(classToEdit.studentsPerGroup);
+  const handleGroupChange = (event) => {
+    event.preventDefault();
+    setnumberOfGroups(event.target.value);
+  }
 
   const finsishEditClass = () => {
     let students = tableData.data;
-    let newClass = { oldClassName, students, className, numberOfGroups, studentsPerGroup }
-    props.editClass(newClass, replaceClass);
-    props.setShowEdit(false);
+    let newClass = { oldClassName, students, className, numberOfGroups }
+    props.editClass(newClass, props.setShowEdit);
   }
+
   const handleClick = () => {
     props.setShowEdit(false);
   }
@@ -106,18 +113,35 @@ function EditClass(props) {
 
   return (
     <div>
-      <Paper className = {classes.paper}>
+      <Paper className={classes.paper}>
         <SuperList className={classes.superlist} state={tableData} setState={setTableData} />
-        {cancelButton}
-        <Button
-          size="large"
-          aria-label="finished"
-          className={classes.fab}
-          onClick={finsishEditClass}
-        >
-          <SaveIcon className={classes.icon} />
+        <div className={classes.flexContainer}>
+          <div className={classes.textField}>
+            <TextField
+              variant='outlined'
+              id='numberOfGroups'
+              name='numberOfGroups'
+              type='text'
+              label='Number of Groups'
+              value={numberOfGroups}
+              onChange={handleGroupChange}
+              helperText={errors ? errors.numberOfGroups : false}
+              error={(errors && errors.numberOfGroups) ? true : false}
+            ></TextField>
+          </div>
+          <div>
+            {cancelButton}
+            <Button
+              size="large"
+              aria-label="finished"
+              className={classes.fab}
+              onClick={finsishEditClass}
+            >
+              <SaveIcon className={classes.icon} />
                    Finished
         </Button>
+          </div>
+        </div>
       </Paper>
     </div>
   )

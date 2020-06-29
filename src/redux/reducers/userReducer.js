@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
     case SET_UNAUTHENTICATED:
       return initialState;
     case SET_USER:
+      console.log("setting user");
       return {
         authenticated: true,
         ...action.payload

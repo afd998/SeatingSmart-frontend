@@ -25,9 +25,9 @@ const useStyles = makeStyles(theme => ({
 
   },
   paper: {
-    minWidth: "400px",
-    padding: "30px 30px",
-    margin: "5% 100px",
+    //minWidth: "400px",
+    padding: "0px 0px",
+    margin: "0% 20px",
     // backgroundColor: '#FAACA8',
     // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
     // backgroundColor: "#CFFFEF",  /* fallback for old browsers */
@@ -43,7 +43,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     //margin: "10% 0px",
     textAlign: 'center',
-    padding: 'px 0px'
+    padding: 'px 0px',
+    flexBasis: "100%"
 
   },
 
@@ -51,7 +52,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    flexDirection: "column"
   },
   flexItemText: {
     flexBasis: "40%",
@@ -105,50 +107,51 @@ function NewChart(props) {
   }
 
   return (
-    <div>
-      <Paper elevation={2} className={classes.paper}>
-        <div className={classes.flexContainer}>
-          <div className={classes.flexItemText}>
-            <div className={classes.title}>
-              <Typography variant="h3"> Create a New Chart</Typography>
-            </div>
-            <TextInput
-              chartName={chartName}
-              setChartName={setChartName} />
-            <div className={classes.flexItemCancel}>
-              <Link to={props.cancelPath}>
-                <Button
-                  size="large"
-                  aria-label="cancel"
-                  className={classes.fab}
-                >
-                  <CancelIcon className={classes.icon} />
-                   Cancel
-            </Button>
-              </Link>
-            </div>
-            <div className={classes.flexItemButton}>
-              <Button
-                size="large"
-                color="primary"
-
-                aria-label="finished"
-                className={classes.fab}
-                onClick={finsishNewChart}
-              >
-                <SaveIcon className={classes.icon} />
-                   Finished
-            </Button>
-            </div>
+    <div className={classes.paper}>
+      <div className={classes.flexContainer}>
+        <div className={classes.flexItemText}>
+          <div className={classes.title}>
+            <Typography variant="h3"> Create a New Chart</Typography>
           </div>
-          <div className={classes.flexItem}>
-            {(chart.length !== 0) && <Chart chart={{ chart: chart }} />}
-            <div className={classes.flexItemButton}>
-              <ChartGenerator students={students} numberOfGroups={numberOfGroups} setChart={setChart} />
-            </div>
+          <TextInput
+            chartName={chartName}
+            setChartName={setChartName} />
+
+        </div>
+        <div className={classes.flexItem}>
+          {(chart.length !== 0) && <Chart chart={{ chart: chart }} />}
+          <div className={classes.flexItemButton}>
+            <ChartGenerator students={students} numberOfGroups={numberOfGroups} setChart={setChart} />
           </div>
         </div>
-      </Paper >
+        <div>
+          <div className={classes.flexItemCancel}>
+            <Link to={props.cancelPath}>
+              <Button
+                size="large"
+                aria-label="cancel"
+                className={classes.fab}
+              >
+                <CancelIcon className={classes.icon} />
+                   Cancel
+            </Button>
+            </Link>
+          </div>
+          <div className={classes.flexItemButton}>
+            <Button
+              size="large"
+              color="primary"
+
+              aria-label="finished"
+              className={classes.fab}
+              onClick={finsishNewChart}
+            >
+              <SaveIcon className={classes.icon} />
+                   Finished
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

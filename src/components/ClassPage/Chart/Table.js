@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     borderStyle: "solid",
     borderWidth: "5px",
+    borderRadius: "25px"
+
   }
 
 }));

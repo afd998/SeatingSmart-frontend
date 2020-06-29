@@ -16,40 +16,65 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
-    margin: "40px 0px",
+    margin: "0px 0px 0px 0px",
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-around",
-    alignItems: "flex-start",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    textAlign: "center"
+
+  },
+  flexContainer1: {
+    //margin: "40px 0px",
+    display: "flex",
+    flexDirection: "column",
+    //justifyContent: "center",
+    //alignItems: "center",
     textAlign: "center"
 
   },
   NewChartButton: {
-    //flexBasis: "5%",
-    width: "15%",
+    flexBasis: "20%",
+    //width: "15%",
     alignSelf: "center",
-    //margin: "20px 0px 0px 0px"
+    margin: "0px 0px 40px 0px",
+    padding: "0px 60px",
+    textAlign: "center",
+
   },
   currChart: {
+    minWidth: "300px",
     flexBasis: "40%",
+    flexShrink: "2",
+    margin: "0px 0px 50px 0px",
+    alignSelf: "center",
+
+
+
+  },
+  button: {
+    display: "inline-block"
+
 
   },
 
   EditWrapper: {
-    flexBasis: "40%"
+    flexBasis: "30%",
+    margin: "0px 60px"
 
   },
 
   PastChartsMain: {
     flexBasis: "100%",
-    display: "inline-block"
+    display: "inline-block",
+    margin: "50px 0px"
   }
 
 }));
 
 function ClassPage(props) {
 
-  useEffect((props) => {
+  useEffect(() => {
     props.getCharts(props.classroom.className);
   }, []);
 
@@ -65,19 +90,19 @@ function ClassPage(props) {
     </div>
 
   let classPage =
-    <div>
+    <div className={classes.flexContainer1}>
       <Title {...props} />
 
       <div className={classes.flexContainer}>
         <div className={classes.NewChartButton}>
-          <NewChartButton
+          <NewChartButton className={classes.button}
             route={`/class/${props.classroom.className}/new`} />
         </div>
         {currChart}
         <div className={classes.EditWrapper}>
           <EditWrapper
             classToEdit={props.classroom}
-            replaceClass={props.replaceClass} />
+          />
         </div>
       </div>
       <div className={classes.PastChartsMain}>

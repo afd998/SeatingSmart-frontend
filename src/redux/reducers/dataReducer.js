@@ -1,4 +1,4 @@
-import { SET_CURRCLASS, SET_CLASSES, ADD_CHART, SET_CHARTS, DELETE_CHART } from '../types';
+import { SET_CURRCLASS, EDIT_CLASS, DELETE_CLASS, ADD_CLASS, SET_CLASSES, ADD_CHART, SET_CHARTS, DELETE_CHART } from '../types';
 
 
 const initialState = {
@@ -17,11 +17,35 @@ export default function (state = initialState, action) {
         ...state,
         currClass: action.payload.className
       };
+    case ADD_CLASS:
+      return {
+        ...state,
+        classesArray: [...state.classesArray, action.payload]
+      };
+    case DELETE_CLASS:
+      return {
+        ...state,
+        classesArray: state.classesArray.filter((classs) => classs.className !== action.payload),
+      };
+    case EDIT_CLASS:
+      // let index = 0;
+      // while (index < state.classesArray.length) {
+      //   if (state.classesArray[index].className === action.payload.oldClassName) {
+      //     break;
+      //   }
+      //   index++;
+      // }
+
+      return {
+        ...state,
+        classesArray: state.classesArray.map(
+          (classs, i) => classs.className ===action.payload.oldClassName? (action.payload):(classs))
+      };
 
     case SET_CLASSES:
       return {
         ...state,
-        classesArray: action.payload.className,
+        classesArray: action.payload,
         loading: false
       };
 

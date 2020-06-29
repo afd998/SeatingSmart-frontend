@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-
-import {Redirect } from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import { changeClassName } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux'
 import {TextField, IconButton } from '@material-ui/core'
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   main: {
-    margin: '20px 0px 0px 0px',
+    margin: '0px 0px 30px 15px',
     ///display: "inline-block"
     display: "flex",
     flexWrap: "wrap",
@@ -52,6 +51,7 @@ function Title(props) {
   const [editing, setEditing] = React.useState("");
   const [title, setTitle] = React.useState(props.classroom.className);
   const [error, setError] = React.useState("");
+  const history = useHistory();
 
   let handleEdit = () => {
     setEditing(true);
@@ -83,7 +83,7 @@ function Title(props) {
       var changedClass = Object.assign({}, props.classroom);
       changedClass.oldClassName = props.classroom.className;
       changedClass.className = title;
-      props.changeClassName(changedClass, props.replaceClass);
+      props.changeClassName(changedClass, history);
     }
   }
 
@@ -125,7 +125,7 @@ function Title(props) {
     ) : (
       <Typography
         className={classes.title}
-        variant="h3"> {title}
+        variant="h4"> {title}
       </Typography>
     );
 

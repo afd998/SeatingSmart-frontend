@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
-    margin: "40px 0px",
+    margin: "20px 0px",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-evenly",
@@ -44,9 +44,9 @@ function PastChartsMain() {
 
   }
   let actionButton = !showPast ?
-    (<Button variant = "outlined" onClick={handleShow}> Past Charts </Button>) :
+    (<Button variant="outlined" onClick={handleShow}> Past Charts... </Button>) :
     (<div>
-      <Button  variant = "outlined" className={classes.button} onClick={handleHide}> Hide Past Charts </Button>
+      <Button variant="outlined" className={classes.button} onClick={handleHide}> Hide Past Charts </Button>
       <PastCharts />
     </div>);
 

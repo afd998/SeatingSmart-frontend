@@ -1,4 +1,4 @@
-import { SET_CURRCLASS, DELETE_CHART, SET_CLASSES, ADD_CHART, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
+import { EDIT_CLASS, SET_CURRCLASS, DELETE_CLASS, DELETE_CHART, SET_CLASSES, ADD_CLASS, ADD_CHART, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
 import axios from 'axios';
 
 
@@ -18,6 +18,7 @@ export const getClasses = () => (dispatch) => {
     });
   });
 }
+
 
 export const getCharts = (className) => (dispatch) => {
 
@@ -61,18 +62,17 @@ export const addChart = (newChart, history) => (dispatch) => {
     });
   });
 }
-export const addClass = (newClass, getNewClassInfo, history) => (dispatch) => {
+export const addClass = (newClass, history) => (dispatch) => {
   //dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("new class structure", newClass);
   axios.post('/addclass', newClass).then((res) => {
     console.log(res.data);
-    getNewClassInfo(newClass);
     history.push("/");
-    // dispatch({
-    //   type: SET_CLASSES,
-    //   payload: newClass
-    // })
+    dispatch({
+      type: ADD_CLASS,
+      payload: newClass
+    })
   }).catch(err => {
     dispatch({
       type: SET_ERRORS,
@@ -82,17 +82,19 @@ export const addClass = (newClass, getNewClassInfo, history) => (dispatch) => {
 
 }
 
-export const editClass = (newClass, replaceClass) => (dispatch) => {
-  //dispatch({ type: LOADING_UI });
+export const editClass = (newClass, setShowEdit) => (dispatch) => {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("edited class structure", newClass);
   axios.post('/editclass', newClass).then((res) => {
-    replaceClass(newClass);
+    console.log(".then() on axios edit");
+    console.log(res.data);
+    setShowEdit(false);
     dispatch({
-      type: SET_CLASSES,
+      type: EDIT_CLASS,
       payload: newClass
     })
   }).catch(err => {
+    console.log(".catch() on axios edit");
     if (err.response) {
       dispatch({
         type: SET_ERRORS,
@@ -103,16 +105,16 @@ export const editClass = (newClass, replaceClass) => (dispatch) => {
 
 }
 
-export const changeClassName = (newClass, replaceClass) => (dispatch) => {
+export const changeClassName = (newClass, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   console.log("edited class structure", newClass);
   axios.post('/changeclassname', newClass).then((res) => {
-    replaceClass(newClass);
     dispatch({
-      type: SET_CLASSES,
+      type: EDIT_CLASS,
       payload: newClass
     })
+    history.push(`/class/${newClass.className}`)
   }).catch(err => {
     console.log(err.response);
     if (err.response) {
@@ -125,12 +127,15 @@ export const changeClassName = (newClass, replaceClass) => (dispatch) => {
 
 }
 
-export const deleteClass = (body) => (dispatch) => {
+export const deleteClass = (className) => (dispatch) => {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
-  axios.delete('/deleteclass', body, {
+  axios.delete('/deleteclass',{data: {className: className}}, {
     headers: { 'content-type': 'application/json', },
   }).then((res) => {
-    console.log(res);
+    dispatch({
+      type: DELETE_CLASS,
+      payload: className
+    })
   }).catch((err) => console.log(err));
 
 }

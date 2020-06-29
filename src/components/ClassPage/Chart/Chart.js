@@ -7,26 +7,34 @@ import { Card, CardContent, CardActions } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { deleteChart } from '../../../redux/actions/dataActions';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteDialog from '../../../util/DeleteDialog';
 
 import Table from './Table';
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center"
   },
   text: {
-    textAlign: "center"
+    textAlign: "center",
+    margin: "10px 0px 10px 0px"
 
   },
 
   paper: {
-    padding: "20px 20px"
+    //padding: "20px 20px"
 
+  },
+  flexItem: {
+    //flexBasis: "100%",
+    flexShrink: "2"
   }
 }));
 function Chart(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
   const { chart } = props;
   const data = chart.chart;
   console.log(chart);
@@ -36,13 +44,17 @@ function Chart(props) {
         <Table students={table.i} />
       </div>);
 
-  let handleClick = () => {
-    props.deleteChart({ data: props.chart });
+  const handleClick = () => {
+    setOpen(true);
   }
+  const handleCloseDel = () => {
+    setOpen(false);
+  }
+
   return (
     <Card className={classes.paper}>
       <CardContent>
-        <Typography variant="h4" className={classes.text}> {chart.chartName}</Typography>
+        <Typography variant="h5" className={classes.text}> {chart.chartName}</Typography>
         <div className={classes.flexContainer}>
           {chartMarkup}
         </div>
@@ -52,6 +64,7 @@ function Chart(props) {
           <DeleteIcon />
         </IconButton>
       </CardActions>}
+      <DeleteDialog type="chart" data={{ data: props.chart }} open={open} onClose={handleCloseDel} />
     </Card>
   )
 }

@@ -8,7 +8,8 @@ import ChartCard from './ChartCard';
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
-    display: "flex"
+    display: "flex",
+    margin: "20px 0px 20px 50px"
   }
 }));
 

@@ -22,6 +22,11 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 const useStyles = makeStyles(theme => ({
   superlist: {
+    //width: "50%",
+    textAlign: "center",
+    margin: "0 0 0 0%",
+    flexShrink: 2,
+    padding: "dense"
 
   },
   root: {
@@ -94,8 +99,13 @@ export default function SuperList(props) {
   return (
     <div className = {classes.superlist}>
       <MaterialTable
+        style = {{
+          textAlign: "center",
+          margin: "0 10% 0 10%",
+          width: "80%"
+        }}
+        padding =  "dense"
         options = {{search: false}}
-        className = {classes.superlist}
         icons={tableIcons}
         title="Add Some Students ➡️"
         columns={state.columns}

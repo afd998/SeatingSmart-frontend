@@ -2,6 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// var DEBUG = false;
+// if(!DEBUG){
+//     if(!window.console) window.console = {};
+//     var methods = ["log", "debug", "warn", "info"];
+//     for(var i=0;i<methods.length;i++){
+//         console[methods[i]] = function(){};
+//     }
+// }
 
 ReactDOM.render(<App/>, document.getElementById('root'));
 

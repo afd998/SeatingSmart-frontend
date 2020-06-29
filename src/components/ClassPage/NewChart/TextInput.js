@@ -31,7 +31,7 @@ function TextInput(props) {
 
   };
 
-  useEffect((props) => {
+  useEffect(() => {
     return () => {
       props.clearErrors();
     }

@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, FormGroup, FormControlLabel, Checkbox, Typography, Paper } from '@material-ui/core';
+import { Link, Button, FormGroup, FormControlLabel, Checkbox, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CasinoIcon from '@material-ui/icons/Casino';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import LearnMore from './LearnMore';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     background: "red", /* For browsers that do not support gradients */
@@ -24,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
 
 
   },
+  link: {
+    flexBasis: "100%",
+
+
+  },
   or: {
     //display: "inline-block"
     margin: "20px 0px 0px 0px",
@@ -40,12 +47,15 @@ const useStyles = makeStyles((theme) => ({
 
 
   },
-  FormGroup: {
-    display: "inline-block",
+  form: {
     textAlign: "center",
+    margin: "0px 10px 0px 0px"
     ///flexDirection: "column",
     //justifyContent: "center"
 
+  },
+  paper: {
+    padding: "20px 0px"
   }
 
 }));
@@ -57,6 +67,14 @@ function ChartGenerator(props) {
     checkedA: false,
     checkedB: false,
   });
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
 
   const shuffle = (array) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -73,8 +91,7 @@ function ChartGenerator(props) {
     return array;
   }
 
-  const randomize = (event) => {
-    event.preventDefault();
+  const randomize = () => {
     let localChart = [];
     let numStudents = students.length;
     let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
@@ -103,22 +120,21 @@ function ChartGenerator(props) {
 
 
   const handleGo = (event) => {
+    event.preventDefault();
     if (state.checkedA && state.checkedB) {
-      event.preventDefault();
 
       genderAndPoc();
     }
     else if (state.checkedA && !state.checkedB) {
-      event.preventDefault();
 
       gender();
     }
     else if (!state.checkedA && state.checkedB) {
-      event.preventDefault();
 
       poc();
     }
     else {
+
       randomize(event);
     }
   }
@@ -132,8 +148,11 @@ function ChartGenerator(props) {
     }
     let localChart = [];
     let numStudents = students.length;
-    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
-    console.log(numStudentsPerGroup);
+    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups);
+    if (numStudentsPerGroup === 1) {
+      randomize();
+      return;
+    }
     for (var i = 0; i < numberOfGroups; i++) {
       localChart[i] = [];
     }
@@ -206,8 +225,11 @@ function ChartGenerator(props) {
   const gender = () => {
     let localChart = [];
     let numStudents = students.length;
-    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
-    console.log(numStudentsPerGroup);
+    let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups);
+    if (numStudentsPerGroup === 1) {
+      randomize();
+      return;
+    }
     for (var i = 0; i < numberOfGroups; i++) {
       localChart[i] = [];
     }
@@ -257,7 +279,10 @@ function ChartGenerator(props) {
     let localChart = [];
     let numStudents = students.length;
     let numStudentsPerGroup = Math.ceil(numStudents / numberOfGroups)
-    console.log(numStudentsPerGroup);
+    if (numStudentsPerGroup === 1) {
+      randomize();
+      return;
+    }
     for (var i = 0; i < numberOfGroups; i++) {
       localChart[i] = [];
     }
@@ -268,15 +293,19 @@ function ChartGenerator(props) {
     if (pocs.length % 2 === 1) {
       localChart[0].push(pocs.pop());
     }
+    console.log("here");
+
     while (pocs.length !== 0) {
       for (let i = 0; i < numberOfGroups; i++) {
+        console.log("here");
         if (pocs.length !== 0 && localChart[i].length < numStudentsPerGroup - 1) {
+          console.log("here");
           localChart[i].push(pocs.pop());
           localChart[i].push(pocs.pop());
         }
       }
     }
-
+    console.log("here");
     for (let i = 0; i < numberOfGroups; i++) {
       console.log(localChart[i].length);
       while (localChart[i].length < numStudentsPerGroup - 1) {
@@ -298,6 +327,7 @@ function ChartGenerator(props) {
       localChart[i] = { i: localChart[i] }
     }
     setChart(localChart);
+    return;
   }
 
 
@@ -307,28 +337,34 @@ function ChartGenerator(props) {
 
   return (
     <div className={classes.flexContainer}>
-      <Paper>
+      <Paper className={classes.paper}>
+        <div className={classes.flexContainer}>
 
-      <FormGroup row className={classes.FormGroup}>
-        <FormControlLabel
-          control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
-          label="Don't isolate females"
-        />
-        <FormControlLabel
-          control={<Checkbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
-          label="Don't isolate people of color"
-        />
-      </FormGroup>
-      <Button
-        variant="contained"
-        className={classes.button2}
-        startIcon={<PlayArrowIcon />}
-        onClick={handleGo}
-      >
-        GO
-    </Button>
-    </Paper>
-      <Typography elevation = {10} className= {classes.or}>- OR -</Typography>
+          {/* <FormGroup column className={classes.FormGroup}> */}
+          <FormControlLabel
+            control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
+            label="Don't isolate non-males"
+          />
+          <FormControlLabel className={classes.form}
+            control={<Checkbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
+            label="Don't isolate people of color"
+          />
+          {/* </FormGroup> */}
+          <Button
+            variant="contained"
+            className={classes.button2}
+            startIcon={<PlayArrowIcon />}
+            onClick={handleGo}
+          >
+            GO
+          </Button>
+          <Link className={classes.link} color="primary" onClick={handleClickOpen}>
+            Learn More
+          </Link>
+          <LearnMore open={open} onClose={handleClose} />
+        </div>
+      </Paper>
+      <Typography elevation={10} className={classes.or}>- OR -</Typography>
       <Button
         variant="contained"
         className={classes.button}

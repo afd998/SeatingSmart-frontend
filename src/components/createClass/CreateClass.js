@@ -26,9 +26,10 @@ const useStyles = makeStyles(theme => ({
 
   },
   paper: {
-    minWidth: "400px",
-    padding: "30px 30px",
-    margin: "5% 100px",
+    // minWidth: "400px",
+    //width: "50%",
+    textAlign: "center",
+    //margin: "5% 300px",
     // backgroundColor: '#FAACA8',
     // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
     //backgroundColor: "#CFFFEF",  /* fallback for old browsers */
@@ -44,21 +45,23 @@ const useStyles = makeStyles(theme => ({
   title: {
     //margin: "10% 0px",
     textAlign: 'center',
-    padding: 'px 0px'
+    margin: '0px 0px 20px 0px'
 
   },
 
   flexContainer: {
     display: "flex",
+    flexDirection: 'column',
     flexWrap: "wrap",
     justifyContent: "space-around",
     alignItems: "center"
   },
   flexItemText: {
     flexBasis: "40%",
+    width: "90%"
   },
   flexItem: {
-    flexBasis: "40%",
+    margin: "20px 0px"
   },
   flexItemCancel: {
     //flexBasis: "50%",
@@ -88,8 +91,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CreateClass(props) {
-  let history=useHistory();
-  const { getNewClassInfo } = props;
+  let history = useHistory();
   const classes = useStyles();
   const [className, setclassName] = React.useState("");
   const [students_state, setStudents_state] = React.useState({
@@ -108,12 +110,12 @@ function CreateClass(props) {
   const finsishCreateClass = () => {
     let students = students_state.data;
     let newClass = { students, className, numberOfGroups, studentsPerGroup }
-    props.addClass(newClass, getNewClassInfo, history);
+    props.addClass(newClass, history);
   }
 
   return (
-    <div>
-      <Paper elevation={2} className={classes.paper}>
+    <div className={classes.paper} >
+    {/* <Paper elevation={2} className={classes.paper}> */}
 
         <div className={classes.flexContainer}>
           <div className={classes.flexItemText}>
@@ -127,39 +129,43 @@ function CreateClass(props) {
               setstudentsPerGroup={setstudentsPerGroup}
               className={className}
               setclassName={setclassName} />
-            <div className={classes.flexItemCancel}>
-              <Link to='/'>
-                <Button
-                  size="large"
-                  aria-label="cancel"
-                  className={classes.fab}
-                >
-                  <CancelIcon className={classes.icon} />
-                   Cancel
-            </Button>
-              </Link>
-            </div>
-            <div className={classes.flexItemButton}>
-              <Button
-                size="large"
-                color="primary"
-
-                aria-label="finished"
-                className={classes.fab}
-                onClick={finsishCreateClass}
-              >
-                <SaveIcon className={classes.icon} />
-                   Finished
-            </Button>
-            </div>
           </div>
           <div className={classes.flexItem}>
             <SuperList className={classes.superlist} state={students_state} setState={setStudents_state} />
           </div>
-
-
         </div>
-      </Paper >
+
+
+        <div>
+          <div className={classes.flexItemCancel}>
+            <Link to='/'>
+              <Button
+                size="large"
+                aria-label="cancel"
+                className={classes.fab}
+              >
+                <CancelIcon className={classes.icon} />
+                   Cancel
+            </Button>
+            </Link>
+          </div>
+          <div className={classes.flexItemButton}>
+            <Button
+              size="large"
+              color="primary"
+
+              aria-label="finished"
+              className={classes.fab}
+              onClick={finsishCreateClass}
+            >
+              <SaveIcon className={classes.icon} />
+                   Finished
+            </Button>
+          </div>
+        </div>
+
+
+      {/* </Paper > */}
     </div>
   )
 }

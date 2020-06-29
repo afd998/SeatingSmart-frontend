@@ -2,23 +2,22 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/userActions";
 import { getClasses } from '../redux/actions/dataActions';
+import { getUserData } from '../redux/actions/userActions';
+
 import Class from '../components/HomeUtil/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
 import CreateClass from "../components/createClass/CreateClass";
 import CreateClassButton from "../components/HomeUtil/CreateClassButton";
 import ClassRoute from "../components/HomeUtil/ClassRoute";
-import AppIcon from "../images/icon.png"
+import AppIcon from "../images/icon2.png"
 
 //import themeFile from "../util/theme"
 
-
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import { IconButton } from '@material-ui/core'
+import { IconButton, CircularProgress } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
@@ -28,34 +27,38 @@ const styles = {
   image: {
     //margin: '10px 10px 10px 10px',
     height: '40px',
-    width: '40px'
+    width: '40px',
+    margin: '30px 30px 10px 30px',
   },
   class: {
     margin: '50px 50px 50px 50px',
     padding: 20
   },
   logout: {
-    float: "right",
-    position: "fixed",
-    margin: '0px 0 2% 92%',
-    bottom: 0,
+    margin: "0px 0px 0px 85%",
+    //position: "fixed",
+    // margin: '0px 0 2% 92%',
+    //bottom: 0,
+    alignSelf: "flex-end"
   },
   root: {
-    //border: 10,
-    //borderRadius: 3,
-    padding: '30px 30px 30px 30px',
-    height: '100%'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   noClassesMessage: {
     textAlgin: "center",
+    margin: '20px 10px 20px 10px',
+
 
   },
   welcome: {
     textAlgin: "center",
-    margin: "3% 30%"
-    // left: "100px",
-    //margin: "50px 100px 0px 100px"
+    margin: "3% 0%"
   },
+ 
+
+
   flexContainer: {
     display: "flex",
     flexWrap: "wrap",
@@ -64,12 +67,12 @@ const styles = {
 
   },
   flexItem: {
-    //height: "200px"
+    margin: "0px 0px 30px 0px",
     flexBasis: "250px"
   },
   createClass: {
     //height: "200px",
-    margin: "0 50px"
+    margin: "0 50px 30px 50px"
 
   }
 };
@@ -79,46 +82,19 @@ export class home extends Component {
   constructor(props) {
     super(props);
     // Don't call this.setState() here!
-    this.state =  {
-      classes: "init",
-      loading: true,
-      classToEdit: "",
+    this.state = {
     }
   }
 
   componentDidMount() {
-    console.log("home component mounted");
     let token = localStorage.getItem('FBIdToken');
     if (!token) {
       window.location.href = '/login';
     }
-    axios.defaults.headers.common['Authorization'] = token;
-    axios.get('/getclasses').then(res => {
-      this.setState({ classes: res.data.classes, loading: false });
-    }).catch((err) => {
-      console.log("error getting classes");
-    });
+    this.props.getClasses();
+    this.props.getUserData();
   }
 
-  replaceClass = (newClass) => {
-    this.setState((oldstate) => {
-      let newState = oldstate.classes.slice()
-      const result = newState.filter(classs => classs.className !== newClass.oldClassName);
-      delete newClass.oldClassName;
-      result.push(newClass);
-      this.props.history.push(`/class/${newClass.className}`);
-
-      return { classes: result };
-    });
-  }
-
-  updateStateDelete = (className) => {
-    this.setState((oldstate) => {
-      let newState = oldstate.classes;
-      const result = newState.filter(classs => classs.className !== className);
-      return { classes: result };
-    });
-  }
 
   handleLogout = () => {
     this.props.logoutUser();
@@ -126,30 +102,17 @@ export class home extends Component {
   };
 
 
-  getNewClassInfo = (newClass) => {
-    this.setState((oldstate) => {
-      let e = oldstate.classes;
-      e.push(newClass);
-      return { classes: e };
-    }
-    );
-  };
-
-
   render() {
     const { classes } = this.props;
-    ///DISPLAY CREAT CLASS OR BUTTON
-    let createClass = <Grid item >
-      <CreateClass getNewClassInfo={this.getNewClassInfo.bind(this)} />
-    </Grid>;
+    const classesArray = this.props.classesArray ? (this.props.classesArray) : (null);
+    const instructorName = this.props.user.credentials ? (this.props.user.credentials.instructorName) : (null);
 
-    let classesMarkup = this.state.classes === "init" ? (
+    let classesMarkup = (!this.props.classesArray) ? (
       <ClassSkeleton />
     ) : (
-
-        this.state.classes.map((classs) =>
+        classesArray.map((classs) =>
           <div className={classes.flexItem} key={classs.className}>
-            <Class  className={classes.class} class={classs} updateState={this.updateStateDelete.bind(this)} />
+            <Class className={classes.class} class={classs} />
           </div>
         ));
 
@@ -160,7 +123,6 @@ export class home extends Component {
       </Typography>
       </div>
 
-console.log(this.props.user);
     return (
       <div className={classes.root}>
         <Link to={`/`}>
@@ -172,22 +134,21 @@ console.log(this.props.user);
             />
           </Tooltip>
         </Link>
-
-        {(this.props.location.pathname === '/') && (this.props.user) && (<Typography variant="h3" align="center" className={classes.welcome}> Welcome back {this.props.user.credentials.instructorName}! </Typography>)}
+        {(this.props.location.pathname === '/') && (instructorName) && (<Typography variant="h4" align="center" className={classes.welcome}> {`Welcome back ${instructorName}!`} </Typography>)}
         <div className={classes.flexContainer}>
           {(this.props.location.pathname === '/') && classesMarkup}
-          {(this.props.location.pathname === '/') && (this.state.loading === false) && (this.state.classes.length === 0) && noClassesMessage}
+          {(this.props.location.pathname === '/') && (classesArray) && (classesArray.length === 0) && noClassesMessage}
           <div className={classes.createClass}>
-            {(this.props.location.pathname === '/') && (!this.state.displayEditClass) && <CreateClassButton />}
+            {(this.props.location.pathname === '/') && <CreateClassButton />}
           </div>
         </div>
 
         <Switch>
           <Route exact path="/new">
-            {createClass}
+            <CreateClass />
           </Route>
           <Route path={`/class/:URLclassName`}>
-            <ClassRoute allClasses={this.state.classes} replaceClass={this.replaceClass.bind(this)} />
+            <ClassRoute />
           </Route>
           <Route path="/">
             <Redirect to="/" />
@@ -214,10 +175,10 @@ home.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.data,
+  classesArray: state.data.classesArray,
   user: state.user
 });
 
-const mapActionToProps = { logoutUser, getClasses };
+const mapActionToProps = { logoutUser, getClasses, getUserData };
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(home));

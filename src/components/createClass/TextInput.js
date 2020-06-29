@@ -9,7 +9,7 @@ import { clearErrors } from '../../redux/actions/uiActions';
 const useStyles = makeStyles(theme => ({
   textField: {
     margin: '10px 0px 20px 0px',
-    width: "100%"
+    width: "30%"
   },
 }));
 
@@ -32,7 +32,7 @@ function TextInput(props) {
 
   };
 
-  useEffect((props) => {
+  useEffect(() => {
     return () => {
       props.clearErrors();
     }
@@ -61,7 +61,7 @@ function TextInput(props) {
           id='numberOfGroups'
           name='numberOfGroups'
           type='text'
-          label='Number of Groups/Tables'
+          label='Number of Groups'
           className={classes.textField}
           value={numberOfGroups}
           onChange={handleChange}
