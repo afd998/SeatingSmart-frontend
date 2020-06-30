@@ -42,6 +42,7 @@ function ClassRoute(props) {
   if (allClasses.length===0) {
       return <div className={classes.title}> <CircularProgress /> </div>;
   } else {
+    
     let found = false;
     allClasses.forEach(element => {
       if (element.className === URLclassName) {

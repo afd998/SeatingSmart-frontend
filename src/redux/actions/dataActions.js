@@ -1,9 +1,9 @@
-import { EDIT_CLASS, SET_CURRCLASS, DELETE_CLASS, DELETE_CHART, SET_CLASSES, ADD_CLASS, ADD_CHART, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
+import { EDIT_CLASS, LOADING_DATA, SET_CURRCLASS, DELETE_CLASS, DELETE_CHART, SET_CLASSES, ADD_CLASS, ADD_CHART, SET_CHARTS, SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
 import axios from 'axios';
 
 
 export const getClasses = () => (dispatch) => {
-  dispatch({ type: LOADING_UI });
+  dispatch({ type: LOADING_DATA });
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
   axios.get('/getclasses').then(res => {
     console.log(res.data.classes)
@@ -16,6 +16,14 @@ export const getClasses = () => (dispatch) => {
       type: SET_CLASSES,
       payload: []
     });
+  });
+}
+export const provideFeedback = (message) => (dispatch) => {
+  axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
+  axios.post('/providefeedback', {message: message}).then(res => {
+    console.log(res.data.classes)
+  }).catch((err) => {
+    console.log(err.response.data);
   });
 }
 
@@ -129,7 +137,7 @@ export const changeClassName = (newClass, history) => (dispatch) => {
 
 export const deleteClass = (className) => (dispatch) => {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('FBIdToken');
-  axios.delete('/deleteclass',{data: {className: className}}, {
+  axios.delete('/deleteclass', { data: { className: className } }, {
     headers: { 'content-type': 'application/json', },
   }).then((res) => {
     dispatch({

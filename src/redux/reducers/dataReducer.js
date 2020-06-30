@@ -1,4 +1,4 @@
-import { SET_CURRCLASS, EDIT_CLASS, DELETE_CLASS, ADD_CLASS, SET_CLASSES, ADD_CHART, SET_CHARTS, DELETE_CHART } from '../types';
+import { SET_CURRCLASS, LOADING_DATA, EDIT_CLASS, DELETE_CLASS, ADD_CLASS, SET_CLASSES, ADD_CHART, SET_CHARTS, DELETE_CHART } from '../types';
 
 
 const initialState = {
@@ -12,11 +12,15 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_CURRCLASS:
-      console.log("here");
       return {
         ...state,
         currClass: action.payload.className
       };
+      case LOADING_DATA:
+        return {
+          ...state,
+          loading: true
+        };
     case ADD_CLASS:
       return {
         ...state,

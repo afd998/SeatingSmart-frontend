@@ -3,16 +3,28 @@ import { Fab } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+
 import AddIcon from '@material-ui/icons/Add';
 const useStyles = makeStyles(theme => ({
   root: {
     // borderStyle: 'solid',
     //borderWidth: '1px',
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+
+   
+
+
   },
   button: {
-   
+    borderRadius: "50%",
+    border: "3px dashed  #FFFFFF",
+
+    /// width: "5000px",
+    height: "55px",
+    backgroundColor: "#03a9f4",
+
   },
   text: {
     textAlign: "center",
@@ -25,13 +37,13 @@ export default function NewChartButton(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-    {/* <Typography className={classes.text} >Create a New Chart</Typography> */}
+      {/* <Typography className={classes.text} >Create a New Chart</Typography> */}
       <Tooltip title="New Chart" placement="top">
-      <Link to={props.route}>
-        <Fab className={classes.button} color="primary" >
-          <AddIcon />
-        </Fab>
-      </Link>
+        <Link to={props.route}>
+          <Fab className={classes.button} color="primary" >
+            <AddIcon  style={{ color: green[50] }} />
+          </Fab>
+        </Link>
       </Tooltip>
     </div>
   )

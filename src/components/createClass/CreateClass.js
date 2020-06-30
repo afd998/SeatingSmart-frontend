@@ -79,7 +79,8 @@ const useStyles = makeStyles(theme => ({
   textField: {
     margin: '20px 0px 0px 0px',
     textAlign: 'center',
-    minWidth: '400px'
+    minWidth: '400px',
+    
 
   },
   textinput: {
@@ -120,7 +121,7 @@ function CreateClass(props) {
         <div className={classes.flexContainer}>
           <div className={classes.flexItemText}>
             <div className={classes.title}>
-              <Typography variant="h3"> Create a New Class</Typography>
+              <Typography variant="h3"> Create a New Class <span role='img' aria-label="emoji"> 📓</span></Typography>
             </div>
             <TextInput
               numberOfGroups={numberOfGroups}

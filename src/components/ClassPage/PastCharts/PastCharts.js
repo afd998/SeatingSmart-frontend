@@ -9,7 +9,9 @@ import ChartCard from './ChartCard';
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: "flex",
-    margin: "20px 0px 20px 50px"
+    justifyContent: "center",
+    alignItem: "center",
+    margin: "20px 0px 20px 0px"
   }
 }));
 

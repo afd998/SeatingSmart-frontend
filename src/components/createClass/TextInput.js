@@ -9,7 +9,8 @@ import { clearErrors } from '../../redux/actions/uiActions';
 const useStyles = makeStyles(theme => ({
   textField: {
     margin: '10px 0px 20px 0px',
-    width: "30%"
+    width: "30%",
+    minWidth: "300px"
   },
 }));
 

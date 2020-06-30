@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
+import { green } from '@material-ui/core/colors';
 
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
@@ -19,9 +20,12 @@ import AppIcon from "../images/icon2.png"
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton, CircularProgress } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
+import {Link as LinkM} from '@material-ui/core';
 import { Link } from 'react-router-dom';
+
 import { Typography } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
+import Feedback from '../components/HomeUtil/Feedback';
 
 const styles = {
   image: {
@@ -35,16 +39,26 @@ const styles = {
     padding: 20
   },
   logout: {
-    margin: "0px 0px 0px 85%",
-    //position: "fixed",
-    // margin: '0px 0 2% 92%',
-    //bottom: 0,
-    alignSelf: "flex-end"
+    //margin: "0px 40px 20px 85%",
+    position: "fixed",
+    margin: '0px 10px 30px 0%',
+    bottom: "0",
+    right: "0",
+    //alignSelf: "flex-end",
+    borderRadius: "800%",
+    border: "3px dashed  #FFFFFF",
+
+    //width: "200px",
+    //height: "200px",
+    backgroundColor: "#03a9f4",
+
   },
   root: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    position: "relative",
+
   },
   noClassesMessage: {
     textAlgin: "center",
@@ -56,7 +70,7 @@ const styles = {
     textAlgin: "center",
     margin: "3% 0%"
   },
- 
+
 
 
   flexContainer: {
@@ -70,9 +84,14 @@ const styles = {
     margin: "0px 0px 30px 0px",
     flexBasis: "250px"
   },
+  feedbackFlex: {
+    margin: "30% 0px 0px 0px",
+    flexBasis: "100%",
+    textAlign: "center"
+  },
   createClass: {
     //height: "200px",
-    margin: "0 50px 30px 50px"
+    margin: "0 50px 30px 50px",
 
   }
 };
@@ -83,6 +102,7 @@ export class home extends Component {
     super(props);
     // Don't call this.setState() here!
     this.state = {
+      feedback: false
     }
   }
 
@@ -100,14 +120,24 @@ export class home extends Component {
     this.props.logoutUser();
     this.props.history.push('/login')
   };
+  handleOpenFeedback = () => {
+    this.setState({ feedback: true });
+
+  };
+  handleCloseFeedback = () => {
+    this.setState({ feedback: false });
+
+  };
+
 
 
   render() {
     const { classes } = this.props;
     const classesArray = this.props.classesArray ? (this.props.classesArray) : (null);
     const instructorName = this.props.user.credentials ? (this.props.user.credentials.instructorName) : (null);
+    const loading = this.props.loading ? (this.props.loading) : (false);
 
-    let classesMarkup = (!this.props.classesArray) ? (
+    let classesMarkup = (this.props.loading) ? (
       <ClassSkeleton />
     ) : (
         classesArray.map((classs) =>
@@ -137,12 +167,18 @@ export class home extends Component {
         {(this.props.location.pathname === '/') && (instructorName) && (<Typography variant="h4" align="center" className={classes.welcome}> {`Welcome back ${instructorName}!`} </Typography>)}
         <div className={classes.flexContainer}>
           {(this.props.location.pathname === '/') && classesMarkup}
-          {(this.props.location.pathname === '/') && (classesArray) && (classesArray.length === 0) && noClassesMessage}
+          {(this.props.location.pathname === '/') && (!loading) && (classesArray.length === 0) && noClassesMessage}
           <div className={classes.createClass}>
             {(this.props.location.pathname === '/') && <CreateClassButton />}
           </div>
+          {(this.props.location.pathname === '/') && < div className={classes.feedbackFlex}>
+            <LinkM className={classes.feedback} color="primary" onClick={this.handleOpenFeedback.bind(this)}>
+              Provide Feedback...
+          </LinkM>
+          </div>}
         </div>
 
+        <Feedback open={this.state.feedback} onClose={this.handleCloseFeedback.bind(this)} />
         <Switch>
           <Route exact path="/new">
             <CreateClass />
@@ -158,7 +194,7 @@ export class home extends Component {
         <div className={classes.logout}>
           <Tooltip title="Logout" placement="top">
             <IconButton size="medium" onClick={this.handleLogout}>
-              <KeyboardReturn color="primary" />
+              <KeyboardReturn style={{ color: green[50] }} />
             </IconButton>
           </Tooltip>
         </div>
@@ -169,14 +205,14 @@ export class home extends Component {
 
 home.propTypes = {
   getClasses: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
+  classesArray: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
-
 };
 
 const mapStateToProps = (state) => ({
   classesArray: state.data.classesArray,
-  user: state.user
+  user: state.user,
+  loading: state.data.loading
 });
 
 const mapActionToProps = { logoutUser, getClasses, getUserData };

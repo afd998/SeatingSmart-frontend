@@ -51,7 +51,7 @@ const styles = (theme) => ({
 const ClassSkeleton = (props) => {
   const { classes } = props;
 
-  const content = Array.from({ length: 3 }).map((item, index) => (
+  const content = Array.from({ length: 2 }).map((item, index) => (
     <Card className={classes.card} key={index}>
       <CardContent className={classes.cardContent}>
         <div className={classes.handle} />
