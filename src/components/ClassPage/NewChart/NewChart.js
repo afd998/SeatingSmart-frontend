@@ -12,7 +12,7 @@ import { Button } from '@material-ui/core'
 import PropTypes from 'prop-types';
 import TextInput from './TextInput';
 import ChartGenerator from './ChartGenerator';
-import { addChart } from '../../../redux/actions/dataActions';
+import { addChart } from '../../redux/actions/dataActions';
 import Chart from '../Chart/Chart';
 
 const useStyles = makeStyles(theme => ({

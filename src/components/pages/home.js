@@ -8,12 +8,12 @@ import { logoutUser } from "../redux/actions/userActions";
 import { getClasses } from '../redux/actions/dataActions';
 import { getUserData } from '../redux/actions/userActions';
 
-import Class from '../components/HomeUtil/Class'
+import Class from '../HomeUtil/Class'
 import ClassSkeleton from '../util/ClassSkeleton';
-import CreateClass from "../components/createClass/CreateClass";
-import CreateClassButton from "../components/HomeUtil/CreateClassButton";
-import ClassRoute from "../components/HomeUtil/ClassRoute";
-import AppIcon from "../images/icon2.png"
+import CreateClass from "../createClass/CreateClass";
+import CreateClassButton from "../HomeUtil/CreateClassButton";
+import ClassRoute from "../HomeUtil/ClassRoute";
+import AppIcon from "../../images/icon2.png"
 
 //import themeFile from "../util/theme"
 
@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 
 import { Typography } from '@material-ui/core';
 import { Tooltip } from '@material-ui/core';
-import Feedback from '../components/HomeUtil/Feedback';
+import Feedback from '../HomeUtil/Feedback';
 
 const styles = {
   image: {
@@ -85,7 +85,7 @@ const styles = {
     flexBasis: "250px"
   },
   feedbackFlex: {
-    margin: "30% 0px 0px 0px",
+    margin: "20% 0px 0px 0px",
     flexBasis: "100%",
     textAlign: "center"
   },

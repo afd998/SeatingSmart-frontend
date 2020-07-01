@@ -55,7 +55,7 @@ export default function SimpleTable(props) {
       <TableContainer className={classes.table} component={Paper}>
         <Typography variant="h5" className={classes.title}> Students </Typography>
 
-        <Table aria-label="simple table">
+        <Table size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>

@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core'
 import SuperList from '../createClass/SuperList'
 import PropTypes from 'prop-types';
 
-import { editClass } from "../../redux/actions/dataActions";
+import { editClass } from "../redux/actions/dataActions";
 
 const useStyles = makeStyles(theme => ({
   superlist: {

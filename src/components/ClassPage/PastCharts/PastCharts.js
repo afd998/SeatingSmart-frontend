@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { deleteChart } from '../../../redux/actions/dataActions';
+import { deleteChart } from '../../redux/actions/dataActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 

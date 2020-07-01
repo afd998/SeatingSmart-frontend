@@ -8,10 +8,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     borderStyle: "solid",
     borderWidth: "5px",
-    borderRadius: "25px"
+    borderRadius: "25px",
+    
+
+  },
+  item: {
+   
+    fontSize: "1px",
+    variant: "h6"
 
   }
-
 }));
 function Table(props) {
   const { students } = props;
@@ -20,14 +26,14 @@ function Table(props) {
   let listMarkup =
     students.map((student, index) =>
       <div key={index}>
-        <ListItem>
-          <ListItemText primary={student.name} secondary={`Gender: ${student.gender}, POC: ${student.poc === "1" ? ("yes") : ("No")}`} />
+        <ListItem dense ={true}>
+          <ListItemText primaryTypographyProps= {{variant: "subtitle2"}} primary={student.name} secondary={`Gender: ${student.gender} POC: ${student.poc === "1" ? ("Yes") : ("No")}`} />
         </ListItem>
       </div>);
 
   return (
-    <div>
-      <List className={classes.root}>
+    <div class>
+      <List dense={true} disablePadding= {true} className={classes.root}>
         {listMarkup}
       </List>
     </div>

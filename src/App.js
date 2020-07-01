@@ -1,21 +1,21 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import themeFile from "./util/theme"
+import themeFile from "./components/util/theme"
 import "./App.css";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles/";
 import { CssBaseline } from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import jwtDecode from "jwt-decode";
-import AuthRoute from './util/AuthRoute'
+import AuthRoute from './components/util/AuthRoute'
 //PAGES
-import home from "./pages/home";
-import login from "./pages/login";
-import signup from "./pages/signup";
+import home from "./components/pages/home";
+import login from "./components/pages/login/login";
+import signup from "./components/pages/signup";
 //REDUX
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import { SET_AUTHENTICATED } from './redux/types';
-import { logoutUser, getUserData } from "./redux/actions/userActions";
+import store from './components/redux/store';
+import { SET_AUTHENTICATED } from './components/redux/types';
+import { logoutUser, getUserData } from "./components/redux/actions/userActions";
 import axios from "axios";
 const theme = createMuiTheme(themeFile);
 const token = localStorage.FBIdToken;

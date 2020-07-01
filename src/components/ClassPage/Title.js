@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import {Redirect, useHistory} from "react-router-dom";
-import { changeClassName } from '../../redux/actions/dataActions';
+import { changeClassName } from '../redux/actions/dataActions';
 import { connect } from 'react-redux'
 import {TextField, IconButton } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';

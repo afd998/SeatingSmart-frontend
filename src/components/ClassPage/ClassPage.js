@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from "react-router-dom";
 import EditWrapper from './EditWrapper';
-import { getCharts } from '../../redux/actions/dataActions';
+import { getCharts } from '../redux/actions/dataActions';
 import Title from './Title';
 import Chart from './Chart/Chart';
 import NewChart from './NewChart/NewChart';

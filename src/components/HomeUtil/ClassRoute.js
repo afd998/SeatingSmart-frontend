@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
-import FourOFour from '../../util/FourOFour';
+import FourOFour from '../util/FourOFour';
 import ClassPage from '../ClassPage/ClassPage';
 import { makeStyles } from '@material-ui/core/styles'
 import { CircularProgress } from '@material-ui/core'
@@ -42,7 +42,7 @@ function ClassRoute(props) {
   if (allClasses.length===0) {
       return <div className={classes.title}> <CircularProgress /> </div>;
   } else {
-    
+
     let found = false;
     allClasses.forEach(element => {
       if (element.className === URLclassName) {

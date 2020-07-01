@@ -13,7 +13,7 @@ import TextInput from './TextInput';
 import SuperList from './SuperList'
 import PropTypes from 'prop-types';
 
-import { addClass } from "../../redux/actions/dataActions";
+import { addClass } from "../redux/actions/dataActions";
 
 
 const useStyles = makeStyles(theme => ({

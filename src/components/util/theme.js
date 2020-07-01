@@ -3,27 +3,62 @@ export default {
     textAlign: "center"
   },
   container: {
-   background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
-   margin: '20px auto 20px auto',
-   height: '150px',
-   width: '150px'
+    background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
+    margin: '20px 0px 20px 0px',
+    height: '150px',
+    width: '150px'
+
+  },
+  demoContainer: {
+    //background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
+    //margin: '200px 0px 20px 0px',
+
+
+    height: '100%',
+    //width: '150px'
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  demo: {
+
+  },
+  container: {
+    background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
+    margin: '20px 0px 20px 0px',
+    height: '150px',
+    width: '150px'
+
+  },
+  flexContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
 
   },
   root: {
     background: '#a5d6a7',
-  //   border: 0,
-  //   borderRadius: 3,
-  //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  //   color: 'white',
-  //   height: 48,
-  //   padding: '0 30px',
+    //   border: 0,
+    //   borderRadius: 3,
+    //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    //   color: 'white',
+    //   height: 48,
+    //   padding: '0 30px',
   },
   classesGrid: {
     flexGrow: 1
   },
-  
+
   form: {
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '20px 20px 0px 20px'
+  },
+  login: {
+    textAlign: 'center',
+    padding: '80px 0px 0px 0px'
   },
   image: {
     margin: '20px auto 20px auto',
@@ -42,7 +77,9 @@ export default {
     margin: '10px auto 10px auto'
   },
   textField: {
-    margin: '0px 6px 20px 0px'
+    margin: '0px 30px 20px 0px',
+    textAlign: "center"
+
 
   },
   button: {
@@ -58,7 +95,7 @@ export default {
   progress: {
     position: 'absolute'
   },
-  
+
   palette: {
     type: 'light',
     primary: {
@@ -73,10 +110,10 @@ export default {
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
-    error:{
+    error: {
       main: "#ff1744"
     },
-    action:{
+    action: {
       main: "#ffffff"
     },
     // Used by `getContrastText()` to maximize the contrast between

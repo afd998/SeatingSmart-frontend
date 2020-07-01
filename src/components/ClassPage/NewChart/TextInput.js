@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core'
-import { clearErrors } from '../../../redux/actions/uiActions';
+import { clearErrors } from '../../redux/actions/uiActions';
 
 const useStyles = makeStyles(theme => ({
   textField: {

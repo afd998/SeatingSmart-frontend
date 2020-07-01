@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
 
   },
   button: {
-    borderRadius: "50%",
-    border: "3px dashed  #FFFFFF",
+    // borderRadius: "50%",
+    // border: "3px dashed  #FFFFFF",
 
     /// width: "5000px",
     height: "55px",

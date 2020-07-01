@@ -1,5 +1,5 @@
 import React from 'react';
-import DeleteDialog from '../../util/DeleteDialog';
+import DeleteDialog from '../util/DeleteDialog';
 import { connect } from "react-redux"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -13,7 +13,7 @@ import { Typography } from '@material-ui/core';
 import { CardHeader } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { deleteClass } from '../../redux/actions/dataActions';
+import { deleteClass } from '../redux/actions/dataActions';
 
 const useStyles = makeStyles((theme) => ({
   header: {

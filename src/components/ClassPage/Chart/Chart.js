@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { Card, CardContent, CardActions } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
-import { deleteChart } from '../../../redux/actions/dataActions';
+import { deleteChart } from '../../redux/actions/dataActions';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DeleteDialog from '../../../util/DeleteDialog';
+import DeleteDialog from '../../util/DeleteDialog';
 
 import Table from './Table';
 const useStyles = makeStyles((theme) => ({
@@ -53,19 +53,30 @@ function Chart(props) {
 
   return (
     <Card className={classes.paper}>
-      <CardContent>
-        <Typography variant="h5" className={classes.text}> {chart.chartName}</Typography>
-        <div className={classes.flexContainer}>
-          {chartMarkup}
-        </div>
-      </CardContent>
-      {props.showDel && <CardActions>
-        <IconButton onClick={handleClick} size="small">
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>}
+      {props.handleClose &&
+        <CardContent onClick={props.handleClose}>
+          <Typography variant="h5" className={classes.text}> {chart.chartName}</Typography>
+          <div className={classes.flexContainer}>
+            {chartMarkup}
+          </div>
+        </CardContent>}
+      {!props.handleClose &&
+        < CardContent >
+          <Typography variant="h5" className={classes.text}> {chart.chartName}</Typography>
+          <div className={classes.flexContainer}>
+            {chartMarkup}
+          </div>
+        </CardContent>}
+
+      {
+        props.showDel && <CardActions>
+          <IconButton onClick={handleClick} size="small">
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      }
       <DeleteDialog type="chart" data={{ data: props.chart }} open={open} onClose={handleCloseDel} />
-    </Card>
+    </Card >
   )
 }
 

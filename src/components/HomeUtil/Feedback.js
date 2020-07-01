@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 import { TextField } from '@material-ui/core';
-import { provideFeedback } from '../../redux/actions/dataActions';
+import { provideFeedback } from '../redux/actions/dataActions';
 
 const useStyles = makeStyles({
 

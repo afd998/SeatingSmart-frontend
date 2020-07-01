@@ -40,9 +40,9 @@ export default function LearnMore(props) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle className={classes.title}>How It Works</DialogTitle>
-      <Typography variant="body1" className={classes.body}> <p> Choosing to "not isolate" a specific category of people
+      <Typography variant="body1" align = "center" className={classes.body}> <p> Choosing to "not isolate" a specific category of people
       (be it non-males or non-whites) will insure that each group/table has
-        either zero or more than one representitve from that category of poeple.</p> </Typography>
+        either zero or at least two representitves from that category of poeple. </p> </Typography>
     </Dialog>
   );
 }

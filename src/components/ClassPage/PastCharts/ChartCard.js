@@ -56,7 +56,7 @@ function ChartCard(props) {
 
   const { chartName, createdAt } = props.chart;
   let markup = showChart ?
-    (<Paper onClick={handleClose} className={classes.root}><Chart showDel chart={props.chart} /></Paper>) :
+    (<Paper  className={classes.root}><Chart handleClose = {handleClose} showDel chart={props.chart} /></Paper>) :
     (
       <Card onClick={handleOpen} className={classes.root} variant="outlined" >
         <CardContent>

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 //MUI STUFF
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core'
-import { clearErrors } from '../../redux/actions/uiActions';
+import { clearErrors } from '../redux/actions/uiActions';
 const useStyles = makeStyles(theme => ({
   textField: {
     margin: '10px 0px 20px 0px',
