@@ -22,6 +22,19 @@ import { logoutUser, getUserData } from "./components/redux/actions/userActions"
 import axios from "axios";
 var theme = createMuiTheme(themeFile);
 theme = responsiveFontSizes(theme);
+
+theme.typography.h1 = {
+  fontWeight: "normal",
+  fontSize: '3.5rem',
+  '@media (min-width:600px)': {
+    fontSize: '5.5rem',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '6.4rem',
+  },
+
+};
+
 const token = localStorage.FBIdToken;
 
 axios.defaults.baseURL = 'https://us-central1-seatingsmart-15114.cloudfunctions.net/api';

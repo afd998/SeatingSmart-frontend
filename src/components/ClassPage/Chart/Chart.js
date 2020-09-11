@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
   paper: {
     //padding: "20px 20px"
+    backgroundColor: "#17A398"
 
   },
   flexItem: {

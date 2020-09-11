@@ -7,6 +7,11 @@ const useStyles = makeStyles((theme) => ({
   about: {
     margin: "60px auto",
     maxWidth: "700px",
+    padding: "0px 30px"
+  },
+  about2: {
+    
+    
   },
 
 }));

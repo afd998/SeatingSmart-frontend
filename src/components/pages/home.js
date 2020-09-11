@@ -76,12 +76,13 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2B2D42"
+    backgroundColor: "#662C91"
 
   },
   flexItem: {
     margin: "0px 30px 0px 30px",
-    flexBasis: "250px"
+    flexBasis: "250px",
+    backgroundColor: "#F38D68"
   },
   feedback: {
     margin: "400px 0px 0px 0px",
@@ -185,7 +186,7 @@ export class home extends Component {
               </div>
             </div>
             {(this.props.location.pathname === '/') && < div className={classes.feedback}>
-              <LinkM color="primary" onClick={this.handleOpenFeedback.bind(this)}>
+              <LinkM styles={{margin: "20px"}} color="secondary" onClick={this.handleOpenFeedback.bind(this)}>
                 Provide Feedback...
           </LinkM>
             </div>}

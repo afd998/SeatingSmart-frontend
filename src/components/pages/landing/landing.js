@@ -4,7 +4,6 @@ import { Typography, Card, CardContent } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom';
 import AppIcon from "../../../images/icon2.png"
-import Kids from "../../../images/children2.png"
 import Container from "../../util/Container"
 
 import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core'
@@ -19,10 +18,12 @@ const useStyles = makeStyles((theme) => ({
   },
   h1: {
     margin: "60px 30px 0px 30px",
+    color: "#33312E"
 
   },
   h2: {
     margin: "0px 30px 80px 30px",
+    color: "#33312E"
 
   },
   menuButton: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cards: {
     backgroundSize: "cover",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#662C91",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-around",
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     backgroundSize: "cover",
-    backgroundColor: "#000000",
+    backgroundColor: "#33312E",
     margin: "20px 20px",
     flexBasis: "300px",
     flexShrink: "3",
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   title: {
-    color: "#F8F32B",
+    color: "#EE6C4D",
     flexGrow: 1,
   },
   demo: {
@@ -95,7 +96,7 @@ function Landing() {
               Create gender and race-conscious seating charts and teams to increase innovation and productivity.
               </Typography>
             <Typography className={classes.body} variant="body2" component="p">
-            Generate random seating charts and teams that don't isolate female students, non-binary students, or students of color.
+            Generate seating charts and teams that don't isolate female students, non-binary students, or students of color.
             </Typography>
           </CardContent>
         </Card>

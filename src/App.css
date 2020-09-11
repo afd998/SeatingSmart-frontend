@@ -1,6 +1,7 @@
  
 .app{
-  background-color: #ffffff;
+  background-color: #17A398;
+
 }
 html,
 body {
@@ -14,6 +15,8 @@ body {
   margin: 0 auto 0 auto;
   max-width: 1500px;
   min-height: 800px;
+  background-color: #17A398
+
   /* background-color: #8EC5FC;
   background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%); */
 

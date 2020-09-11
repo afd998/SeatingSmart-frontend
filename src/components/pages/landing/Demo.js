@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   wrap: {
 
     margin: "30px 20px",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#EE6C4D"
   }
 }));
 function Demo() {

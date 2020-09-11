@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100px",
     //display: "inline-block"
     margin: "20px 0px 20px 0px",
-
+    backgroundColor: "#662C91"
 
 
   },
@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
 
   },
   paper: {
-    padding: "20px 0px"
+    padding: "20px 0px",
+    backgroundColor: "#F38D68"
   }
 
 }));

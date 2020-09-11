@@ -38,7 +38,8 @@ const styles = (theme) => ({
     alignItems: 'center',
     alignContent: 'center',
     maxWidth: "300px",
-    margin: "0 auto"
+    margin: "0 auto",
+    backgroundColor: "#17A398"
 
   },
   form: {

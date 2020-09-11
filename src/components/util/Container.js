@@ -7,7 +7,7 @@ import { AppBar, Toolbar, IconButton, Button } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   background: {
     backgroundSize: "cover",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F38D68",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",

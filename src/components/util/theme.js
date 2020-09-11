@@ -58,7 +58,7 @@ export default {
 
   },
   root: {
-    //background: '#a5d6a7',
+    backgroundColor: "#17A398"
     //   border: 0,
     //   borderRadius: 3,
     //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -105,13 +105,13 @@ export default {
     type: 'light',
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#000000',
+      main: '#17A398',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       light: '#ffffff',
-      main: '#2B2D42',
+      main: '#EE6C4D',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
