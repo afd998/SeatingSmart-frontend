@@ -4,16 +4,26 @@ import { Card, CardHeader, IconButton, Fab, CardContent } from '@material-ui/cor
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ChartGenerator from '../../ClassPage/NewChart/ChartGenerator';
 import Chart from '../../ClassPage/Chart/Chart';
-import Students from './students';
+import Students from './Students';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: "50% 0px 20px 0px"
+    textAlign: "center",
+    margin: "100px auto 100px auto",
   },
   card: {
-    margin: "0px 0px 0px 0px"
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+
+  },
+  wrap: {
+
+    margin: "30px 20px",
+    backgroundColor: "#FFFFFF"
   }
 }));
 function Demo() {
@@ -32,8 +42,8 @@ function Demo() {
   }
 
   let demo =
-    <div className={classes.card}>
-      <Card>
+    <div >
+      <Card className={classes.wrap}>
         <CardHeader titleTypographyProps={{ align: "left" }}
           subheaderTypographyProps={{ align: "justify" }}
           action={
@@ -54,14 +64,15 @@ function Demo() {
         </CardContent>
       </Card>
     </div>
-  let button = <Fab 
-  variant="extended" 
-  className={classes.button} 
-  onClick={handleOpen}
+  let button = <div className = {classes.button}> <Fab
+    variant="extended"
+
+    onClick={handleOpen}
   >
     <PlayArrowIcon className={classes.extendedIcon} />
       Show Me a Demo
       </Fab>
+  </div>
 
 
   return (

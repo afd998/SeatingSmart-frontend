@@ -14,7 +14,7 @@ import { Typography } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 50,
-    maxWidth: 400,
+    maxWidth: 700,
     //margin: "0% 10%",
     display: "inline-block"
 

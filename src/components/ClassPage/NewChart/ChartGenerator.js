@@ -349,7 +349,6 @@ function ChartGenerator(props) {
             control={<Checkbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
             label="Don't isolate people of color"
           />
-          {/* </FormGroup> */}
           <Button
             variant="contained"
             className={classes.button2}

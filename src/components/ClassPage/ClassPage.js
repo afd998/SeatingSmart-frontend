@@ -59,9 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   EditWrapper: {
-    flexBasis: "30%",
-    margin: "0px 60px"
-
+    margin: "0px 30px"
   },
 
   PastChartsMain: {
@@ -93,17 +91,15 @@ function ClassPage(props) {
     <div className={classes.flexContainer1}>
       <Title {...props} />
 
-      <div className={classes.flexContainer}>
-        <div className={classes.NewChartButton}>
-          <NewChartButton className={classes.button}
-            route={`/class/${props.classroom.className}/new`} />
-        </div>
-        {currChart}
-        <div className={classes.EditWrapper}>
-          <EditWrapper
-            classToEdit={props.classroom}
-          />
-        </div>
+      {currChart}
+      <div className={classes.NewChartButton}>
+        <NewChartButton className={classes.button}
+          route={`/class/${props.classroom.className}/new`} />
+      </div>
+      <div className={classes.EditWrapper}>
+        <EditWrapper
+          classToEdit={props.classroom}
+        />
       </div>
       <div className={classes.PastChartsMain}>
         <PastChartsMain />

@@ -25,7 +25,8 @@ const useStyles = makeStyles({
     textAlign: "center"
   },
   body: {
-    padding: "0px 20px"
+    padding: "0px 20px",
+    margin: "0px 0px 20px 0px"
   },
   textField: {
     //textAlign: "center",
@@ -62,7 +63,7 @@ function Feedback(props) {
   return (
     <Dialog className={classes.root} onClose={handleClose} open={open}>
       <DialogTitle className={classes.title}>We would love to hear about your expirience!</DialogTitle>
-      <Typography variant="body1" className={classes.body}>  Below you can tell us about any issues you've been having with SeatSmart. We are also open to suggestions!.      </Typography>
+      <Typography variant="body1" className={classes.body}>  Below you can tell us about any issues you've been having with SeatSmart. We are also open to suggestions!</Typography>
 
       <TextField
         fullWidth

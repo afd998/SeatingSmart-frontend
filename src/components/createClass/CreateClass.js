@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SaveIcon from '@material-ui/icons/Save';
 import { Typography } from '@material-ui/core';
-import { Paper } from '@material-ui/core';
 import { Button } from '@material-ui/core'
 import TextInput from './TextInput';
 import SuperList from './SuperList'
@@ -54,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     flexWrap: "wrap",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    margin: "0px auto"
   },
   flexItemText: {
     flexBasis: "40%",

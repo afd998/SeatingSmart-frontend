@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 import { Typography } from '@material-ui/core';
-import { Card, CardContent, CardActions } from '@material-ui/core';
+import { Card, CardContent, CardActions, Paper } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { deleteChart } from '../../redux/actions/dataActions';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -52,7 +52,7 @@ function Chart(props) {
   }
 
   return (
-    <Card className={classes.paper}>
+    <Paper className={classes.paper} elevation={0} >
       {props.handleClose &&
         <CardContent onClick={props.handleClose}>
           <Typography variant="h5" className={classes.text}> {chart.chartName}</Typography>
@@ -76,7 +76,7 @@ function Chart(props) {
         </CardActions>
       }
       <DeleteDialog type="chart" data={{ data: props.chart }} open={open} onClose={handleCloseDel} />
-    </Card >
+    </Paper >
   )
 }
 

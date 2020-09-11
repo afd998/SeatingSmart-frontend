@@ -8,26 +8,18 @@ import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    borderRadius:"50%",
-    border: "3px dashed  #FFFFFF",
-
-   /// width: "5000px",
-     height: "60px",
-    backgroundColor: "#03a9f4",
-
+    margin: "auto 0px"
   }
 }));
 
 export default function CreateClassButton(props) {
   const classes = useStyles();
   return (
-    <div >
+    <div className = {classes.button} >
       <Tooltip title="New Class" placement="top">
         <Link to='/new'>
-          <Fab variant="extended"
-            size="large"
+          <Fab
             color="primary"
-            className= {classes.button}
             onClick={props.displayCreateClass}>
             <AddIcon style={{ color: green[50] }}  />
           </Fab>

@@ -1,9 +1,27 @@
+
 export default {
+  typography: {
+    fontFamily: [
+      
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    fontSize: 20,
+    baseLineHeight: 10,
+    headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+
+  },
   SeatSmart: {
     textAlign: "center"
   },
   container: {
-    background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
+    //background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
     margin: '20px 0px 20px 0px',
     height: '150px',
     width: '150px'
@@ -26,10 +44,10 @@ export default {
 
   },
   container: {
-    background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
+    //background: 'linear-gradient(45deg, #00c853 30%, #a5d6a7 90%)',
     margin: '20px 0px 20px 0px',
     height: '150px',
-    width: '150px'
+    width: '150px',
 
   },
   flexContainer: {
@@ -40,13 +58,13 @@ export default {
 
   },
   root: {
-    background: '#a5d6a7',
+    //background: '#a5d6a7',
     //   border: 0,
     //   borderRadius: 3,
     //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     //   color: 'white',
     //   height: 48,
-    //   padding: '0 30px',
+
   },
   classesGrid: {
     flexGrow: 1
@@ -56,20 +74,7 @@ export default {
     textAlign: 'center',
     padding: '20px 20px 0px 20px'
   },
-  login: {
-    textAlign: 'center',
-    padding: '80px 0px 0px 0px'
-  },
-  image: {
-    margin: '20px auto 20px auto',
-    height: '150px',
-    width: '150px'
-  },
-  google: {
-    margin: '20px auto 20px auto',
-    height: '10px',
-    width: '10px'
-  },
+  
   signup: {
     margin: '20px auto 20px auto'
   },
@@ -100,13 +105,13 @@ export default {
     type: 'light',
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#03a9f4',
+      main: '#000000',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       light: '#ffffff',
-      main: '#bdbdbd',
+      main: '#2B2D42',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },

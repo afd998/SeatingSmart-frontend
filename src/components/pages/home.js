@@ -20,7 +20,7 @@ import AppIcon from "../../images/icon2.png"
 import { withStyles } from '@material-ui/core/styles';
 import { IconButton, CircularProgress } from '@material-ui/core'
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
-import {Link as LinkM} from '@material-ui/core';
+import { Link as LinkM } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import { Typography } from '@material-ui/core';
@@ -29,29 +29,27 @@ import Feedback from '../HomeUtil/Feedback';
 
 const styles = {
   image: {
-    //margin: '10px 10px 10px 10px',
+    margin: '9px 0px 0px 0px',
     height: '40px',
     width: '40px',
-    margin: '30px 30px 10px 30px',
+ 
   },
   class: {
     margin: '50px 50px 50px 50px',
     padding: 20
   },
+  bar:{
+    display: "flex",
+    flexDirection: "row",
+  },
   logout: {
-    //margin: "0px 40px 20px 85%",
-    position: "fixed",
-    margin: '0px 10px 30px 0%',
-    bottom: "0",
-    right: "0",
-    //alignSelf: "flex-end",
-    borderRadius: "800%",
-    border: "3px dashed  #FFFFFF",
-
-    //width: "200px",
-    //height: "200px",
-    backgroundColor: "#03a9f4",
-
+    float: "right",
+    width: "50%",
+    margin: "20px"
+  },
+  homeCont: {
+    margin: "20px",
+    width: "50%",
   },
   root: {
     display: "flex",
@@ -77,21 +75,20 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#2B2D42"
 
   },
   flexItem: {
-    margin: "0px 0px 30px 0px",
+    margin: "0px 30px 0px 30px",
     flexBasis: "250px"
   },
-  feedbackFlex: {
-    margin: "20% 0px 0px 0px",
-    flexBasis: "100%",
+  feedback: {
+    margin: "400px 0px 0px 0px",
     textAlign: "center"
   },
   createClass: {
-    //height: "200px",
-    margin: "0 50px 30px 50px",
+    margin: "auto 0px"
 
   }
 };
@@ -109,7 +106,7 @@ export class home extends Component {
   componentDidMount() {
     let token = localStorage.getItem('FBIdToken');
     if (!token) {
-      window.location.href = '/login';
+      window.location.href = '/home';
     }
     this.props.getClasses();
     this.props.getUserData();
@@ -118,7 +115,7 @@ export class home extends Component {
 
   handleLogout = () => {
     this.props.logoutUser();
-    this.props.history.push('/login')
+    this.props.history.push('/home')
   };
   handleOpenFeedback = () => {
     this.setState({ feedback: true });
@@ -132,6 +129,10 @@ export class home extends Component {
 
 
   render() {
+    let token = localStorage.getItem('FBIdToken');
+    if (!token) {
+      window.location.href = '/home';
+    }
     const { classes } = this.props;
     const classesArray = this.props.classesArray ? (this.props.classesArray) : (null);
     const instructorName = this.props.user.credentials ? (this.props.user.credentials.instructorName) : (null);
@@ -148,57 +149,62 @@ export class home extends Component {
 
     const noClassesMessage =
       <div className={classes.noClassesMessage}>
-        <Typography variant="h5" className={classes.noClassesMessage}>
+        <Typography variant="h6" className={classes.noClassesMessage}>
           Hey, looks like you haven't made any classes. Press the + to make some!
       </Typography>
       </div>
 
     return (
       <div className={classes.root}>
-        <Link to={`/`}>
-          <Tooltip title="Home" placement="right">
-            <img
-              src={AppIcon}
-              className={classes.image}
-              alt="app icon"
-            />
-          </Tooltip>
-        </Link>
-        {(this.props.location.pathname === '/') && (instructorName) && (<Typography variant="h4" align="center" className={classes.welcome}> {`Welcome back ${instructorName}!`} </Typography>)}
-        <div className={classes.flexContainer}>
-          {(this.props.location.pathname === '/') && classesMarkup}
-          {(this.props.location.pathname === '/') && (!loading) && (classesArray.length === 0) && noClassesMessage}
-          <div className={classes.createClass}>
-            {(this.props.location.pathname === '/') && <CreateClassButton />}
-          </div>
-          {(this.props.location.pathname === '/') && < div className={classes.feedbackFlex}>
-            <LinkM className={classes.feedback} color="primary" onClick={this.handleOpenFeedback.bind(this)}>
-              Provide Feedback...
+        {token &&
+          <div>
+            <div className={classes.bar}>
+              <Link className = {classes.homeCont} to={`/`}>
+                <Tooltip title="Home" placement="right">
+                  <img
+                    src={AppIcon}
+                    className={classes.image}
+                    alt="app icon"
+                  />
+                </Tooltip>
+              </Link>
+              <div className={classes.logout}>
+                <Tooltip title="Logout" placement="left">
+                  <IconButton style={{float: "right"}} size="medium" onClick={this.handleLogout}>
+                    <KeyboardReturn />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            </div>
+            {(this.props.location.pathname === '/') && (instructorName) && (<Typography variant="h4" align="center" className={classes.welcome}> {`Welcome back ${instructorName}!`} </Typography>)}
+            <div className={classes.flexContainer}>
+              {(this.props.location.pathname === '/') && classesMarkup}
+              {(this.props.location.pathname === '/') && (!loading) && (classesArray.length === 0) && noClassesMessage}
+              <div className={classes.createClass}>
+                {(this.props.location.pathname === '/') && <CreateClassButton />}
+              </div>
+            </div>
+            {(this.props.location.pathname === '/') && < div className={classes.feedback}>
+              <LinkM color="primary" onClick={this.handleOpenFeedback.bind(this)}>
+                Provide Feedback...
           </LinkM>
-          </div>}
-        </div>
+            </div>}
+            <Feedback open={this.state.feedback} onClose={this.handleCloseFeedback.bind(this)} />
+            <Switch>
+              <Route exact path="/new">
+                <CreateClass />
+              </Route>
+              <Route path={`/class/:URLclassName`}>
+                <ClassRoute />
+              </Route>
+              <Route path="/">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
 
-        <Feedback open={this.state.feedback} onClose={this.handleCloseFeedback.bind(this)} />
-        <Switch>
-          <Route exact path="/new">
-            <CreateClass />
-          </Route>
-          <Route path={`/class/:URLclassName`}>
-            <ClassRoute />
-          </Route>
-          <Route path="/">
-            <Redirect to="/" />
-          </Route>
-        </Switch>
 
-        <div className={classes.logout}>
-          <Tooltip title="Logout" placement="top">
-            <IconButton size="medium" onClick={this.handleLogout}>
-              <KeyboardReturn style={{ color: green[50] }} />
-            </IconButton>
-          </Tooltip>
-        </div>
-      </div >
+          </div >}
+      </div>
     )
   }
 }
