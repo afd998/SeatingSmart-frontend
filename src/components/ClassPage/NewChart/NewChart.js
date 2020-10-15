@@ -140,7 +140,7 @@ function NewChart(props) {
           <div className={classes.flexItemButton}>
             <Button
               size="large"
-              color="primary"
+              color="secondary"
 
               aria-label="finished"
               className={classes.fab}

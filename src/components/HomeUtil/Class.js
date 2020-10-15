@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     margin: '10px 10px 10px 10px',
-    //backgroundImage: "radial-gradient(circle farthest-corner at 10% 20%, rgba(255,247,153,1)  0%, #69f0ae 90% )",
+    backgroundColor: "#F38D68"
+
   },
   title: {
     '&:hover': {

@@ -9,7 +9,7 @@ import jwtDecode from "jwt-decode";
 import AuthRoute from './components/util/AuthRoute'
 //PAGES
 import home from "./components/pages/home";
-import login from "./components/pages/login/login";
+import login from "./components/pages/login";
 import landing from "./components/pages/landing/landing";
 import signup from "./components/pages/signup";
 import about from "./components/pages/about";

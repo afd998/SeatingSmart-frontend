@@ -36,7 +36,8 @@ const styles = {
   },
   class: {
     margin: '50px 50px 50px 50px',
-    padding: 20
+    padding: 20,
+
   },
   bar:{
     display: "flex",
@@ -82,7 +83,7 @@ const styles = {
   flexItem: {
     margin: "0px 30px 0px 30px",
     flexBasis: "250px",
-    backgroundColor: "#F38D68"
+ 
   },
   feedback: {
     margin: "400px 0px 0px 0px",
